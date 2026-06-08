@@ -1,292 +1,478 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABD JALIL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABD JALIL</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-<style>
+        body {
+            background: #050816;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+        /* تأثير خلفية الماتريكس البرمجية المتساقطة */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15; /* تأثير خفيف جداً خلف البطاقات الزجاجية */
+        }
 
-body{
-background:#050816;
-color:white;
-overflow-x:hidden;
-min-height:100vh;
-}
+        /* الخلفية التوهجية الأصلية */
+        .bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0,140,255,.25), transparent 30%),
+                radial-gradient(circle at 80% 40%, rgba(128,0,255,.20), transparent 30%),
+                radial-gradient(circle at 50% 90%, rgba(0,255,255,.15), transparent 30%);
+            animation: moveBg 10s infinite alternate ease-in-out;
+        }
 
-/* Animated background */
-.bg{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:-1;
-background:
-radial-gradient(circle at 20% 20%, rgba(0,140,255,.25), transparent 30%),
-radial-gradient(circle at 80% 40%, rgba(128,0,255,.20), transparent 30%),
-radial-gradient(circle at 50% 90%, rgba(0,255,255,.15), transparent 30%);
-animation: moveBg 10s infinite alternate ease-in-out;
-}
+        @keyframes moveBg {
+            100% { transform: scale(1.1) rotate(2deg); }
+        }
 
-@keyframes moveBg{
-100%{
-transform:scale(1.2) rotate(5deg);
-}
-}
+        /* الواجهة الرئيسية - Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px 20px;
+        }
 
-/* Hero */
-.hero{
-text-align:center;
-padding:80px 20px;
-}
+        .profile {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0,140,255,.5);
+        }
 
-.profile{
-width:220px;
-height:220px;
-object-fit:cover;
-border-radius:50%;
-border:4px solid rgba(255,255,255,.3);
-backdrop-filter:blur(20px);
-box-shadow:0 0 40px rgba(0,140,255,.5);
-}
+        .hero h1 {
+            margin-top: 25px;
+            font-size: 60px;
+            letter-spacing: 2px;
+        }
 
-.hero h1{
-margin-top:25px;
-font-size:60px;
-}
+        /* تأثير الكتابة التلقائية */
+        .typing-container {
+            font-size: 24px;
+            color: #8ab4ff;
+            font-weight: 400;
+            min-height: 35px;
+        }
+        .typed-text {
+            border-right: 2px solid #60a5fa;
+            animation: blink 0.75s step-end infinite;
+            padding-right: 5px;
+        }
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #60a5fa; }
+        }
 
-.hero p{
-font-size:22px;
-color:#8ab4ff;
-}
+        /* البطاقات الزجاجية - Glass Cards */
+        .glass {
+            background: rgba(255, 255, 255, .06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
 
-/* Glass Cards */
-.glass{
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.15);
-border-radius:25px;
-box-shadow:0 8px 32px rgba(0,0,0,.3);
-}
+        /* العناوين المشتركة */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin: 50px 0 20px 0;
+            letter-spacing: 1px;
+            color: white;
+        }
 
-/* About */
-.about{
-max-width:900px;
-margin:30px auto;
-padding:35px;
-text-align:center;
-}
+        /* نبذة عني - About */
+        .about {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 35px;
+            text-align: center;
+            width: 90%;
+        }
 
-.about h2{
-margin-bottom:15px;
-}
+        .about p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
 
-/* Stats */
-.stats{
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-padding:30px;
-}
+        /* الإحصائيات - Stats & Fitness Goals */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-.stat{
-width:220px;
-padding:25px;
-text-align:center;
-}
+        .stat {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            text-align: center;
+        }
 
-.stat h3{
-font-size:35px;
-color:#60a5fa;
-}
+        .stat h3 {
+            font-size: 32px;
+            color: #60a5fa;
+        }
 
-/* Interests */
-.cards{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:25px;
-padding:30px;
-}
+        /* الاهتمامات والمشاريع */
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.card{
-width:280px;
-padding:25px;
-transition:.3s;
-}
+        .card {
+            width: 320px;
+            padding: 30px;
+            transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+        }
 
-.card:hover{
-transform:translateY(-10px);
-}
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, .1);
+            box-shadow: 0 12px 40px rgba(0, 140, 255, 0.2);
+        }
 
-.card h3{
-margin-bottom:15px;
-color:#60a5fa;
-}
+        .card h3 {
+            margin-bottom: 15px;
+            color: #60a5fa;
+            font-size: 22px;
+        }
 
-/* Gallery */
-.gallery{
-max-width:1200px;
-margin:auto;
-padding:40px 20px;
-}
+        .project-tag {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
 
-.gallery h2{
-text-align:center;
-margin-bottom:20px;
-}
+        /* معرض الصور - Gallery */
+        .gallery {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-.grid img{
-width:100%;
-height:300px;
-object-fit:cover;
-border-radius:20px;
-transition:.4s;
-}
+        .grid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform .4s ease, box-shadow .4s ease;
+            border: 1px solid rgba(255,255,255,.1);
+        }
 
-.grid img:hover{
-transform:scale(1.05);
-}
+        .grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,140,255,.3);
+        }
 
-/* Social */
-.social{
-text-align:center;
-padding:50px 20px;
-}
+        /* نموذج التواصل - Contact Form */
+        .contact-section {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 40px;
+            width: 90%;
+        }
 
-.social a{
-display:inline-block;
-margin:10px;
-padding:15px 30px;
-text-decoration:none;
-color:white;
-border-radius:50px;
-background:rgba(255,255,255,.1);
-border:1px solid rgba(255,255,255,.2);
-backdrop-filter:blur(10px);
-transition:.3s;
-}
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-.social a:hover{
-background:#2563eb;
-}
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border .3s;
+        }
 
-footer{
-text-align:center;
-padding:30px;
-color:#aaa;
-}
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #60a5fa;
+        }
 
-</style>
+        .contact-form button {
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .3s, transform .2s;
+        }
+
+        .contact-form button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* التواصل الاجتماعي - Social */
+        .social {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 35px;
+            text-decoration: none;
+            color: white;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            transition: all .3s ease;
+        }
+
+        .social a:hover {
+            background: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+    </style>
 </head>
 <body>
 
-<div class="bg"></div>
+    <canvas id="matrixCanvas"></canvas>
+    <div class="bg"></div>
 
-<section class="hero">
-<img src="profile.jpg" class="profile">
+    <section class="hero">
+        <img src="IMG_0071.JPG" alt="Profile Picture" class="profile">
+        <h1>ABD JALIL</h1>
+        <div class="typing-container">
+            <span class="typed-text"></span>
+        </div>
+    </section>
 
-<h1>ABD JALIL</h1>
-<p>Fitness • Programming • Gaming</p>
-</section>
+    <section class="about glass">
+        <h2>About Me</h2>
+        <p>
+            Hello, I'm Abd Jalil from Algeria 🇩🇿. 
+            I love fitness, technology, programming and gaming. 
+            I always try to improve myself and learn new skills every day.
+        </p>
+    </section>
 
-<section class="about glass">
-<h2>About Me</h2>
+    <section class="stats">
+        <div class="stat glass">
+            <h3>18</h3>
+            <p>Age</p>
+        </div>
+        <div class="stat glass">
+            <h3>🇩🇿</h3>
+            <p>Algeria</p>
+        </div>
+        <div class="stat glass">
+            <h3>150 KG</h3>
+            <p>Deadlift Max</p>
+        </div>
+        <div class="stat glass">
+            <h3>Bulking 🏋️‍♂️</h3>
+            <p>Current Goal</p>
+        </div>
+    </section>
 
-<p>
-Hello, I'm Abd Jalil from Algeria 🇩🇿.
-I love fitness, technology, programming and gaming.
-I always try to improve myself and learn new skills every day.
-</p>
-</section>
+    <h2 class="section-title">My Passions</h2>
+    <section class="cards">
+        <div class="card glass">
+            <h3>🏋️ Fitness</h3>
+            <p>Bodybuilding, strength training, hitting heavy PRs, and absolute self-improvement.</p>
+        </div>
+        <div class="card glass">
+            <h3>💻 Programming</h3>
+            <p>Learning Python, hacking/cybersecurity concepts, and advanced web development.</p>
+        </div>
+        <div class="card glass">
+            <h3>🎮 Gaming</h3>
+            <p>Enjoying racing, tactical simulator games, and high-octane adventure titles.</p>
+        </div>
+    </section>
 
-<section class="stats">
+    <h2 class="section-title">Projects & Dev</h2>
+    <section class="cards">
+        <div class="card glass">
+            <h3>🐍 Python Scripts</h3>
+            <p>Building automated scripts, security tools, and backend applications using Python.</p>
+            <span class="project-tag">Backend</span>
+        </div>
+        <div class="card glass">
+            <h3>🌐 Portfolio Site</h3>
+            <p>Creating this high-end interactive portfolio with dynamic themes and glassmorphism styling.</p>
+            <span class="project-tag">Frontend</span>
+        </div>
+    </section>
 
-<div class="stat glass">
-<h3>18</h3>
-<p>Age</p>
-</div>
+    <section class="gallery">
+        <h2 class="section-title">My Gallery</h2>
+        <div class="grid">
+            <img src="IMG_0076.JPG" alt="Gallery Image 1">
+            <img src="IMG_0079.JPG" alt="Gallery Image 2">
+        </div>
+    </section>
 
-<div class="stat glass">
-<h3>🇩🇿</h3>
-<p>Algeria</p>
-</div>
+    <h2 class="section-title">Drop Me a Message</h2>
+    <section class="contact-section glass">
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="5" placeholder="Your Message..." required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
 
-<div class="stat glass">
-<h3>3+</h3>
-<p>Main Hobbies</p>
-</div>
+    <section class="social">
+        <h2 class="section-title">Follow Me</h2>
+        <a href="https://www.instagram.com/abdjalile_mh" target="_blank" rel="noopener noreferrer">
+            Instagram
+        </a>
+        <a href="#">
+            TikTok - jalil mgn
+        </a>
+    </section>
 
-</section>
+    <footer>
+        &copy; 2026 ABD JALIL | Personal Portfolio
+    </footer>
 
-<section class="cards">
+    <script>
+        // 1. تأثير الكتابة التلقائية (Typing Effect)
+        const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextSpan = document.querySelector(".typed-text");
 
-<div class="card glass">
-<h3>🏋️ Fitness</h3>
-<p>Bodybuilding, strength training and self improvement.</p>
-</div>
+        function type() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
 
-<div class="card glass">
-<h3>💻 Programming</h3>
-<p>Learning Python and web development.</p>
-</div>
+            let typeSpeed = isDeleting ? 50 : 100;
 
-<div class="card glass">
-<h3>🎮 Gaming</h3>
-<p>Enjoying racing and adventure games.</p>
-</div>
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 1500; // انتظر قليلاً عند نهاية الكلمة
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500; // انتظر قليلاً قبل البدء بالكلمة الجديدة
+            }
 
-</section>
+            setTimeout(type, typeSpeed);
+        }
 
-<section class="gallery">
+        document.addEventListener("DOMContentLoaded", () => setTimeout(type, 200));
 
-<h2>My Gallery</h2>
+        // 2. تأثير الماتريكس البرمجي في الخلفية (Matrix Rain Effect)
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
 
-<div class="grid">
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-<img src="img 0076.jpg">
-<img src="profile.jpg">
-<img src="IMG_0076.JPG" class="profile">
+        const katakana = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>///+-*';
+        const alphabet = katakana.split('');
 
-</div>
+        const fontSize = 16;
+        let columns = canvas.width / fontSize;
 
-</section>
+        const rainDrops = [];
+        for( let x = 0; x < columns; x++ ) {
+            rainDrops[x] = 1;
+        }
 
-<section class="social">
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 8, 22, 0.05)'; // مسح تدريجي لترك أثر خلف الحروف
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-<h2>Follow Me</h2>
+            ctx.fillStyle = '#0f0'; // لون الحروف (أخضر كلاسيكي برميجي خفيف)
+            ctx.font = fontSize + 'px monospace';
 
-<a href="https://www.instagram.com/abdjalile_mh" target="_blank">
-Instagram
-</a>
+            for(let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
 
-<a href="#">
-TikTok - jalil mgn 13
-</a>
+                if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
 
-</section>
-
-<footer>
-© 2026 ABD JALIL | Personal Portfolio
-</footer>
-
+        setInterval(drawMatrix, 30);
+    </script>
 </body>
 </html>
-
