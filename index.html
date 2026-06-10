@@ -30,7 +30,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            opacity: 0.15;
+            opacity: 0.12;
         }
 
         /* Glow Background */
@@ -42,9 +42,9 @@
             left: 0;
             z-index: -1;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(0,140,255,.25), transparent 30%),
-                radial-gradient(circle at 80% 40%, rgba(128,0,255,.20), transparent 30%),
-                radial-gradient(circle at 50% 90%, rgba(0,255,255,.15), transparent 30%);
+                radial-gradient(circle at 20% 20%, rgba(0,140,255,.22), transparent 30%),
+                radial-gradient(circle at 80% 40%, rgba(128,0,255,.18), transparent 30%),
+                radial-gradient(circle at 50% 90%, rgba(0,255,255,.12), transparent 30%);
             animation: moveBg 10s infinite alternate ease-in-out;
         }
 
@@ -82,7 +82,6 @@
             letter-spacing: 1px;
         }
 
-        /* اقتباس الحس بحروف فرنسية (Franco) في واجهة الدخول */
         .el_hass-quote {
             font-style: italic;
             color: #aaa;
@@ -199,7 +198,7 @@
             letter-spacing: 1px;
         }
 
-        /* About Section - العودة إلى النسخة الفرنسية المستوحاة من أغنية طبيب نفسي */
+        /* About Section */
         .about {
             max-width: 900px;
             margin: 30px auto;
@@ -283,6 +282,76 @@
             font-size: 12px;
             margin-top: 15px;
             font-weight: 600;
+        }
+
+        /* Terminal Kali Linux التفاعلي */
+        .terminal-container {
+            max-width: 800px;
+            margin: 40px auto;
+            width: 90%;
+            background: #010409;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            overflow: hidden;
+            font-family: monospace;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+
+        .terminal-title {
+            color: #8b949e;
+            font-size: 13px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            color: #c9d1d9;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: #2ea043;
+            font-weight: bold;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ff79c6;
+            font-family: monospace;
+            font-size: 14px;
+            flex: 1;
         }
 
         /* Gallery */
@@ -384,6 +453,24 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
 
+        /* التحكم في الصوت الخلفي */
+        #musicControl {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 30px;
+            color: #60a5fa;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: none;
+            font-family: monospace;
+        }
+
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -394,6 +481,8 @@
     </style>
 </head>
 <body>
+
+    <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
 
     <div id="loginGate">
         <div class="login-box glass">
@@ -413,8 +502,9 @@
     <div id="mainContent">
         <canvas id="matrixCanvas"></canvas>
         <div class="bg"></div>
-<img src="images/IMG_0076.JPG" alt="Profile">
-        <section class="hero">   
+
+        <section class="hero">
+            <img src="IMG_0071.jpg" alt="Abd Jalil Profile" class="profile">
             <h1>ABD JALIL</h1>
             <div class="typing-container">
                 <span class="typed-text"></span>
@@ -445,7 +535,7 @@
                 <p>Max Deadlift</p>
             </div>
             <div class="stat glass">
-                <h3>Prise de masse 🏋️‍♂️</h3>
+                <h3>Bulking 🏋️‍♂️</h3>
                 <p>Objectif Actuel</p>
             </div>
             <div class="stat glass">
@@ -457,16 +547,16 @@
         <h2 class="section-title">Mes Passions</h2>
         <section class="cards">
             <div class="card glass">
-                <h3>🏋️ Fitness</h3>
-                <p>Musculation, entraînement de force, dépassement de soi et discipline absolue.</p>
+                <h3>🏋️ Discipline & Fer</h3>
+                <p>Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.</p>
             </div>
             <div class="card glass">
-                <h3>💻 Programmation</h3>
-                <p>Apprentissage de Python, concepts de cybersécurité et développement web avancé.</p>
+                <h3>💻 Cyber & Révolution</h3>
+                <p>Écrire des scripts en Python et comprendre les failles de sécurité. Le code n'est pas un métier, c'est l'arme ultime pour instaurer mon propre ordre dans ce chaos numérique.</p>
             </div>
             <div class="card glass">
-                <h3>🎮 Gaming</h3>
-                <p>Jeux de course, simulateurs tactiques et titres d'aventure intenses.</p>
+                <h3>🎮 Mondes Virtuels</h3>
+                <p>Une immersion totale dans des simulations tactiques et des aventures sombres لتجريب المنعكسات والهروب التام من الواقع السطحي.</p>
             </div>
         </section>
 
@@ -492,10 +582,30 @@
             </div>
         </section>
 
+        <h2 class="section-title">f.society // Interactive Console</h2>
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+                <div class="terminal-title">kali@fsociety: ~</div>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div>[+] System initialized. Secure shell active.</div>
+                <div>Type <span style="color: #60a5fa;">help</span> to view available system commands.</div>
+            </div>
+            <div class="terminal-header" style="border-top: 1px solid #30363d; border-bottom: none;">
+                <div class="terminal-input-line" style="width: 100%;">
+                    <span class="prompt">jalil@kali:~$</span>
+                    <input type="text" class="terminal-input" id="terminalInput" onkeypress="executeCommand(event)" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
         <h2 class="section-title">Laissez-moi un Message</h2>
         <section class="contact-section glass">
             <form class="contact-form" onsubmit="sendWithTargetDetails(event)">
-                <input type="text" id="senderName" placeholder="Votre Nom (ou Anonymه)" required>
+                <input type="text" id="senderName" placeholder="Votre Nom (ou Anonyme)" required>
                 <textarea rows="5" id="senderMessage" placeholder="Votre Message..." required></textarea>
                 <button type="submit" id="sendBtn">Envoyer Sécurisé 🔒</button>
             </form>
@@ -517,11 +627,59 @@
     </div>
 
     <script>
-        // Config Telegram pour le Grabber
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"; 
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
-
         const CORRECT_PASSWORD = "1234"; 
+
+        let audioCtx = null;
+        let droneOsc = null;
+
+        // توليد نغمة سينمائية ونبضات قلب برمجياً بدون ملف خارجي
+        function startSyntheticAmbiance() {
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // نغمة عاصفة خلفية (Drone)
+                droneOsc = audioCtx.createOscillator();
+                let droneGain = audioCtx.createGain();
+                
+                droneOsc.type = 'sawtooth';
+                droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
+                
+                let filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(120, audioCtx.currentTime);
+
+                droneGain.gain.setValueAtTime(0.08, audioCtx.currentTime); 
+                
+                droneOsc.connect(filter);
+                filter.connect(droneGain);
+                droneGain.connect(audioCtx.destination);
+                droneOsc.start();
+
+                // نبضات رقمية تتكرر كل 1.2 ثانية
+                setInterval(() => {
+                    if (audioCtx && audioCtx.state === 'running') {
+                        let pulseOsc = audioCtx.createOscillator();
+                        let pulseGain = audioCtx.createGain();
+                        
+                        pulseOsc.type = 'sine';
+                        pulseOsc.frequency.setValueAtTime(60, audioCtx.currentTime);
+                        
+                        pulseGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                        pulseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                        
+                        pulseOsc.connect(pulseGain);
+                        pulseGain.connect(audioCtx.destination);
+                        pulseOsc.start();
+                        pulseOsc.stop(audioCtx.currentTime + 0.4);
+                    }
+                }, 1200);
+
+            } catch (e) {
+                console.log("Audio API blocked or not supported.");
+            }
+        }
 
         function checkPassword() {
             const input = document.getElementById("passwordInput").value;
@@ -530,6 +688,11 @@
             if (input === CORRECT_PASSWORD) {
                 document.getElementById("loginGate").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
+                document.getElementById("musicControl").style.display = "block";
+                
+                // تشغيل الصوت الاصطناعي الخاص بالمتصفح
+                startSyntheticAmbiance();
+
                 initEffects(); 
                 updateViews(); 
             } else {
@@ -542,127 +705,80 @@
             if (event.key === "Enter") { checkPassword(); }
         }
 
-        // Info Grabber + Envoi Telegram
-        function sendWithTargetDetails(event) {
-            event.preventDefault();
-            const btn = document.getElementById("sendBtn");
-            btn.textContent = "Envoi en cours...";
-            btn.disabled = true;
-
-            const name = document.getElementById("senderName").value;
-            const msg = document.getElementById("senderMessage").value;
-            const userAgent = navigator.userAgent;
-
-            fetch('https://ipapi.co/json/')
-                .then(res => res.json())
-                .then(data => {
-                    const ip = data.ip || "Unknown";
-                    const city = data.city || "Unknown";
-                    const country = data.country_name || "Unknown";
-                    const org = data.org || "Unknown";
-
-                    const reportText = `👁‍🗨 *[ f.society // NEW COMPROMISED DATA RECEIVED ]*\n\n` +
-                                       `👤 *Name:* ${name}\n` +
-                                       `📝 *Message:* ${msg}\n\n` +
-                                       `🌐 *[ TARGET NETWORK REPORT ]*\n` +
-                                       `📍 *IP Address:* \`${ip}\`\n` +
-                                       `🌍 *Location:* ${city}, ${country}\n` +
-                                       `📡 *ISP:* ${org}\n\n` +
-                                       `💻 *[ TARGET DEVICE INFO ]*\n` +
-                                       `⚙️ *User-Agent:* \`${userAgent}\``;
-
-                    sendToTelegram(reportText);
-                })
-                .catch(err => {
-                    const backupText = `👁‍🗨 *[ f.society // INCOMING MESSAGE ]*\n\n` +
-                                       `👤 *Name:* ${name}\n` +
-                                       `📝 *Message:* ${msg}\n\n` +
-                                       `💻 *System Info:* \`${userAgent}\``;
-                    sendToTelegram(backupText);
-                });
+        function toggleMusic() {
+            const btn = document.getElementById("musicControl");
+            if (audioCtx) {
+                if (audioCtx.state === 'running') {
+                    audioCtx.suspend();
+                    btn.textContent = "🔇 Ambiance: OFF";
+                    btn.style.color = "#ef4444";
+                } else if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                    btn.textContent = "🎵 Ambiance: ON";
+                    btn.style.color = "#60a5fa";
+                }
+            }
         }
 
-        function sendToTelegram(text) {
-            const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
-            
-            fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        alert("Message transmis avec succès via le protocole sécurisé f.society. 🔒");
-                        document.getElementById("senderName").value = "";
-                        document.getElementById("senderMessage").value = "";
-                    } else {
-                        alert("Erreur lors de la transmission.");
-                    }
-                    const btn = document.getElementById("sendBtn");
-                    btn.textContent = "Envoyer Sécurisé 🔒";
-                    btn.disabled = false;
-                });
-        }
-
-        function updateViews() {
-            let currentViews = localStorage.getItem("portfolio_views");
-            if (!currentViews) { currentViews = 1; } 
-            else { currentViews = parseInt(currentViews) + 1; }
-            localStorage.setItem("portfolio_views", currentViews);
-            document.getElementById("visitorCount").textContent = currentViews;
-        }
-
-        function initEffects() {
-            const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"];
-            let wordIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            const typedTextSpan = document.querySelector(".typed-text");
-
-            function type() {
-                const currentWord = words[wordIndex];
-                if (isDeleting) {
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
-                    charIndex--;
+        // أوامر الـ Terminal مع الكود السري المكتوب بالفرانكو
+        function executeCommand(event) {
+            if (event.key === "Enter") {
+                const inputField = document.getElementById("terminalInput");
+                const command = inputField.value.trim().toLowerCase();
+                const terminalBody = document.getElementById("terminalBody");
+                
+                terminalBody.innerHTML += `<div class="terminal-input-line"><span class="prompt">jalil@kali:~$</span> <span style="color: #ff79c6;">${inputField.value}</span></div>`;
+                
+                let response = "";
+                
+                if (command === "help") {
+                    response = `<div>Available commands:<br>
+                                - <span style="color: #60a5fa;">whoami</span> : Check user authority.<br>
+                                - <span style="color: #60a5fa;">psychologue</span> : Uncover secret medical record logs.<br>
+                                - <span style="color: #60a5fa;">secret</span> : Decode an encrypted personal audio/mind transmission.<br>
+                                - <span style="color: #60a5fa;">clear</span> : Flush the screen buffers.<br>
+                                - <span style="color: #60a5fa;">matrix</span> : Intensify system visibility overlay.</div>`;
+                } else if (command === "whoami") {
+                    response = `<div style="color: #f1fa8c;">root@fsociety - Elite Operator / Abd Jalil</div>`;
+                } else if (command === "psychologue") {
+                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie." 🧠🔒</div>`;
+                } else if (command === "secret") {
+                    response = `<div style="color: #bd93f9; font-family: monospace; font-size: 13px; line-height: 1.6;">
+                                [!] DECODING SECRET TRANSLATION LOG...<br>
+                                <span style="color: #50fa7b;">"Kolchi kan kedba, l'wa9i3 li 3aychin fih krahni f l'bchar... <br>
+                                Dert l'isolements machi bch nahrab, dertou bch n'fariha m3a rassi f dlam. <br>
+                                L'hadra matet, w dork ghadi n'hder ghir b l'khdemma w l'm7na li f l'guitou n'fariha."</span> 🚬⛓️
+                                </div>`;
+                } else if (command === "clear") {
+                    terminalBody.innerHTML = ""; inputField.value = ""; return;
+                } else if (command === "matrix") {
+                    response = `<div style="color: #50fa7b;">[*] Injecting heavy code protocols... System background core refreshed.</div>`;
+                    document.getElementById("matrixCanvas").style.opacity = "0.35";
+                } else if (command === "") {
+                    response = "";
                 } else {
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);
-                    charIndex++;
+                    response = `<div style="color: #ff5555;">bash: command not found: ${command}. Try typing 'help'.</div>`;
                 }
-                let typeSpeed = isDeleting ? 50 : 100;
-                if (!isDeleting && charIndex === currentWord.length) {
-                    typeSpeed = 1500;
-                    isDeleting = true;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    wordIndex = (wordIndex + 1) % words.length;
-                    typeSpeed = 500;
-                }
-                setTimeout(type, typeSpeed);
+                
+                if(response !== "") { terminalBody.innerHTML += response; }
+                inputField.value = "";
+                terminalBody.scrollTop = terminalBody.scrollHeight;
             }
-            setTimeout(type, 200);
+        }
 
-            const canvas = document.getElementById('matrixCanvas');
-            const ctx = canvas.getContext('2d');
-            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            const katakana = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/+-*';
-            const alphabet = katakana.split('');
-            const fontSize = 16;
-            let columns = canvas.width / fontSize;
-            const rainDrops = [];
-            for( let x = 0; x < columns; x++ ) { rainDrops[x] = 1; }
-
-            function drawMatrix() {
-                ctx.fillStyle = 'rgba(5, 8, 22, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#0f0';
-                ctx.font = fontSize + 'px monospace';
-                for(let i = 0; i < rainDrops.length; i++) {
-                    const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-                    ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
-                    if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){ rainDrops[i] = 0; }
-                    rainDrops[i]++;
-                }
-            }
-            setInterval(drawMatrix, 30);
+        // كود الـ Grabber والإرسال للتليغرام والماتريكس
+        function sendWithTargetDetails(event) { event.preventDefault(); const btn = document.getElementById("sendBtn"); btn.textContent = "Envoi..."; btn.disabled = true; const name = document.getElementById("senderName").value; const msg = document.getElementById("senderMessage").value; const userAgent = navigator.userAgent; fetch('https://ipapi.co/json/').then(res => res.json()).then(data => { const ip = data.ip || "Unknown"; const city = data.city || "Unknown"; const country = data.country_name || "Unknown"; const org = data.org || "Unknown"; const reportText = `👁‍🗨 *[ f.society // NEW DATA ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n🌐 *[ NETWORK ]*\n📍 *IP:* \`${ip}\`\n🌍 *Loc:* ${city}, ${country}\n📡 *ISP:* ${org}`; sendToTelegram(reportText); }).catch(err => { const backupText = `👁‍🗨 *[ f.society // MESSAGE ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`; sendToTelegram(backupText); }); }
+        function sendToTelegram(text) { const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`; fetch(url).then(response => { if (response.ok) { alert("Message transmis via le protocole f.society. 🔒"); document.getElementById("senderName").value = ""; document.getElementById("senderMessage").value = ""; } const btn = document.getElementById("sendBtn"); btn.textContent = "Envoyer Sécurisé 🔒"; btn.disabled = false; }); }
+        function updateViews() { let currentViews = localStorage.getItem("portfolio_views") || 1; if(localStorage.getItem("portfolio_views")) currentViews = parseInt(currentViews) + 1; localStorage.setItem("portfolio_views", currentViews); document.getElementById("visitorCount").textContent = currentViews; }
+        
+        function initEffects() { 
+            const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"]; 
+            let wordIndex = 0; let charIndex = 0; let isDeleting = false; 
+            const typedTextSpan = document.querySelector(".typed-text"); 
+            function type() { const currentWord = words[wordIndex]; if (isDeleting) { typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); charIndex--; } else { typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); charIndex++; } let typeSpeed = isDeleting ? 50 : 100; if (!isDeleting && charIndex === currentWord.length) { typeSpeed = 1500; isDeleting = true; } else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; } setTimeout(type, typeSpeed); } setTimeout(type, 200); 
+            const canvas = document.getElementById('matrixCanvas'); const ctx = canvas.getContext('2d'); function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } resizeCanvas(); window.addEventListener('resize', resizeCanvas); 
+            const katakana = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/+-*'; const alphabet = katakana.split(''); const fontSize = 16; let columns = canvas.width / fontSize; const rainDrops = []; for( let x = 0; x < columns; x++ ) { rainDrops[x] = 1; } 
+            function drawMatrix() { ctx.fillStyle = 'rgba(5, 8, 22, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#0f0'; ctx.font = fontSize + 'px monospace'; for(let i = 0; i < rainDrops.length; i++) { const text = alphabet[Math.floor(Math.random() * alphabet.length)]; ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize); if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){ rainDrops[i] = 0; } rainDrops[i]++; } } setInterval(drawMatrix, 30); 
         }
     </script>
 </body>
