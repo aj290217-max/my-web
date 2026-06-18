@@ -8,6 +8,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
+/* تصميم شريط التنقل */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #161b22;
+    padding: 10px 20px;
+    border-bottom: 1px solid #30363d;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-links a {
+    color: #8b949e;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 15px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #58a6ff;
+}
+
+/* أزرار الترجمة */
+.lang-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.lang-btn {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.lang-btn.active {
+    background-color: #238636;
+    color: white;
+    border-color: #2ea44f;
+}
+        
         * {
             margin: 0;
             padding: 0;
@@ -479,11 +527,24 @@
             border-top: 1px solid rgba(255,255,255,.05);
         }
     </style>
-</head>
+</head> 
+
+
 <body>
 
     <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
-
+ <div class="navbar">
+    <div class="nav-links">
+        <a href="#" id="navHome">الرئيسية</a>
+        <a href="#gallerySection" id="navGallery">الصور</a>
+        <a href="#videoSection" id="navVideo">الفيديو</a>
+    </div>
+    
+    <div class="lang-buttons">
+        <button onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
+        <button onclick="switchLanguage('en')" class="lang-btn">EN</button>
+    </div>
+</div>
     <div id="loginGate">
         <div class="login-box glass">
             <h2>f.society // Access Portal</h2>
