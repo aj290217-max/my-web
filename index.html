@@ -698,10 +698,45 @@
 
         <footer>
             &copy; 2026 ABD JALIL | Portfolio Personnel
-        </footer>
+     
+}  </footer>
     </div>
 
-    <script>
+    <script> 
+        // قاموس الترجمة (العربية والإنجليزية)
+const translations = {
+    ar: {
+        dir: "rtl",
+        navHome: "الرئيسية",
+        navGallery: "الصور",
+        navVideo: "الفيديو",
+        siteTitle: "أداة استخبارات المصادر المفتوحة والتحكم 🛠️"
+        // يمكنك إضافة باقي نصوص موقعك هنا بنفس الطريقة
+    },
+    en: {
+        dir: "ltr",
+        navHome: "Home",
+        navGallery: "Gallery",
+        navVideo: "Video",
+        siteTitle: "OSINT & Control Dashboard 🛠️"
+    }
+};
+
+function switchLanguage(lang) {
+    // 1. تغيير اتجاه الصفحة (من اليمين لليسار أو العكس)
+    document.documentElement.dir = translations[lang].dir;
+    document.documentElement.lang = lang;
+
+    // 2. تغيير نصوص أزرار التنقل
+    document.getElementById('navHome').innerText = translations[lang].navHome;
+    document.getElementById('navGallery').innerText = translations[lang].navGallery;
+    document.getElementById('navVideo').innerText = translations[lang].navVideo;
+
+    // 3. تحديث حالة الأزرار النشطة (تغيير اللون الأخضر)
+    const buttons = document.querySelectorAll('.lang-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+}
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"; 
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
         const CORRECT_PASSWORD = "1234"; 
