@@ -740,20 +740,20 @@ body {
 
         let audioCtx = null;
         let droneOsc = null;
-
+    
         // توليد نغمة سينمائية ونبضات قلب برمجياً بدون ملف خارجي
         function startSyntheticAmbiance() {
-            try {
+     <       try {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 
-                // نغمة عاصفة خلفية (Drone)
-                droneOsc = audioCtx.createOscillator();
-                let droneGain = audioCtx.createGain();
+      <          // نغمة عاصفة خلفية (Drone)
+       <         droneOsc = audioCtx.createOscillator();
+        <        let droneGain = audioCtx.createGain();
+         <       
+           <     droneOsc.type = 'sawtooth';
+          <      droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
                 
-                droneOsc.type = 'sawtooth';
-                droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
-                
-                let filter = audioCtx.createBiquadFilter();
+    <            let filter = audioCtx.createBiquadFilter();
                 filter.type = 'lowpass';
                 filter.frequency.setValueAtTime(120, audioCtx.currentTime);
 
@@ -764,10 +764,10 @@ body {
                 droneGain.connect(audioCtx.destination);
                 droneOsc.start();
 
-                // نبضات رقمية تتكرر كل 1.2 ثانية
-                setInterval(() => {
-                    if (audioCtx && audioCtx.state === 'running') {
-                        let pulseOsc = audioCtx.createOscillator();
+            <   < // نبضات رقمية تتكرر كل 1.2 ثانية
+             <   <setInterval(() => {
+                  <  if (audioCtx && audioCtx.state === 'running') {
+                   <     let pulseOsc = audioCtx.createOscillator();
                         let pulseGain = audioCtx.createGain();
                         
                         pulseOsc.type = 'sine';
@@ -788,47 +788,47 @@ body {
             }
         }
 
-        function checkPassword() {
-            const input = document.getElementById("passwordInput").value;
-            const errorMsg = document.getElementById("errorMsg");
-            
+        <function checkPassword() {
+         <   const input = document.getElementById("passwordInput").value;
+           < const errorMsg = document.getElementById("errorMsg");
+          <  
             if (input === CORRECT_PASSWORD) {
-                document.getElementById("loginGate").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-                document.getElementById("musicControl").style.display = "block";
+            <    document.getElementById("loginGate").style.display = "none";
+             <   document.getElementById("mainContent").style.display = "block";
+              <  document.getElementById("musicControl").style.display = "block";
                 
-                // تشغيل الصوت الاصطناعي الخاص بالمتصفح
-                startSyntheticAmbiance();
+               < // تشغيل الصوت الاصطناعي الخاص بالمتصفح
+                <startSyntheticAmbiance();
 
                 initEffects(); 
-                updateViews(); 
+               < updateViews(); 
             } else {
                 errorMsg.style.display = "block";
                 document.getElementById("passwordInput").value = "";
             }
         }
 
-        function handleKeyPress(event) {
-            if (event.key === "Enter") { checkPassword(); }
+        <function handleKeyPress(event) {
+         <   if (event.key === "Enter") { checkPassword(); }
         }
 
-        function toggleMusic() {
+        <function toggleMusic() {
             const btn = document.getElementById("musicControl");
             if (audioCtx) {
                 if (audioCtx.state === 'running') {
-                    audioCtx.suspend();
-                    btn.textContent = "🔇 Ambiance: OFF";
-                    btn.style.color = "#ef4444";
+         <           audioCtx.suspend();
+          <          btn.textContent = "🔇 Ambiance: OFF";
+           <         btn.style.color = "#ef4444";
                 } else if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                    btn.textContent = "🎵 Ambiance: ON";
-                    btn.style.color = "#60a5fa";
+            <        audioCtx.resume();
+             <       btn.textContent = "🎵 Ambiance: ON";
+              <      btn.style.color = "#60a5fa";
                 }
-            }
-        }
-
-        // أوامر الـ Terminal مع الكود السري المكتوب بالفرانكو
-        function executeCommand(event) {
+            }<
+        }<
+<
+ <       // أوامر الـ Terminal مع الكود السري المكتوب بالفرانكو
+   <     function executeCommand(event) {
             if (event.key === "Enter") {
                 const inputField = document.getElementById("terminalInput");
                 const command = inputField.value.trim().toLowerCase();
