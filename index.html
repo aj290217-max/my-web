@@ -1,67 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
-    <meta charset="UTF-8">navGallery
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABD JALIL</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-/* تصميم شريط التنقل */
-.navbar { 
-    <div class="nav-links">
-    <a href="#" id="navHome">الرئيسية</a>
-    <a href="#gallerySection" id="navGallery">الصور</a>
-    <a href="#videoSection" id="navVideo">الفيديو</a>
-    <a href="#osintSection" id="navOsint" style="color: #2ea44f; font-weight: bold;">أداة OSINT</a>
-</div>
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #161b22;
-    padding: 10px 20px;
-    border-bottom: 1px solid #30363d;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-links a {
-    color: #8b949e;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 15px;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #58a6ff;
-}
-
-/* أزرار الترجمة */
-.lang-buttons {
-    display: flex;
-    gap: 5px;
-}
-
-.lang-btn {
-    background-color: #0d1117;
-    border: 1px solid #30363d;
-    color: #c9d1d9;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.lang-btn.active {
-    background-color: #238636;
-    color: white;
-    border-color: #2ea44f;
-}
-        
         * {
             margin: 0;
             padding: 0;
@@ -74,6 +20,54 @@
             color: white;
             overflow-x: hidden;
             min-height: 100vh;
+        }
+
+        /* شريط التنقل - Navbar */
+        .navbar { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #161b22;
+            padding: 10px 20px;
+            border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #58a6ff;
+        }
+
+        /* أزرار الترجمة */
+        .lang-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background-color: #238636;
+            color: white;
+            border-color: #2ea44f;
         }
 
         /* Matrix Effect Background */
@@ -235,11 +229,13 @@
             font-weight: 400;
             min-height: 35px;
         }
+        
         .typed-text {
             border-right: 2px solid #60a5fa;
             animation: blink 0.75s step-end infinite;
             padding-right: 5px;
         }
+        
         @keyframes blink {
             from, to { border-color: transparent }
             50% { border-color: #60a5fa; }
@@ -338,7 +334,7 @@
             font-weight: 600;
         }
 
-        /* Terminal Kali Linux التفاعلي */
+        /* Terminal Kali Linux */
         .terminal-container {
             max-width: 800px;
             margin: 40px auto;
@@ -535,22 +531,24 @@
     </style>
 </head> 
 
-
 <body>
 
     <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
- <div class="navbar">
-    <div class="nav-links">
-        <a href="#" id="navHome">الرئيسية</a>
-        <a href="#gallerySection" id="navGallery">الصور</a>
-        <a href="#videoSection" id="navVideo">الفيديو</a>
-    </div>
     
-    <div class="lang-buttons">
-        <button onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
-        <button onclick="switchLanguage('en')" class="lang-btn">EN</button>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#" id="navHome">الرئيسية</a>
+            <a href="#gallerySection" id="navGallery">الصور</a>
+            <a href="#videoSection" id="navVideo">الفيديو</a>
+            <a href="#osintSection" id="navOsint" style="color: #2ea44f; font-weight: bold;">أداة OSINT</a>
+        </div>
+        
+        <div class="lang-buttons">
+            <button onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
+            <button onclick="switchLanguage('en')" class="lang-btn">EN</button>
+        </div>
     </div>
-</div>
+
     <div id="loginGate">
         <div class="login-box glass">
             <h2>f.society // Access Portal</h2>
@@ -597,8 +595,6 @@
                 <h3>🇩🇿</h3>
                 <p>Algérie</p>
             </div>
-           
-            </div>
             <div class="stat glass">
                 <h3>Bulking 🏋️‍♂️</h3>
                 <p>Objectif Actuel</p>
@@ -639,27 +635,31 @@
             </div>
         </section>
 
-        <section class="gallery">
+        <section id="gallerySection" class="gallery">
             <h2 class="section-title">Ma Galerie</h2>
             <div class="grid">
                 <img src="IMG_0076.JPG" alt="Gym Back Pose">
-             <img src="IMG_20251114_210742_154.jpg" alt="Gym Mirror Selfie">
-                <img src="IMG_20251006_115628.jpg" alt="Gym Mirror Selfie"> <p> f.socity</p>
-
+                <img src="IMG_20251114_210742_154.jpg" alt="Gym Mirror Selfie">
+                <img src="IMG_20251006_115628.jpg" alt="Gym Mirror Selfie">
             </div>
             
-            <div style="text-align: center; margin: 20px 0;">
-    <video width="100%" style="max-width: 600px; border-radius: 8px; border: 1px solid #30363d;" controls>
-        <source src="IMG_0011.MOV" type="IMG_0011.MOV">
-        
-        <p style="color: #8b949e; font-size: 14px;">
-            عذراً، متصفحك لا يدعم تشغيل الفيديو مباشرة. 
-            <br>
-            <a href="IMG_0011.MOV" download style="color: #58a6ff; text-decoration: underline;">اضغط هنا لتحميل الفيديو ومشاهدته على جهازك</a>
-        </p>
-    </video>
-</div>
+            <div id="videoSection" style="text-align: center; margin: 40px 0;">
+                <video width="100%" style="max-width: 600px; border-radius: 8px; border: 1px solid #30363d;" controls>
+                    <source src="IMG_0011.MOV" type="video/quicktime">
+                    <p style="color: #8b949e; font-size: 14px;">
+                        عذراً، متصفحك لا يدعم تشغيل الفيديو مباشرة. 
+                        <br>
+                        <a href="IMG_0011.MOV" download style="color: #58a6ff; text-decoration: underline;">اضغط هنا لتحميل الفيديو ومشاهدته على جهازك</a>
+                    </p>
+                </video>
+            </div>
         </section>
+
+        <!-- أداة تعقب اسم المستخدم OSINT Section -->
+        <div id="osintSection" style="max-width: 600px; margin: 50px auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+            <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;">أداة تعقب اسم المستخدم 🛠️</h2>
+            <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
+        </div>
 
         <h2 class="section-title">f.society // Interactive Console</h2>
         <div class="terminal-container">
@@ -692,12 +692,8 @@
 
         <section class="social">
             <h2 class="section-title">Suivez-moi</h2>
-            <a href="https://www.instagram.com/abdjalile_mh" target="_blank" rel="noopener noreferrer">
-                Instagram
-            </a>
-            <a href="#">
-                TikTok - jalil mgn
-            </a>
+            <a href="https://www.instagram.com/abdjalile_mh" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="#">TikTok - jalil mgn</a>
         </section>
 
         <footer>
@@ -713,12 +709,10 @@
         let audioCtx = null;
         let droneOsc = null;
 
-        // توليد نغمة سينمائية ونبضات قلب برمجياً بدون ملف خارجي
         function startSyntheticAmbiance() {
             try {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 
-                // نغمة عاصفة خلفية (Drone)
                 droneOsc = audioCtx.createOscillator();
                 let droneGain = audioCtx.createGain();
                 
@@ -736,7 +730,6 @@
                 droneGain.connect(audioCtx.destination);
                 droneOsc.start();
 
-                // نبضات رقمية تتكرر كل 1.2 ثانية
                 setInterval(() => {
                     if (audioCtx && audioCtx.state === 'running') {
                         let pulseOsc = audioCtx.createOscillator();
@@ -769,9 +762,7 @@
                 document.getElementById("mainContent").style.display = "block";
                 document.getElementById("musicControl").style.display = "block";
                 
-                // تشغيل الصوت الاصطناعي الخاص بالمتصفح
                 startSyntheticAmbiance();
-
                 initEffects(); 
                 updateViews(); 
             } else {
@@ -799,7 +790,6 @@
             }
         }
 
-        // أوامر الـ Terminal مع الكود السري المكتوب بالفرانكو
         function executeCommand(event) {
             if (event.key === "Enter") {
                 const inputField = document.getElementById("terminalInput");
@@ -845,82 +835,110 @@
             }
         }
 
-        // كود الـ Grabber والإرسال للتليغرام والماتريكس
-        function sendWithTargetDetails(event) { event.preventDefault(); const btn = document.getElementById("sendBtn"); btn.textContent = "Envoi..."; btn.disabled = true; const name = document.getElementById("senderName").value; const msg = document.getElementById("senderMessage").value; const userAgent = navigator.userAgent; fetch('https://ipapi.co/json/').then(res => res.json()).then(data => { const ip = data.ip || "Unknown"; const city = data.city || "Unknown"; const country = data.country_name || "Unknown"; const org = data.org || "Unknown"; const reportText = `👁‍🗨 *[ f.society // NEW DATA ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n🌐 *[ NETWORK ]*\n📍 *IP:* \`${ip}\`\n🌍 *Loc:* ${city}, ${country}\n📡 *ISP:* ${org}`; sendToTelegram(reportText); }).catch(err => { const backupText = `👁‍🗨 *[ f.society // MESSAGE ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`; sendToTelegram(backupText); }); }
-        function sendToTelegram(text) { const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`; fetch(url).then(response => { if (response.ok) { alert("Message transmis via le protocole f.society. 🔒"); document.getElementById("senderName").value = ""; document.getElementById("senderMessage").value = ""; } const btn = document.getElementById("sendBtn"); btn.textContent = "Envoyer Sécurisé 🔒"; btn.disabled = false; }); }
-        function updateViews() { let currentViews = localStorage.getItem("portfolio_views") || 1; if(localStorage.getItem("portfolio_views")) currentViews = parseInt(currentViews) + 1; localStorage.setItem("portfolio_views", currentViews); document.getElementById("visitorCount").textContent = currentViews; }
+        function sendWithTargetDetails(event) { 
+            event.preventDefault(); 
+            const btn = document.getElementById("sendBtn"); 
+            btn.textContent = "Envoi..."; 
+            btn.disabled = true; 
+            const name = document.getElementById("senderName").value; 
+            const msg = document.getElementById("senderMessage").value; 
+            
+            fetch('https://ipapi.co/json/').then(res => res.json()).then(data => { 
+                const ip = data.ip || "Unknown"; 
+                const city = data.city || "Unknown"; 
+                const country = data.country_name || "Unknown"; 
+                const org = data.org || "Unknown"; 
+                const reportText = `👁‍🗨 *[ f.society // NEW DATA ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n🌐 *[ NETWORK ]*\n📍 *IP:* \`${ip}\`\n🌍 *Loc:* ${city}, ${country}\n📡 *ISP:* ${org}`; 
+                sendToTelegram(reportText); 
+            }).catch(err => { 
+                const backupText = `👁‍🗨 *[ f.society // MESSAGE ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`; 
+                sendToTelegram(backupText); 
+            }); 
+        }
+
+        function sendToTelegram(text) { 
+            const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`; 
+            fetch(url).then(response => { 
+                if (response.ok) { 
+                    alert("Message transmis via le protocole f.society. 🔒"); 
+                    document.getElementById("senderName").value = ""; 
+                    document.getElementById("senderMessage").value = ""; 
+                } 
+                const btn = document.getElementById("sendBtn"); 
+                btn.textContent = "Envoyer Sécurisé 🔒"; 
+                btn.disabled = false; 
+            }); 
+        }
+
+        function updateViews() { 
+            let currentViews = localStorage.getItem("portfolio_views") || 1; 
+            if(localStorage.getItem("portfolio_views")) currentViews = parseInt(currentViews) + 1; 
+            localStorage.setItem("portfolio_views", currentViews); 
+            document.getElementById("visitorCount").textContent = currentViews; 
+        }
         
         function initEffects() { 
             const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"]; 
             let wordIndex = 0; let charIndex = 0; let isDeleting = false; 
             const typedTextSpan = document.querySelector(".typed-text"); 
-            function type() { const currentWord = words[wordIndex]; if (isDeleting) { typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); charIndex--; } else { typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); charIndex++; } let typeSpeed = isDeleting ? 50 : 100; if (!isDeleting && charIndex === currentWord.length) { typeSpeed = 1500; isDeleting = true; } else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; } setTimeout(type, typeSpeed); } setTimeout(type, 200); 
-            const canvas = document.getElementById('matrixCanvas'); const ctx = canvas.getContext('2d'); function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } resizeCanvas(); window.addEventListener('resize', resizeCanvas); 
-            const katakana = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/+-*'; const alphabet = katakana.split(''); const fontSize = 16; let columns = canvas.width / fontSize; const rainDrops = []; for( let x = 0; x < columns; x++ ) { rainDrops[x] = 1; } 
-            function drawMatrix() { ctx.fillStyle = 'rgba(5, 8, 22, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#0f0'; ctx.font = fontSize + 'px monospace'; for(let i = 0; i < rainDrops.length; i++) { const text = alphabet[Math.floor(Math.random() * alphabet.length)]; ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize); if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){ rainDrops[i] = 0; } rainDrops[i]++; } } setInterval(drawMatrix, 30); 
-        }
-        <div id="osintSection" style="max-width: 600px; margin: 50px auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
-    <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;">أداة تعقب اسم المستخدم 🛠️</h2>
-    <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">أدخل الـ Username للبحث عنه وتوليد روابطه في المنصات البرمجية والاجتماعية.</p>
-
-    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-        <input type="text" id="usernameInput" placeholder="e.g., username" style="width: 70%; padding: 12px; background-color: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; font-size: 16px; outline: none; text-align: left;">
-        <button onclick="startOSINTScan()" style="padding: 12px 24px; background-color: #238636; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s;">فحص</button>
-    </div>
-
-    <div id="resultsBox" style="text-align: left; background: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #30363d; display: none;">
-        <h3 style="color: #c9d1d9; margin-top: 0; font-size: 16px; border-bottom: 1px solid #30363d; padding-bottom: 8px;">نتائج التحري والمصادر المفتوحة:</h3>
-        <div id="resultsContainer"></div>
-    </div>
-</div>
-
-<script>
-function startOSINTScan() {
-    const username = document.getElementById('usernameInput').value.trim();
-    const resultsBox = document.getElementById('resultsBox');
-    const container = document.getElementById('resultsContainer');
-    
-    if (username === "") {
-        alert("الرجاء إدخال اسم مستخدم أولاً!");
-        return;
-    }
-
-    // إظهار صندوق النتائج وتفريغه لعرض رسالة التحميل
-    resultsBox.style.display = "block";
-    container.innerHTML = "<p style='color: #8b949e; font-size: 14px;'>جاري فحص الخوادم المفتوحة وتجميع الروابط...</p>";
-
-    // محاكاة سريعة لتوليد الروابط الذكية
-    setTimeout(() => {
-        container.innerHTML = ""; // مسح رسالة التحميل
-        
-        // قائمة المنصات المستهدفة
-        const platforms = [
-            { name: "GitHub", url: `https://github.com/${username}` },
-            { name: "Telegram", url: `https://t.me/${username}` },
-            { name: "Instagram", url: `https://instagram.com/${username}` },
-            { name: "TikTok", url: `https://tiktok.com/@${username}` }
-        ];
-
-        // توليد الروابط وعرضها للمستخدم بشكل أنيق
-        platforms.forEach(platform => {
-            const item = document.createElement('div');
-            item.style.padding = "10px 0";
-            item.style.borderBottom = "1px solid #21262d";
-            item.style.fontSize = "14px";
-            item.style.color = "#c9d1d9";
             
-            item.innerHTML = `
-                <span style="color: #2ea44f; font-weight: bold; float: right; font-size: 12px;">[رابط متوقع]</span>
-                فحص منصة ${platform.name}: 
-                <br>
-                <a href="${platform.url}" target="_blank" style="color: #58a6ff; text-decoration: none; word-break: break-all;">${platform.url}</a>
-            `;
-            container.appendChild(item);
-        });
+            function type() { 
+                const currentWord = words[wordIndex]; 
+                if (isDeleting) { 
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); 
+                    charIndex--; 
+                } else { 
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); 
+                    charIndex++; 
+                } 
+                let typeSpeed = isDeleting ? 50 : 100; 
+                if (!isDeleting && charIndex === currentWord.length) { 
+                    typeSpeed = 1500; 
+                    isDeleting = true; 
+                } else if (isDeleting && charIndex === 0) { 
+                    isDeleting = false; 
+                    wordIndex = (wordIndex + 1) % words.length; 
+                    typeSpeed = 500; 
+                } 
+                setTimeout(type, typeSpeed); 
+            } 
+            setTimeout(type, 200); 
 
-    }, 1000); // تأخير لمدة ثانية واحدة لمحاكاة الفحص الحقيقي
-}
-</script>
+            const canvas = document.getElementById('matrixCanvas'); 
+            const ctx = canvas.getContext('2d'); 
+            function resizeCanvas() { 
+                canvas.width = window.innerWidth; 
+                canvas.height = window.innerHeight; 
+            } 
+            resizeCanvas(); 
+            window.addEventListener('resize', resizeCanvas); 
+
+            const katakana = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/+-*'; 
+            const alphabet = katakana.split(''); 
+            const fontSize = 16; 
+            let columns = canvas.width / fontSize; 
+            const rainDrops = []; 
+            for( let x = 0; x < columns; x++ ) { rainDrops[x] = 1; } 
+
+            function drawMatrix() { 
+                ctx.fillStyle = 'rgba(5, 8, 22, 0.05)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height); 
+                ctx.fillStyle = '#0f0'; 
+                ctx.font = fontSize + 'px monospace'; 
+                for(let i = 0; i < rainDrops.length; i++) { 
+                    const text = alphabet[Math.floor(Math.random() * alphabet.length)]; 
+                    ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize); 
+                    if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){ rainDrops[i] = 0; } 
+                    rainDrops[i]++; 
+                } 
+            } 
+            setInterval(drawMatrix, 30); 
+        }
+
+        // Placeholder for language switching logic if needed later
+        function switchLanguage(lang) {
+            console.log("Language switched to: " + lang);
+        }
     </script>
-
 </body>
+</html>
