@@ -100,96 +100,8 @@
             100% { transform: scale(1.1) rotate(2deg); }
         }
 
-        /* Login Gate */
-        #loginGate {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #050816;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .login-box {
-            padding: 40px;
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .login-box h2 {
-            margin-bottom: 15px;
-            font-size: 26px;
-            color: #60a5fa;
-            letter-spacing: 1px;
-        }
-
-        .el_hass-quote {
-            font-style: italic;
-            color: #aaa;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            border-left: 3px solid #ef4444;
-            padding-left: 12px;
-            text-align: left;
-            font-family: monospace;
-            letter-spacing: 0.5px;
-        }
-
-        .login-box input {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 12px;
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            outline: none;
-            margin-bottom: 20px;
-            transition: border .3s;
-        }
-
-        .login-box input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .login-box button {
-            width: 100%;
-            padding: 15px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all .3s;
-        }
-
-        .login-box button:hover {
-            background: #1d4ed8;
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
-        }
-
-        .error-msg {
-            color: #ef4444;
-            margin-top: 15px;
-            font-size: 14px;
-            display: none;
-        }
-
-        /* Main Content */
         #mainContent {
-            display: none;
+            display: block;
         }
 
         .glass {
@@ -431,6 +343,47 @@
             box-shadow: 0 10px 25px rgba(0,140,255,.3);
         }
 
+        /* OSINT Tracker Styling */
+        .osint-input {
+            width: 70%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        .osint-btn {
+            padding: 12px 20px;
+            background: #238636;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .osint-btn:hover { background: #2ea44f; }
+        .osint-results {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 250px;
+            overflow-y: auto;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            font-family: monospace;
+        }
+        .osint-link {
+            display: block;
+            margin: 8px 0;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        .osint-link:hover { text-decoration: underline; }
+
         /* Contact Form */
         .contact-section {
             max-width: 600px;
@@ -503,7 +456,6 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
 
-        /* التحكم في الصوت الخلفي */
         #musicControl {
             position: fixed;
             bottom: 20px;
@@ -517,7 +469,7 @@
             cursor: pointer;
             z-index: 999;
             backdrop-filter: blur(10px);
-            display: none;
+            display: block;
             font-family: monospace;
         }
 
@@ -549,21 +501,6 @@
         </div>
     </div>
 
-    <div id="loginGate">
-        <div class="login-box glass">
-            <h2>f.society // Access Portal</h2>
-            
-            <div class="el_hass-quote">
-                // "Bredt l'm7na w matet fi galbi dik l'lahfa..."<br>
-                // "L'galb li kan yabghik, l'youm rah y3azi fi rou7ou."
-            </div>
-
-            <input type="password" id="passwordInput" placeholder="Entrez le mot de passe" onkeypress="handleKeyPress(event)">
-            <button onclick="checkPassword()">Déverrouiller le Profil</button>
-            <p class="error-msg" id="errorMsg">❌ Accès Refusé : Mot de passe incorrect.</p>
-        </div>
-    </div>
-
     <div id="mainContent">
         <canvas id="matrixCanvas"></canvas>
         <div class="bg"></div>
@@ -582,7 +519,7 @@
                 "Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. 
                 Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. 
                 Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. 
-                Bienvenue dans mon sanctuaire, forged dans l'ombre de l'Algérie 🇩🇿."
+                Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."
             </p>
         </section>
 
@@ -655,10 +592,15 @@
             </div>
         </section>
 
-        <!-- أداة تعقب اسم المستخدم OSINT Section -->
+        <!-- أداة تعقب اسم المستخدم OSINT Section الذكية والمفعّلة -->
         <div id="osintSection" style="max-width: 600px; margin: 50px auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
             <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;">أداة تعقب اسم المستخدم 🛠️</h2>
             <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
+            
+            <input type="text" id="osintUsername" class="osint-input" placeholder="أدخل اسم المستخدم (مثال: abdjalile_mh)">
+            <button onclick="startOsintScan()" class="osint-btn">فحص الأسماء</button>
+            
+            <div id="osintResults" class="osint-results" style="display: none;"></div>
         </div>
 
         <h2 class="section-title">f.society // Interactive Console</h2>
@@ -704,10 +646,48 @@
     <script>
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
-        const CORRECT_PASSWORD = "1234"; 
 
         let audioCtx = null;
         let droneOsc = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initEffects(); 
+            updateViews();
+            startSyntheticAmbiance(); 
+        });
+
+        // دالة تشغيل محاكي الـ OSINT البرمجي
+        function startOsintScan() {
+            const username = document.getElementById("osintUsername").value.trim();
+            const resultsDiv = document.getElementById("osintResults");
+            
+            if (username === "") {
+                alert("الرجاء كتابة اسم المستخدم أولاً!");
+                return;
+            }
+            
+            resultsDiv.style.display = "block";
+            resultsDiv.innerHTML = `<span style="color: #f1fa8c;">[*] جاري بدء فحص المعرفات الرقمية لـ [${username}]...</span><br><br>`;
+            
+            const platforms = [
+                { name: "Instagram", url: `https://www.instagram.com/${username}` },
+                { name: "TikTok", url: `https://www.tiktok.com/@${username}` },
+                { name: "GitHub", url: `https://github.com/${username}` },
+                { name: "Twitter / X", url: `https://twitter.com/${username}` },
+                { name: "Pinterest", url: `https://www.pinterest.com/${username}` },
+                { name: "Reddit", url: `https://www.reddit.com/user/${username}` }
+            ];
+
+            let delay = 0;
+            platforms.forEach((platform) => {
+                setTimeout(() => {
+                    resultsDiv.innerHTML += `<span style="color: #50fa7b;">[+] تم توليد رابط البحث لـ ${platform.name}:</span> 
+                    <a href="${platform.url}" target="_blank" class="osint-link">${platform.url} 🔗</a>`;
+                    resultsDiv.scrollTop = resultsDiv.scrollHeight;
+                }, delay);
+                delay += 400; 
+            });
+        }
 
         function startSyntheticAmbiance() {
             try {
@@ -749,44 +729,26 @@
                 }, 1200);
 
             } catch (e) {
-                console.log("Audio API blocked or not supported.");
+                console.log("Audio API dynamic context safe block.");
             }
-        }
-
-        function checkPassword() {
-            const input = document.getElementById("passwordInput").value;
-            const errorMsg = document.getElementById("errorMsg");
-            
-            if (input === CORRECT_PASSWORD) {
-                document.getElementById("loginGate").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-                document.getElementById("musicControl").style.display = "block";
-                
-                startSyntheticAmbiance();
-                initEffects(); 
-                updateViews(); 
-            } else {
-                errorMsg.style.display = "block";
-                document.getElementById("passwordInput").value = "";
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === "Enter") { checkPassword(); }
         }
 
         function toggleMusic() {
             const btn = document.getElementById("musicControl");
-            if (audioCtx) {
-                if (audioCtx.state === 'running') {
-                    audioCtx.suspend();
-                    btn.textContent = "🔇 Ambiance: OFF";
-                    btn.style.color = "#ef4444";
-                } else if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                    btn.textContent = "🎵 Ambiance: ON";
-                    btn.style.color = "#60a5fa";
-                }
+            if (!audioCtx) {
+                startSyntheticAmbiance();
+                btn.textContent = "🎵 Ambiance: ON";
+                btn.style.color = "#60a5fa";
+                return;
+            }
+            if (audioCtx.state === 'running') {
+                audioCtx.suspend();
+                btn.textContent = "🔇 Ambiance: OFF";
+                btn.style.color = "#ef4444";
+            } else {
+                audioCtx.resume();
+                btn.textContent = "🎵 Ambiance: ON";
+                btn.style.color = "#60a5fa";
             }
         }
 
@@ -904,6 +866,7 @@
             const typedTextSpan = document.querySelector(".typed-text");
 
             function type() {
+                if(!typedTextSpan) return;
                 const currentWord = words[wordIndex];
                 if (isDeleting) {
                     typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
@@ -926,7 +889,7 @@
 
                 setTimeout(type, typeSpeed);
             }
-            if(typedTextSpan) type();
+            type();
         }
     </script>
 </body>
