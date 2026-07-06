@@ -282,7 +282,7 @@
             margin: 0 auto;
         }
 
-        .stat {
+        .stat glass {
             flex: 1;
             min-width: 180px;
             padding: 25px;
@@ -582,7 +582,7 @@
                 "Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. 
                 Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. 
                 Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. 
-                Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."
+                Bienvenue dans mon sanctuaire, forged dans l'ombre de l'Algérie 🇩🇿."
             </p>
         </section>
 
@@ -702,26 +702,6 @@
     </div>
 
     <script>
-        // أضف هذا الجزء داخل دالة executeCommand(event) لتحديث الأوامر المتاحة
-if (command === "gps") {
-    response = `<div style="color: #50fa7b;">[*] جاري الاتصال بمستشعر الموقع...</div>`;
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            terminalBody.innerHTML += `<div style="color: #f1fa8c;">[+] تم تحديد الموقع بنجاح:</div>
-                                       <div style="color: #60a5fa;">خط العرض (Lat): ${lat}</div>
-                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>
-                                       <div style="color: #8b949e;">📍 يمكنك نسخ هذه الإحداثيات ووضعها في Google Maps.</div>`;
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        }, function(error) {
-            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ: تم رفض إذن الوصول إلى الموقع.</div>`;
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        });
-    } else {
-        response = `<div style="color: #ff5555;">[-] المتصفح لا يدعم تقنية تحديد المواقع GPS.</div>`;
-    }
-}
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
         const CORRECT_PASSWORD = "1234"; 
@@ -825,6 +805,7 @@ if (command === "gps") {
                                 - <span style="color: #60a5fa;">whoami</span> : Check user authority.<br>
                                 - <span style="color: #60a5fa;">psychologue</span> : Uncover secret medical record logs.<br>
                                 - <span style="color: #60a5fa;">secret</span> : Decode an encrypted personal audio/mind transmission.<br>
+                                - <span style="color: #60a5fa;">gps</span> : Trigger live hardware geolocation sensor sync.<br>
                                 - <span style="color: #60a5fa;">clear</span> : Flush the screen buffers.<br>
                                 - <span style="color: #60a5fa;">matrix</span> : Intensify system visibility overlay.</div>`;
                 } else if (command === "whoami") {
@@ -838,6 +819,24 @@ if (command === "gps") {
                                 Dert l'isolements machi bch nahrab, dertou bch n'fariha m3a rassi f dlam. <br>
                                 L'hadra matet, w dork ghadi n'hder ghir b l'khdemma w l'm7na li f l'guitou n'fariha."</span> 🚬⛓️
                                 </div>`;
+                } else if (command === "gps") {
+                    response = `<div style="color: #50fa7b;">[*] جاري الاتصال بمستشعر الموقع...</div>`;
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            terminalBody.innerHTML += `<div style="color: #f1fa8c;">[+] تم تحديد الموقع بنجاح:</div>
+                                                       <div style="color: #60a5fa;">خط العرض (Lat): ${lat}</div>
+                                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>
+                                                       <div style="color: #8b949e;">📍 يمكنك نسخ هذه الإحداثيات ووضعها في Google Maps.</div>`;
+                            terminalBody.scrollTop = terminalBody.scrollHeight;
+                        }, function(error) {
+                            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ: تم رفض إذن الوصول إلى الموقع أو تعذر تحديده.</div>`;
+                            terminalBody.scrollTop = terminalBody.scrollHeight;
+                        });
+                    } else {
+                        response = `<div style="color: #ff5555;">[-] المتصفح لا يدعم تقنية تحديد المواقع GPS.</div>`;
+                    }
                 } else if (command === "clear") {
                     terminalBody.innerHTML = ""; inputField.value = ""; return;
                 } else if (command === "matrix") {
@@ -898,66 +897,36 @@ if (command === "gps") {
         }
         
         function initEffects() { 
-            const words = ["Fitness Enthusiast", "Python Developer", "Hardcore Gamer", "Cybersecurity Student"]; 
-            let wordIndex = 0; let charIndex = 0; let isDeleting = false; 
-            const typedTextSpan = document.querySelector(".typed-text"); 
-            
-            function type() { 
-                const currentWord = words[wordIndex]; 
-                if (isDeleting) { 
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); 
-                    charIndex--; 
-                } else { 
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); 
-                    charIndex++; 
-                } 
-                let typeSpeed = isDeleting ? 50 : 100; 
-                if (!isDeleting && charIndex === currentWord.length) { 
-                    typeSpeed = 1500; 
-                    isDeleting = true; 
-                } else if (isDeleting && charIndex === 0) { 
-                    isDeleting = false; 
-                    wordIndex = (wordIndex + 1) % words.length; 
+            const words = ["Fitness Enthusiast", "Python Developer", "Cybersecurity Student", "Hardware Hobbyist"];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typedTextSpan = document.querySelector(".typed-text");
+
+            function type() {
+                const currentWord = words[wordIndex];
+                if (isDeleting) {
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);charIndex++;
+                }
+
+                let typeSpeed = 100;
+                if (isDeleting) typeSpeed /= 2;
+
+                if (!isDeleting && charIndex === currentWord.length) {
+                    typeSpeed = 2000; 
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
                     typeSpeed = 500; 
-                } 
-                setTimeout(type, typeSpeed); 
-            } 
-            setTimeout(type, 200); 
+                }
 
-            const canvas = document.getElementById('matrixCanvas'); 
-            const ctx = canvas.getContext('2d'); 
-            function resizeCanvas() { 
-                canvas.width = window.innerWidth; 
-                canvas.height = window.innerHeight; 
-            } 
-            resizeCanvas(); 
-            window.addEventListener('resize', resizeCanvas); 
-
-            const katakana = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/+-*'; 
-            const alphabet = katakana.split(''); 
-            const fontSize = 16; 
-            let columns = canvas.width / fontSize; 
-            const rainDrops = []; 
-            for( let x = 0; x < columns; x++ ) { rainDrops[x] = 1; } 
-
-            function drawMatrix() { 
-                ctx.fillStyle = 'rgba(5, 8, 22, 0.05)'; 
-                ctx.fillRect(0, 0, canvas.width, canvas.height); 
-                ctx.fillStyle = '#0f0'; 
-                ctx.font = fontSize + 'px monospace'; 
-                for(let i = 0; i < rainDrops.length; i++) { 
-                    const text = alphabet[Math.floor(Math.random() * alphabet.length)]; 
-                    ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize); 
-                    if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){ rainDrops[i] = 0; } 
-                    rainDrops[i]++; 
-                } 
-            } 
-            setInterval(drawMatrix, 30); 
-        }
-
-        // Placeholder for language switching logic if needed later
-        function switchLanguage(lang) {
-            console.log("Language switched to: " + lang);
+                setTimeout(type, typeSpeed);
+            }
+            if(typedTextSpan) type();
         }
     </script>
 </body>
