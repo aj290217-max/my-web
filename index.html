@@ -702,7 +702,27 @@
     </div>
 
     <script>
-        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN"; 
+        // أضف هذا الجزء داخل دالة executeCommand(event) لتحديث الأوامر المتاحة
+if (command === "gps") {
+    response = `<div style="color: #50fa7b;">[*] جاري الاتصال بمستشعر الموقع...</div>`;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            terminalBody.innerHTML += `<div style="color: #f1fa8c;">[+] تم تحديد الموقع بنجاح:</div>
+                                       <div style="color: #60a5fa;">خط العرض (Lat): ${lat}</div>
+                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>
+                                       <div style="color: #8b949e;">📍 يمكنك نسخ هذه الإحداثيات ووضعها في Google Maps.</div>`;
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }, function(error) {
+            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ: تم رفض إذن الوصول إلى الموقع.</div>`;
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        });
+    } else {
+        response = `<div style="color: #ff5555;">[-] المتصفح لا يدعم تقنية تحديد المواقع GPS.</div>`;
+    }
+}
+        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
         const CORRECT_PASSWORD = "1234"; 
 
