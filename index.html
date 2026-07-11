@@ -179,7 +179,7 @@
         }
 
         #mainContent {
-            display: none; /* يتم إظهاره بعد كتابة الباسورد */
+            display: none; 
         }
 
         .glass {
@@ -479,7 +479,7 @@
             width: 100%;
             padding: 15px;
             background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid #30363d;
             border-radius: 12px;
             color: white;
             font-size: 16px;
@@ -533,21 +533,24 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
 
+        /* الزر العائم للمشغل */
         #musicControl {
             position: fixed;
             bottom: 20px;
             left: 20px;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 15px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #60a5fa;
+            padding: 10px 18px;
             border-radius: 30px;
-            color: #60a5fa;
+            color: #ef4444; 
             font-size: 12px;
             cursor: pointer;
             z-index: 999;
             backdrop-filter: blur(10px);
             display: block;
             font-family: monospace;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+            transition: all 0.3s;
         }
 
         footer {
@@ -572,7 +575,13 @@
         </div>
     </div>
 
-    <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
+    <!-- مشغل تراك Krha لنجم الراب Hass -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+        <!-- ملاحظة: يمكنك استبدال الرابط أعلاه برابط مباشر لملف MP3 الخاص بتراك Krha إذا توفر لديك -->
+    </audio>
+
+    <button id="musicControl" onclick="toggleMusic()">🔇 Hass - Krha: OFF</button>
     
     <div class="navbar">
         <div class="nav-links">
@@ -733,8 +742,8 @@
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
 
-        let audioCtx = null;
-        let droneOsc = null;
+        const audio = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicControl");
 
         // دالة التحقق من كلمة السر
         function checkPassword() {
@@ -746,18 +755,38 @@
             if (password === "f.socity you") {
                 lockScreen.style.display = "none";
                 mainContent.style.display = "block";
-                // تهيئة التأثيرات بعد فتح الموقع
+                
                 initEffects(); 
                 updateViews();
-                startSyntheticAmbiance(); 
-                switchLanguage('ar'); // البدء باللغة العربية تلقائياً
+                switchLanguage('ar'); 
+
+                // تشغيل تراك Krha تلقائياً بعد فك التشفير الناجح
+                audio.play().then(() => {
+                    musicBtn.textContent = "🎵 Hass - Krha: ON";
+                    musicBtn.style.color = "#60a5fa";
+                    musicBtn.style.borderColor = "#60a5fa";
+                }).catch(e => console.log("Autoplay blocked until user triggers absolute interaction"));
             } else {
                 errorMsg.style.display = "block";
                 errorMsg.textContent = "[-] Access Denied. Incorrect Token.";
             }
         }
 
-        // السماح بالدخول عند الضغط على زر Enter في حقل الباسورد
+        // التحكم اليدوي من الزر العائم
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.textContent = "🎵 Hass - Krha: ON";
+                musicBtn.style.color = "#60a5fa";
+                musicBtn.style.borderColor = "#60a5fa";
+            } else {
+                audio.pause();
+                musicBtn.textContent = "🔇 Hass - Krha: OFF";
+                musicBtn.style.color = "#ef4444";
+                musicBtn.style.borderColor = "#ef4444";
+            }
+        }
+
         document.getElementById("passwordInput").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 checkPassword();
@@ -804,12 +833,10 @@
             }
         };
 
-        // دالة التبديل بين اللغات (مصلحة بالكامل)
         function switchLanguage(lang) {
             const content = translations[lang];
             if (!content) return;
 
-            // تحديث النصوص بناءً على المعرفات الفريدة
             for (let id in content) {
                 const element = document.getElementById(id);
                 if (element) {
@@ -823,7 +850,6 @@
                 }
             }
 
-            // ضبط الاتجاه واتساق الواجهة
             if (lang === 'ar') {
                 document.documentElement.dir = "rtl";
                 document.getElementById("btnAr").classList.add("active");
@@ -867,68 +893,6 @@
             });
         }
 
-        function startSyntheticAmbiance() {
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                droneOsc = audioCtx.createOscillator();
-                let droneGain = audioCtx.createGain();
-                
-                droneOsc.type = 'sawtooth';
-                droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
-                
-                let filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(120, audioCtx.currentTime);
-
-                droneGain.gain.setValueAtTime(0.08, audioCtx.currentTime); 
-                
-                droneOsc.connect(filter);
-                filter.connect(droneGain);
-                droneGain.connect(audioCtx.destination);
-                droneOsc.start();
-
-                setInterval(() => {
-                    if (audioCtx && audioCtx.state === 'running') {
-                        let pulseOsc = audioCtx.createOscillator();
-                        let pulseGain = audioCtx.createGain();
-                        
-                        pulseOsc.type = 'sine';
-                        pulseOsc.frequency.setValueAtTime(60, audioCtx.currentTime);
-                        
-                        pulseGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                        pulseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-                        
-                        pulseOsc.connect(pulseGain);
-                        pulseGain.connect(audioCtx.destination);
-                        pulseOsc.start();
-                        pulseOsc.stop(audioCtx.currentTime + 0.4);
-                    }
-                }, 1200);
-
-            } catch (e) {
-                console.log("Audio Context Blocked");
-            }
-        }
-
-        function toggleMusic() {
-            const btn = document.getElementById("musicControl");
-            if (!audioCtx) {
-                startSyntheticAmbiance();
-                btn.textContent = "🎵 Ambiance: ON";
-                btn.style.color = "#60a5fa";
-                return;
-            }
-            if (audioCtx.state === 'running') {
-                audioCtx.suspend();
-                btn.textContent = "🔇 Ambiance: OFF";
-                btn.style.color = "#ef4444";
-            } else {
-                audioCtx.resume();
-                btn.textContent = "🎵 Ambiance: ON";
-                btn.style.color = "#60a5fa";
-            }
-        }
-
         function executeCommand(event) {
             if (event.key === "Enter") {
                 const inputField = document.getElementById("terminalInput");
@@ -950,7 +914,7 @@
                 } else if (command === "whoami") {
                     response = `<div style="color: #f1fa8c;">root@fsociety - Elite Operator / Abd Jalil</div>`;
                 } else if (command === "psychologue") {
-                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes wounds, et mes lignes de code dictent ma propre thérapie." 🧠🔒</div>`;
+                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes wounds, et mes lines de code dictent ma propre thérapie." 🧠🔒</div>`;
                 } else if (command === "secret") {
                     response = `<div style="color: #bd93f9; font-family: monospace; font-size: 13px; line-height: 1.6;">
                                 [!] DECODING SECRET TRANSLATION LOG...<br>
