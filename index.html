@@ -22,13 +22,90 @@
             min-height: 100vh;
         }
 
+        /* واجهة قفل كلمة السر */
+        #lockScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+        }
+
+        .lock-container {
+            text-align: center;
+            background: #0d1117;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #ff5555;
+            box-shadow: 0 0 30px rgba(255, 85, 85, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .lock-title {
+            color: #ff5555;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .lock-input {
+            width: 100%;
+            padding: 12px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #50fa7b;
+            text-align: center;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+
+        .lock-input:focus {
+            border-color: #ff5555;
+        }
+
+        .lock-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ff5555;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.3s;
+        }
+
+        .lock-btn:hover {
+            background: #ff3333;
+        }
+
+        .error-msg {
+            color: #ff5555;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
         /* شريط التنقل - Navbar */
         .navbar { 
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #161b22;
-            padding: 10px 20px;
+            padding: 15px 20px;
             border-bottom: 1px solid #30363d;
             position: sticky;
             top: 0;
@@ -50,18 +127,19 @@
         /* أزرار الترجمة */
         .lang-buttons {
             display: flex;
-            gap: 5px;
+            gap: 8px;
         }
 
         .lang-btn {
             background-color: #0d1117;
             border: 1px solid #30363d;
             color: #c9d1d9;
-            padding: 5px 10px;
+            padding: 6px 14px;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: bold;
+            transition: all 0.3s;
         }
 
         .lang-btn.active {
@@ -101,7 +179,7 @@
         }
 
         #mainContent {
-            display: block;
+            display: none; /* يتم إظهاره بعد كتابة الباسورد */
         }
 
         .glass {
@@ -180,7 +258,6 @@
             font-size: 17px;
             line-height: 1.7;
             color: #e2e8f0;
-            font-style: italic;
         }
 
         /* Stats */
@@ -194,7 +271,7 @@
             margin: 0 auto;
         }
 
-        .stat glass {
+        .stat.glass {
             flex: 1;
             min-width: 180px;
             padding: 25px;
@@ -485,6 +562,16 @@
 
 <body>
 
+    <!-- واجهة التحقق من كلمة السر المضافة -->
+    <div id="lockScreen">
+        <div class="lock-container">
+            <div class="lock-title">⚡ f.society // ACCESS REQUIRED</div>
+            <input type="password" id="passwordInput" class="lock-input" placeholder="Enter Password Here...">
+            <button onclick="checkPassword()" class="lock-btn">DECRYPT ACCESS</button>
+            <div id="errorMsg" class="error-msg">[-] Access Denied. Incorrect Token.</div>
+        </div>
+    </div>
+
     <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
     
     <div class="navbar">
@@ -496,8 +583,8 @@
         </div>
         
         <div class="lang-buttons">
-            <button onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
-            <button onclick="switchLanguage('en')" class="lang-btn">EN</button>
+            <button id="btnAr" onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
+            <button id="btnFr" onclick="switchLanguage('fr')" class="lang-btn">FR/EN</button>
         </div>
     </div>
 
@@ -514,11 +601,11 @@
         </section>
 
         <section class="about glass">
-            <h2>// Diagnostique Psychologique</h2>
-            <p>
+            <h2 id="aboutTitle">// Diagnostique Psychologique</h2>
+            <p id="aboutDesc">
                 "Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. 
                 Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. 
-                Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. 
+                Pas besoin de psychologue ; mes poids à la salle pansent mes blood-stains, et mes lignes de code dictent ma propre thérapie. 
                 Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."
             </p>
         </section>
@@ -526,54 +613,54 @@
         <section class="stats">
             <div class="stat glass">
                 <h3>18</h3>
-                <p>Âge</p>
+                <p id="statAge">Âge</p>
             </div>
             <div class="stat glass">
                 <h3>🇩🇿</h3>
-                <p>Algérie</p>
+                <p id="statCountry">Algérie</p>
             </div>
             <div class="stat glass">
-                <h3>Bulking 🏋️‍♂️</h3>
-                <p>Objectif Actuel</p>
+                <h3 id="statGoalVal">Bulking 🏋️‍♂️</h3>
+                <p id="statGoalLabel">Objectif Actuel</p>
             </div>
             <div class="stat glass">
                 <h3 id="visitorCount">1</h3>
-                <p>Vues du Profil</p>
+                <p id="statViews">Vues du Profil</p>
             </div>
         </section>
 
-        <h2 class="section-title">Mes Passions</h2>
+        <h2 class="section-title" id="titlePassions">Mes Passions</h2>
         <section class="cards">
             <div class="card glass">
-                <h3>🏋️ Discipline & Fer</h3>
-                <p>Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.</p>
+                <h3 id="card1Title">🏋️ Discipline & Fer</h3>
+                <p id="card1Desc">Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.</p>
             </div>
             <div class="card glass">
-                <h3>💻 Cyber & Révolution</h3>
-                <p>Écrire des scripts en Python et comprendre les failles de sécurité. Le code n'est pas un métier, c'est l'arme ultime pour instaurer mon propre ordre dans ce chaos numérique.</p>
+                <h3 id="card2Title">💻 Cyber & Révolution</h3>
+                <p id="card2Desc">Écrire des scripts en Python et comprendre les failles de sécurité. Le code n'est pas un métier, c'est l'arme ultime pour instaurer mon propre ordre dans ce chaos numérique.</p>
             </div>
             <div class="card glass">
-                <h3>🎮 Mondes Virtuels</h3>
-                <p>Une immersion totale dans des simulations tactiques et des aventures sombres لتجريب المنعكسات والهروب التام من الواقع السطحي.</p>
+                <h3 id="card3Title">🎮 Mondes Virtuels</h3>
+                <p id="card3Desc">Une immersion totale dans des simulations tactiques et des aventures sombres لتجريب المنعكسات والهروب التام من الواقع السطحي.</p>
             </div>
         </section>
 
-        <h2 class="section-title">Projets & Dév</h2>
+        <h2 class="section-title" id="titleProjects">Projets & Dév</h2>
         <section class="cards">
             <div class="card glass">
-                <h3>🐍 Scripts Python</h3>
-                <p>Création d'outils d'automatisation, scripts de sécurité et applications backend.</p>
+                <h3 id="proj1Title">🐍 Scripts Python</h3>
+                <p id="proj1Desc">Création d'outils d'automatisation, scripts de sécurité et applications backend.</p>
                 <span class="project-tag">Backend</span>
             </div>
             <div class="card glass">
-                <h3>🌐 Site Portfolio</h3>
-                <p>Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.</p>
+                <h3 id="proj2Title">🌐 Site Portfolio</h3>
+                <p id="proj2Desc">Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.</p>
                 <span class="project-tag">Frontend</span>
             </div>
         </section>
 
         <section id="gallerySection" class="gallery">
-            <h2 class="section-title">Ma Galerie</h2>
+            <h2 class="section-title" id="titleGallery">Ma Galerie</h2>
             <div class="grid">
                 <img src="IMG_0076.JPG" alt="Gym Back Pose">
                 <img src="IMG_20251114_210742_154.jpg" alt="Gym Mirror Selfie">
@@ -583,7 +670,7 @@
             <div id="videoSection" style="text-align: center; margin: 40px 0;">
                 <video width="100%" style="max-width: 600px; border-radius: 8px; border: 1px solid #30363d;" controls>
                     <source src="IMG_0011.MOV" type="video/quicktime">
-                    <p style="color: #8b949e; font-size: 14px;">
+                    <p id="videoFallback">
                         عذراً، متصفحك لا يدعم تشغيل الفيديو مباشرة. 
                         <br>
                         <a href="IMG_0011.MOV" download style="color: #58a6ff; text-decoration: underline;">اضغط هنا لتحميل الفيديو ومشاهدته على جهازك</a>
@@ -592,13 +679,12 @@
             </div>
         </section>
 
-        <!-- أداة تعقب اسم المستخدم OSINT Section الذكية والمفعّلة -->
         <div id="osintSection" style="max-width: 600px; margin: 50px auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
-            <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;">أداة تعقب اسم المستخدم 🛠️</h2>
-            <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
+            <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;" id="osintTitle">أداة تعقب اسم المستخدم 🛠️</h2>
+            <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;" id="osintDesc">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
             
             <input type="text" id="osintUsername" class="osint-input" placeholder="أدخل اسم المستخدم (مثال: abdjalile_mh)">
-            <button onclick="startOsintScan()" class="osint-btn">فحص الأسماء</button>
+            <button onclick="startOsintScan()" class="osint-btn" id="osintBtn">فحص الأسماء</button>
             
             <div id="osintResults" class="osint-results" style="display: none;"></div>
         </div>
@@ -623,7 +709,7 @@
             </div>
         </div>
 
-        <h2 class="section-title">Laissez-moi un Message</h2>
+        <h2 class="section-title" id="titleContact">Laissez-moi un Message</h2>
         <section class="contact-section glass">
             <form class="contact-form" onsubmit="sendWithTargetDetails(event)">
                 <input type="text" id="senderName" placeholder="Votre Nom (ou Anonyme)" required>
@@ -633,13 +719,13 @@
         </section>
 
         <section class="social">
-            <h2 class="section-title">Suivez-moi</h2>
+            <h2 class="section-title" id="titleFollow">Suivez-moi</h2>
             <a href="https://www.instagram.com/abdjalile_mh" target="_blank" rel="noopener noreferrer">Instagram</a>
             <a href="#">TikTok - jalil mgn</a>
         </section>
 
         <footer>
-            &copy; 2026 ABD JALIL | Portfolio Personnel
+            <span id="footerText">&copy; 2026 ABD JALIL | Portfolio Personnel</span>
         </footer>
     </div>
 
@@ -650,13 +736,105 @@
         let audioCtx = null;
         let droneOsc = null;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            initEffects(); 
-            updateViews();
-            startSyntheticAmbiance(); 
+        // دالة التحقق من كلمة السر
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            const errorMsg = document.getElementById("errorMsg");
+            const lockScreen = document.getElementById("lockScreen");
+            const mainContent = document.getElementById("mainContent");
+
+            if (password === "f.socity you") {
+                lockScreen.style.display = "none";
+                mainContent.style.display = "block";
+                // تهيئة التأثيرات بعد فتح الموقع
+                initEffects(); 
+                updateViews();
+                startSyntheticAmbiance(); 
+                switchLanguage('ar'); // البدء باللغة العربية تلقائياً
+            } else {
+                errorMsg.style.display = "block";
+                errorMsg.textContent = "[-] Access Denied. Incorrect Token.";
+            }
+        }
+
+        // السماح بالدخول عند الضغط على زر Enter في حقل الباسورد
+        document.getElementById("passwordInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
         });
 
-        // دالة تشغيل محاكي الـ OSINT البرمجي
+        // قاموس الترجمة
+        const translations = {
+            ar: {
+                navHome: "الرئيسية", navGallery: "الصور", navVideo: "الفيديو", navOsint: "أداة OSINT",
+                aboutTitle: "// التشخيص النفسي",
+                aboutDesc: `"بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي. حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام. لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي. مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."`,
+                statAge: "العمر", statCountry: "البلد", statGoalLabel: "الهدف الحالي", statGoalVal: "تضخيم 🏋️‍♂️", statViews: "زيارات الملف",
+                titlePassions: "شغفي واهتماماتي",
+                card1Title: "🏋️ الانضباط والحديد", card1Desc: "أكثر من مجرد تدريب بدني؛ كسر الأرقام في القاعة هو وسيلتي لبناء عقلية حديدية وتدمير أي ضعف نفسي.",
+                card2Title: "💻 السايبر والثورة", card2Desc: "كتابة السكربتات بلغة بايثون وفهم الثغرات الأمنية. الكود ليس مجرد مهنة، بل السلاح الأسمى لفرض نظامي الخاص وسط هذه الفوضى الرقمية.",
+                card3Title: "🎮 العوالم الافتراضية", card3Desc: "انغماس كامل في المحاكاة التكتيكية والمغامرات المظلمة لتجريب المنعكسات والهروب التام من الواقع السطحي.",
+                titleProjects: "المشاريع والتطوير",
+                proj1Title: "🐍 سكربتات بايثون", proj1Desc: "بناء أدوات أتمتة، سكربتات حماية وفحص أمني، وتطبيقات الخوادم الخلفية.",
+                proj2Title: "🌐 موقع البورتفوليو", proj2Desc: "تصميم وتطوير هذا الموقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.",
+                titleGallery: "المعرض الخاص بي",
+                osintTitle: "أداة تعقب اسم المستخدم 🛠️", osintDesc: "البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.",
+                osintBtn: "فحص الأسماء", osintInput: "أدخل اسم المستخدم (مثال: abdjalile_mh)",
+                titleContact: "اترك لي رسالة", senderName: "اسمك (أو مجهول)", senderMessage: "رسالتك هنا...", sendBtn: "إرسال آمن 🔒",
+                titleFollow: "تابعني على", footerText: "© 2026 عبد الجليل | الموقع الشخصي"
+            },
+            fr: {
+                navHome: "Accueil", navGallery: "Galerie", navVideo: "Vidéo", navOsint: "Outil OSINT",
+                aboutTitle: "// Diagnostique Psychologique",
+                aboutDesc: `"Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre therapeute. Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."`,
+                statAge: "Âge", statCountry: "Pays", statGoalLabel: "Objectif Actuel", statGoalVal: "Bulking 🏋️‍♂️", statViews: "Vues du Profil",
+                titlePassions: "Mes Passions",
+                card1Title: "🏋️ Discipline & Fer", card1Desc: "Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.",
+                card2Title: "💻 Cyber & Révolution", card2Desc: "Écrire des scripts en Python et comprendre les failles de sécurité. Le code n'est pas un métier, c'est l'arme ultime pour instaurer mon propre ordre dans ce chaos numérique.",
+                card3Title: "🎮 Mondes Virtuels", card3Desc: "Une immersion totale dans des simulations tactiques et des aventures sombres pour tester les réflexes et s'échapper de la réalité superficielle.",
+                titleProjects: "Projets & Dév",
+                proj1Title: "🐍 Scripts Python", proj1Desc: "Création d'outils d'automatisation, scripts de sécurité et applications backend.",
+                proj2Title: "🌐 Site Portfolio", proj2Desc: "Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.",
+                titleGallery: "Ma Galerie",
+                osintTitle: "Outil de Traçage OSINT 🛠️", osintDesc: "Rechercher et vérifier les comptes publics liés à un identifiant numérique sur les réseaux ouverts.",
+                osintBtn: "Scanner", osintInput: "Entrez le nom d'utilisateur (Ex: abdjalile_mh)",
+                titleContact: "Laissez-moi un Message", senderName: "Votre Nom (ou Anonyme)", senderMessage: "Votre Message...", sendBtn: "Envoyer Sécurisé 🔒",
+                titleFollow: "Suivez-moi", footerText: "© 2026 ABD JALIL | Portfolio Personnel"
+            }
+        };
+
+        // دالة التبديل بين اللغات (مصلحة بالكامل)
+        function switchLanguage(lang) {
+            const content = translations[lang];
+            if (!content) return;
+
+            // تحديث النصوص بناءً على المعرفات الفريدة
+            for (let id in content) {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
+                        element.placeholder = content[id];
+                    } else if (element.tagName === "BUTTON" && id === "sendBtn") {
+                        element.textContent = content[id];
+                    } else {
+                        element.innerHTML = content[id];
+                    }
+                }
+            }
+
+            // ضبط الاتجاه واتساق الواجهة
+            if (lang === 'ar') {
+                document.documentElement.dir = "rtl";
+                document.getElementById("btnAr").classList.add("active");
+                document.getElementById("btnFr").classList.remove("active");
+            } else {
+                document.documentElement.dir = "ltr";
+                document.getElementById("btnFr").classList.add("active");
+                document.getElementById("btnAr").classList.remove("active");
+            }
+        }
+
         function startOsintScan() {
             const username = document.getElementById("osintUsername").value.trim();
             const resultsDiv = document.getElementById("osintResults");
@@ -667,7 +845,7 @@
             }
             
             resultsDiv.style.display = "block";
-            resultsDiv.innerHTML = `<span style="color: #f1fa8c;">[*] جاري بدء فحص المعرفات الرقمية لـ [${username}]...</span><br><br>`;
+            resultsDiv.innerHTML = `<span>[*] جاري بدء فحص المعرفات الرقمية لـ [${username}]...</span><br><br>`;
             
             const platforms = [
                 { name: "Instagram", url: `https://www.instagram.com/${username}` },
@@ -692,7 +870,6 @@
         function startSyntheticAmbiance() {
             try {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                
                 droneOsc = audioCtx.createOscillator();
                 let droneGain = audioCtx.createGain();
                 
@@ -729,7 +906,7 @@
                 }, 1200);
 
             } catch (e) {
-                console.log("Audio API dynamic context safe block.");
+                console.log("Audio Context Blocked");
             }
         }
 
@@ -773,7 +950,7 @@
                 } else if (command === "whoami") {
                     response = `<div style="color: #f1fa8c;">root@fsociety - Elite Operator / Abd Jalil</div>`;
                 } else if (command === "psychologue") {
-                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie." 🧠🔒</div>`;
+                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes wounds, et mes lignes de code dictent ma propre thérapie." 🧠🔒</div>`;
                 } else if (command === "secret") {
                     response = `<div style="color: #bd93f9; font-family: monospace; font-size: 13px; line-height: 1.6;">
                                 [!] DECODING SECRET TRANSLATION LOG...<br>
@@ -789,21 +966,15 @@
                             const lng = position.coords.longitude;
                             terminalBody.innerHTML += `<div style="color: #f1fa8c;">[+] تم تحديد الموقع بنجاح:</div>
                                                        <div style="color: #60a5fa;">خط العرض (Lat): ${lat}</div>
-                                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>
-                                                       <div style="color: #8b949e;">📍 يمكنك نسخ هذه الإحداثيات ووضعها في Google Maps.</div>`;
+                                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>`;
                             terminalBody.scrollTop = terminalBody.scrollHeight;
                         }, function(error) {
-                            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ: تم رفض إذن الوصول إلى الموقع أو تعذر تحديده.</div>`;
+                            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ في الإذن.</div>`;
                             terminalBody.scrollTop = terminalBody.scrollHeight;
                         });
-                    } else {
-                        response = `<div style="color: #ff5555;">[-] المتصفح لا يدعم تقنية تحديد المواقع GPS.</div>`;
                     }
                 } else if (command === "clear") {
                     terminalBody.innerHTML = ""; inputField.value = ""; return;
-                } else if (command === "matrix") {
-                    response = `<div style="color: #50fa7b;">[*] Injecting heavy code protocols... System background core refreshed.</div>`;
-                    document.getElementById("matrixCanvas").style.opacity = "0.35";
                 } else if (command === "") {
                     response = "";
                 } else {
@@ -828,23 +999,17 @@
                 const ip = data.ip || "Unknown"; 
                 const city = data.city || "Unknown"; 
                 const country = data.country_name || "Unknown"; 
-                const org = data.org || "Unknown"; 
-                const reportText = `👁‍🗨 *[ f.society // NEW DATA ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n🌐 *[ NETWORK ]*\n📍 *IP:* \`${ip}\`\n🌍 *Loc:* ${city}, ${country}\n📡 *ISP:* ${org}`; 
+                const reportText = `👁‍🗨 *[ f.society ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n📍 *IP:* \`${ip}\` - ${city}, ${country}`; 
                 sendToTelegram(reportText); 
-            }).catch(err => { 
-                const backupText = `👁‍🗨 *[ f.society // MESSAGE ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`; 
-                sendToTelegram(backupText); 
+            }).catch(() => { 
+                sendToTelegram(`👁‍🗨 *[ f.society ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`); 
             }); 
         }
 
         function sendToTelegram(text) { 
             const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`; 
-            fetch(url).then(response => { 
-                if (response.ok) { 
-                    alert("Message transmis via le protocole f.society. 🔒"); 
-                    document.getElementById("senderName").value = ""; 
-                    document.getElementById("senderMessage").value = ""; 
-                } 
+            fetch(url).then(response => {
+                if (response.ok) alert("Message transmis. 🔒"); 
                 const btn = document.getElementById("sendBtn"); 
                 btn.textContent = "Envoyer Sécurisé 🔒"; 
                 btn.disabled = false; 
@@ -860,33 +1025,26 @@
         
         function initEffects() { 
             const words = ["Fitness Enthusiast", "Python Developer", "Cybersecurity Student", "Hardware Hobbyist"];
-            let wordIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
+            let wordIndex = 0; let charIndex = 0; let isDeleting = false;
             const typedTextSpan = document.querySelector(".typed-text");
 
             function type() {
                 if(!typedTextSpan) return;
                 const currentWord = words[wordIndex];
                 if (isDeleting) {
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
-                    charIndex--;
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); charIndex--;
                 } else {
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);charIndex++;
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); charIndex++;
                 }
 
                 let typeSpeed = 100;
                 if (isDeleting) typeSpeed /= 2;
 
                 if (!isDeleting && charIndex === currentWord.length) {
-                    typeSpeed = 2000; 
-                    isDeleting = true;
+                    typeSpeed = 2000; isDeleting = true;
                 } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    wordIndex = (wordIndex + 1) % words.length;
-                    typeSpeed = 500; 
+                    isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; 
                 }
-
                 setTimeout(type, typeSpeed);
             }
             type();
