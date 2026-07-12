@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AJ | Portfolio</title>
+    <!-- Tailwind CSS للواجهات السريعة والعصرية -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Tajawal:wght@400;700&display=swap');
@@ -64,10 +66,13 @@
 </head>
 <body>
 
+    <!-- خلفية الماتريكس المتحركة -->
     <canvas id="matrixCanvas"></canvas>
 
-    <audio id="bgMusic"></audio>
+    <!-- عنصر الصوت الخفي للموسيقى -->
+    <audio id="bgMusic" preload="auto"></audio>
 
+    <!-- ================= شاشة القفل والتحقق ================= -->
     <div id="lockScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4">
         <div class="w-full max-w-md bg-gray-900/80 border border-gray-800 p-8 rounded-2xl backdrop-blur-xl text-center shadow-2xl">
             <div class="mb-6">
@@ -90,8 +95,10 @@
         </div>
     </div>
 
+    <!-- ================= المحتوى الرئيسي للموقع ================= -->
     <div id="mainContent" class="hidden min-h-screen pb-12">
         
+        <!-- الهيدر وشريط التنقل -->
         <header class="border-b border-gray-800 bg-gray-900/60 backdrop-blur-md sticky top-0 z-40">
             <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
                 <div class="flex items-center space-x-2 space-x-reverse">
@@ -105,6 +112,7 @@
                     <a href="#osint" id="navOsint" class="hover:text-blue-400 transition">أداة OSINT</a>
                 </nav>
 
+                <!-- أزرار تبديل اللغة -->
                 <div class="flex bg-gray-800 rounded-lg p-1 text-xs font-bold">
                     <button id="btnAr" onclick="switchLanguage('ar')" class="lang-btn active px-3 py-1 rounded-md transition">AR</button>
                     <button id="btnFr" onclick="switchLanguage('fr')" class="lang-btn px-3 py-1 rounded-md transition ml-1">FR</button>
@@ -112,16 +120,19 @@
             </div>
         </header>
 
+        <!-- محتوى القسم التعريفي -->
         <main class="max-w-4xl mx-auto px-4 mt-12">
             
+            <!-- قسم عني والتشخيص النفسي -->
             <section id="about" class="mb-16">
                 <h2 id="aboutTitle" class="text-xs font-mono text-blue-400 mb-2">// التشخيص النفسي</h2>
                 <div class="bg-gray-900/40 border border-gray-800/80 p-6 rounded-2xl backdrop-blur-sm mb-8">
                     <p id="aboutDesc" class="text-lg leading-relaxed text-gray-300 italic">
-                        "بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي. حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام. لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي. مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."
+                        "بعيداً عن أوهام this world، اخترت العزلة لأعيد بناء نفسي. حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام. لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي. مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."
                     </p>
                 </div>
 
+                <!-- شبكة الإحصائيات والمعلومات السريعة -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
                         <span id="statAge" class="block text-xs text-gray-500 font-mono uppercase">العمر</span>
@@ -144,6 +155,7 @@
 
             <hr class="border-gray-800 my-12">
 
+            <!-- قسم الاهتمامات والشغف -->
             <section id="passions" class="mb-16">
                 <h3 id="titlePassions" class="text-xl font-bold mb-6 text-white border-r-4 border-blue-500 pr-3">شغفي واهتماماتي</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -162,6 +174,7 @@
                 </div>
             </section>
 
+            <!-- قسم المشاريع والتطوير -->
             <section id="projects" class="mb-16">
                 <h3 id="titleProjects" class="text-xl font-bold mb-6 text-white border-r-4 border-blue-500 pr-3">المشاريع والتطوير</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -171,11 +184,12 @@
                     </div>
                     <div class="bg-gray-900/40 border border-gray-800 p-6 rounded-xl">
                         <h4 id="proj2Title" class="text-lg font-bold text-white mb-2">🌐 موقع البورتفوليو</h4>
-                        <p id="proj2Desc" class="text-sm text-gray-400">تصميم وتطوير هذا الموقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.</p>
+                        <p id="proj2Desc" class="text-sm text-gray-400">تصميم وتطوير this موقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.</p>
                     </div>
                 </div>
             </section>
 
+            <!-- تيرمينال محاكاة الكالي لينكس التفاعلي -->
             <section class="mb-16">
                 <div class="terminal-container rounded-xl overflow-hidden">
                     <div class="bg-gray-800 px-4 py-2 flex justify-between items-center text-xs font-mono">
@@ -198,6 +212,7 @@
                 </div>
             </section>
 
+            <!-- أداة فحص الـ OSINT البرمجية -->
             <section id="osint" class="mb-16 bg-gray-900/30 border border-gray-800 p-6 rounded-2xl">
                 <h3 id="osintTitle" class="text-xl font-bold mb-2 text-white">أداة تعقب اسم المستخدم 🛠️</h3>
                 <p id="osintDesc" class="text-sm text-gray-400 mb-4">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
@@ -212,6 +227,7 @@
                 <div id="osintResults" class="bg-black/60 border border-gray-800 rounded-lg p-4 font-mono text-xs text-blue-400 hidden h-32 overflow-y-auto"></div>
             </section>
 
+            <!-- قسم الاتصال وإرسال البيانات لتليجرام -->
             <section id="contact" class="mb-16">
                 <h3 id="titleContact" class="text-xl font-bold mb-6 text-white border-r-4 border-blue-500 pr-3">اترك لي رسالة</h3>
                 <form onsubmit="sendWithTargetDetails(event)" class="space-y-4">
@@ -228,10 +244,12 @@
 
         </main>
 
+        <!-- الفوتر والتحكم العائم بالموسيقى البلاي ليست -->
         <footer class="border-t border-gray-900 mt-12 pt-6 text-center text-xs text-gray-500">
             <p id="footerText">© 2026 عبد الجليل | الموقع الشخصي</p>
         </footer>
 
+        <!-- زر الموسيقى العائم والذكي الأصلي -->
         <div class="fixed bottom-6 left-6 z-40">
             <button id="musicControl" onclick="toggleMusic()" 
                     class="bg-black/80 border border-red-500/50 backdrop-blur-md text-red-500 text-xs font-mono font-bold px-4 py-2.5 rounded-full shadow-2xl hover:scale-105 transition duration-200">
@@ -241,6 +259,7 @@
 
     </div>
 
+    <!-- ================= كود الـ JavaScript المصحح والمضاف إليه الميزات بالكامل ================= -->
     <script>
         // إعدادات توكن البوت وتليجرام الخاص بك
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
@@ -256,9 +275,14 @@
         function playCurrentTrack() {
             audio.src = playlist[currentSongIndex];
             audio.load();
+            
+            // محاولة التشغيل مع التقاط صلاحيات المتصفح
             audio.play().then(() => {
                 updateMusicButton(true);
-            }).catch(e => console.log("Playback error:", e));
+            }).catch(e => {
+                console.log("Playback failed initially:", e);
+                updateMusicButton(false);
+            });
         }
 
         // دالة لتشغيل الأغنية التالية تلقائياً عند انتهائها أو طلبها
@@ -314,7 +338,8 @@
                 initMatrix();
                 initVisitorCount();
 
-                // ميزة التشغيل التلقائي الذكي: تشغيل الأغنية الأولى بمجرد فك التشفير
+                // الحل الجذري للموسيقى: يتم الاستدعاء مباشرة داخل سياق حدث النقر (Click Context)
+                // هذا يخبر المتصفح أن المستخدم ضغط بنفسه وبالتالي تنطلق الموسيقى دون أي قيود
                 playCurrentTrack();
             } else {
                 errorMsg.style.display = "block";
