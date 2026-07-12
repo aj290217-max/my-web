@@ -769,20 +769,6 @@ function toggleMusic() {
 }
         const musicBtn = document.getElementById("musicControl");
 
-        // دالة التحقق من كلمة السر
-        function checkPassword() {
-            const password = document.getElementById("passwordInput").value;
-            const errorMsg = document.getElementById("errorMsg");
-            const lockScreen = document.getElementById("lockScreen");
-            const mainContent = document.getElementById("mainContent");
-
-            if (password === "f.socity you") {
-                lockScreen.style.display = "none";
-                mainContent.style.display = "block";
-                
-                initEffects(); 
-                updateViews();
-                switchLanguage('ar'); 
 
                 // تشغيل تراك Krha تلقائياً بعد فك التشفير الناجح
                 audio.play().then(() => {
