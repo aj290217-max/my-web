@@ -742,7 +742,31 @@
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
 
-        const audio = document.getElementById("bgMusic");
+// قائمة الأغاني الخاصة بك
+const playlist = ["krha.mp3", "song2.mp3"]; 
+let currentSongIndex = 0;
+const audio = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicControl");
+
+// دالة لتشغيل الأغنية التالية
+function nextSong() {
+    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    audio.src = playlist[currentSongIndex];
+    audio.load();
+    audio.play();
+    musicBtn.textContent = "🎵 Hass - Playing...";
+}
+
+// تعديل زر التحكم ليقوم بالتشغيل/الإيقاف (أو التبديل)
+function toggleMusic() {
+    if (audio.paused) {
+        audio.play();
+        musicBtn.textContent = "🎵 Hass - ON";
+    } else {
+        // إذا كان يشتغل، اضغط مرة ثانية لتبديل الأغنية (أو أضف زر جديد للتبديل)
+        nextSong();
+    }
+}
         const musicBtn = document.getElementById("musicControl");
 
         // دالة التحقق من كلمة السر
