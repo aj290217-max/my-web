@@ -66,7 +66,7 @@
 
     <canvas id="matrixCanvas"></canvas>
 
-    <audio id="bgMusic" preload="auto"></audio>
+    <audio id="bgMusic" src="krha.mp3" preload="auto"></audio>
 
     <div id="lockScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4">
         <div class="w-full max-w-md bg-gray-900/80 border border-gray-800 p-8 rounded-2xl backdrop-blur-xl text-center shadow-2xl">
@@ -245,25 +245,23 @@
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
 
-        // قائمة التشغيل
+        // قائمة التشغيل والأغاني المحملة بالمسار
         const playlist = ["krha.mp3", "song2.mp3"]; 
         let currentSongIndex = 0;
         const audio = document.getElementById("bgMusic");
         const musicBtn = document.getElementById("musicControl");
 
-        // التغيير الحقيقي هنا: هذه الدالة تقوم بتهيئة وتشغيل الأغنية فوراً داخل نفس مسار الضغطة
+        // دالة تشغيل المسار والتحقق من صلاحيات المتصفح بشكل كامل
         function playCurrentTrack() {
             audio.src = playlist[currentSongIndex];
             audio.load();
             
-            // التشغيل المباشر لفك قيود المتصفح
             var playPromise = audio.play();
-            
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     updateMusicButton(true);
                 }).catch(e => {
-                    console.log("Playback failed initially:", e);
+                    console.log("Playback blocked or failed:", e);
                     updateMusicButton(false);
                 });
             }
@@ -274,17 +272,25 @@
             playCurrentTrack();
         }
 
+        // الانتقال للأغنية التالية تلقائياً عند انتهاء الحالية
         audio.addEventListener("ended", nextSong);
 
+        // دالة التحكم اليدوي بالزر العائم (تم تعديلها لتعمل بشكل مستقل ومضمون)
         function toggleMusic() {
             if (audio.paused) {
-                if(!audio.src) { 
-                    audio.src = playlist[currentSongIndex]; 
-                    audio.load(); 
+                // إذا لم يكن هناك مسار محدد، قم بتعيين أول مسار من القائمة
+                if (!audio.src || audio.src.includes(window.location.hostname) === false) {
+                    audio.src = playlist[currentSongIndex];
+                    audio.load();
                 }
-                audio.play().then(() => {
-                    updateMusicButton(true);
-                }).catch(e => console.log("Playback blocked:", e));
+                audio.play()
+                    .then(() => updateMusicButton(true))
+                    .catch(e => {
+                        console.log("Failed via user click context:", e);
+                        // محاولة إجبارية ثانية بإعادة تحميل المسار
+                        audio.src = playlist[currentSongIndex];
+                        audio.play().then(() => updateMusicButton(true));
+                    });
             } else {
                 audio.pause();
                 updateMusicButton(false);
@@ -311,14 +317,14 @@
             const errorMsg = document.getElementById("errorMsg");
 
             if (passwordInput.value === "f.society you") {
-                // خطوة جوهرية: نقوم بتشغيل الصوت فوراً هنا في نفس جزء الملي ثانية من حدث الضغط لكسر صلاحيات الأمان
-                playCurrentTrack();
-
                 lockScreen.style.display = "none";
                 mainContent.style.display = "block";
                 
                 initMatrix();
                 initVisitorCount();
+
+                // استدعاء التشغيل الفوري عند الدخول
+                playCurrentTrack();
             } else {
                 errorMsg.style.display = "block";
                 errorMsg.textContent = "[-] Access Denied. Incorrect Token.";
