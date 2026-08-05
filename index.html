@@ -1,338 +1,658 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJ | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>ABD JALIL</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Tajawal:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Tajawal', 'Fira+Code', monospace;
-            background-color: #050816;
-            color: #e2e8f0;
-            overflow-x: hidden;
-        }
-        
-        /* شاشة القفل الخلفية */
-        #lockScreen {
-            background: radial-gradient(circle at center, #0b1528 0%, #020617 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* تأثير خلفية الماتريكس */
+        body {
+            background: #050816;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* شريط التنقل - Navbar */
+        .navbar { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #161b22;
+            padding: 10px 20px;
+            border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #58a6ff;
+        }
+
+        /* أزرار الترجمة */
+        .lang-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background-color: #238636;
+            color: white;
+            border-color: #2ea44f;
+        }
+
+        /* Matrix Effect Background */
         #matrixCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -2;
+            opacity: 0.12;
+        }
+
+        /* Glow Background */
+        .bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
             z-index: -1;
-            opacity: 0.15;
-            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0,140,255,.22), transparent 30%),
+                radial-gradient(circle at 80% 40%, rgba(128,0,255,.18), transparent 30%),
+                radial-gradient(circle at 50% 90%, rgba(0,255,255,.12), transparent 30%);
+            animation: moveBg 10s infinite alternate ease-in-out;
         }
 
-        /* تخصيص مظهر التيرمينال */
-        .terminal-container {
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        @keyframes moveBg {
+            100% { transform: scale(1.1) rotate(2deg); }
         }
-        .terminal-body {
-            font-family: 'Fira Code', monospace;
-            height: 250px;
-            overflow-y: auto;
+
+        #mainContent {
+            display: block;
         }
-        .prompt { color: #50fa7b; }
+
+        .glass {
+            background: rgba(255, 255, 255, .06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px 20px;
+        }
+
+        .profile {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0,140,255,.5);
+        }
+
+        .hero h1 {
+            margin-top: 25px;
+            font-size: 60px;
+            letter-spacing: 2px;
+        }
+
+        .typing-container {
+            font-size: 24px;
+            color: #8ab4ff;
+            font-weight: 400;
+            min-height: 35px;
+        }
         
-        /* أزرار اللغات */
-        .lang-btn.active {
-            background-color: #3b82f6;
-            color: white;
+        .typed-text {
+            border-right: 2px solid #60a5fa;
+            animation: blink 0.75s step-end infinite;
+            padding-right: 5px;
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #60a5fa; }
         }
 
-        /* تنسيقات روابط الـ OSINT */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin: 50px 0 20px 0;
+            letter-spacing: 1px;
+        }
+
+        /* About Section */
+        .about {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 35px;
+            text-align: center;
+            width: 90%;
+            border-left: 4px solid #60a5fa;
+        }
+
+        .about h2 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+
+        .about p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #e2e8f0;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .stat.glass {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .stat h3 {
+            font-size: 32px;
+            color: #60a5fa;
+        }
+
+        /* Cards */
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 320px;
+            padding: 30px;
+            transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, .1);
+            box-shadow: 0 12px 40px rgba(0, 140, 255, 0.2);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: #60a5fa;
+            font-size: 22px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* Terminal Kali Linux */
+        .terminal-container {
+            max-width: 800px;
+            margin: 40px auto;
+            width: 90%;
+            background: #010409;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            overflow: hidden;
+            font-family: monospace;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+
+        .terminal-title {
+            color: #8b949e;
+            font-size: 13px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            color: #c9d1d9;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: #2ea043;
+            font-weight: bold;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ff79c6;
+            font-family: monospace;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        /* Gallery */
+        .gallery {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .grid img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform .4s ease, box-shadow .4s ease;
+            border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,140,255,.3);
+        }
+
+        /* OSINT Tracker Styling */
+        .osint-input {
+            width: 70%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        .osint-btn {
+            padding: 12px 20px;
+            background: #238636;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .osint-btn:hover { background: #2ea44f; }
+        .osint-results {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 250px;
+            overflow-y: auto;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            font-family: monospace;
+        }
         .osint-link {
             display: block;
-            color: #34d399;
-            text-decoration: underline;
-            margin-top: 0.5rem;
-            font-family: 'Fira Code', monospace;
+            margin: 8px 0;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        .osint-link:hover { text-decoration: underline; }
+
+        /* Contact Form */
+        .contact-section {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 40px;
+            width: 90%;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border .3s;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .contact-form button {
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .3s, transform .2s;
+        }
+
+        .contact-form button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* Social */
+        .social {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 35px;
+            text-decoration: none;
+            color: white;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            transition: all .3s ease;
+        }
+
+        .social a:hover {
+            background: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        #musicControl {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 30px;
+            color: #60a5fa;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: block;
+            font-family: monospace;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,.05);
         }
     </style>
-</head>
+</head> 
+
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
-
-    <audio id="bgMusic"></audio>
-
-    <div id="lockScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4">
-        <div class="w-full max-w-md bg-gray-900/80 border border-gray-800 p-8 rounded-2xl backdrop-blur-xl text-center shadow-2xl">
-            <div class="mb-6">
-                <i class="fa-solid fa-shield-halved text-5xl text-blue-500 animate-pulse"></i>
-            </div>
-            <h2 class="text-xl font-bold mb-2 text-white font-mono">[!] SECURE SYSTEM ACCESS</h2>
-            <p class="text-gray-400 text-sm mb-6">الرجاء إدخال رمز الوصول لفك تشفير المحتوى</p>
-            
-            <div class="relative mb-4">
-                <input type="password" id="passwordInput" placeholder="Enter Token..." 
-                       class="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-center text-white focus:outline-none focus:border-blue-500 font-mono tracking-widest">
-            </div>
-            
-            <button onclick="checkPassword()" 
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
-                Authentication 🔑
-            </button>
-            
-            <p id="errorMsg" class="text-red-500 text-sm mt-4 hidden font-mono"></p>
+    <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
+    
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#" id="navHome">الرئيسية</a>
+            <a href="#gallerySection" id="navGallery">الصور</a>
+            <a href="#videoSection" id="navVideo">الفيديو</a>
+            <a href="#osintSection" id="navOsint" style="color: #2ea44f; font-weight: bold;">أداة OSINT</a>
+        </div>
+        
+        <div class="lang-buttons">
+            <button id="btnAr" onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
+            <button id="btnFr" onclick="switchLanguage('fr')" class="lang-btn">FR/EN</button>
         </div>
     </div>
 
-    <div id="mainContent" class="hidden min-h-screen pb-12">
-        
-        <header class="border-b border-gray-800 bg-gray-900/60 backdrop-blur-md sticky top-0 z-40">
-            <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
-                <div class="flex items-center space-x-2 space-x-reverse">
-                    <span class="text-xl font-bold text-blue-500 font-mono">&lt;AJ /&gt;</span>
-                </div>
-                
-                <nav class="flex space-x-6 space-x-reverse text-sm font-medium text-gray-300">
-                    <a href="#about" id="navHome" class="hover:text-blue-400 transition">الرئيسية</a>
-                    <a href="#passions" id="navGallery" class="hover:text-blue-400 transition">الاهتمامات</a>
-                    <a href="#projects" id="navVideo" class="hover:text-blue-400 transition">المشاريع</a>
-                    <a href="#osint" id="navOsint" class="hover:text-blue-400 transition">أداة OSINT</a>
-                </nav>
+    <div id="mainContent">
+        <canvas id="matrixCanvas"></canvas>
+        <div class="bg"></div>
 
-                <div class="flex bg-gray-800 rounded-lg p-1 text-xs font-bold">
-                    <button id="btnAr" onclick="switchLanguage('ar')" class="lang-btn active px-3 py-1 rounded-md transition">AR</button>
-                    <button id="btnFr" onclick="switchLanguage('fr')" class="lang-btn px-3 py-1 rounded-md transition ml-1">FR</button>
-                </div>
+        <section class="hero">
+            <img src="IMG_0076.JPG" alt="Abd Jalil Profile" class="profile">
+            <h1>ABD JALIL</h1>
+            <div class="typing-container">
+                <span class="typed-text"></span>
             </div>
-        </header>
+        </section>
 
-        <main class="max-w-4xl mx-auto px-4 mt-12">
+        <section class="about glass">
+            <h2 id="aboutTitle">// Diagnostique Psychologique</h2>
+            <p id="aboutDesc">
+                "Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. 
+                Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. 
+                Pas besoin de psychologue ; mes poids à la salle pansent mes blood-stains, et mes lignes de code dictent ma propre thérapie. 
+                Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."
+            </p>
+        </section>
+
+        <section class="stats">
+            <div class="stat glass">
+                <h3>18</h3>
+                <p id="statAge">Âge</p>
+            </div>
+            <div class="stat glass">
+                <h3>🇩🇿</h3>
+                <p id="statCountry">Algérie</p>
+            </div>
+            <div class="stat glass">
+                <h3 id="statGoalVal">Bulking 🏋️‍♂️</h3>
+                <p id="statGoalLabel">Objectif Actuel</p>
+            </div>
+            <div class="stat glass">
+                <h3 id="visitorCount">1</h3>
+                <p id="statViews">Vues du Profil</p>
+            </div>
+        </section>
+
+        <h2 class="section-title" id="titlePassions">Mes Passions</h2>
+        <section class="cards">
+            <div class="card glass">
+                <h3 id="card1Title">🏋️ Discipline & Fer</h3>
+                <p id="card1Desc">Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.</p>
+            </div>
+            <div class="card glass">
+                <h3 id="card2Title">💻 Cyber & Révolution</h3>
+                <p id="card2Desc">Écrire des scripts en Python et comprendre les failles de sécurité. Le code n'est pas un métier, c'est l'arme ultime pour instaurer mon propre ordre dans ce chaos numérique.</p>
+            </div>
+            <div class="card glass">
+                <h3 id="card3Title">🎮 Mondes Virtuels</h3>
+                <p id="card3Desc">Une immersion totale dans des simulations tactiques et des aventures sombres لتجريب المنعكسات والهروب التام من الواقع السطحي.</p>
+            </div>
+        </section>
+
+        <h2 class="section-title" id="titleProjects">Projets & Dév</h2>
+        <section class="cards">
+            <div class="card glass">
+                <h3 id="proj1Title">🐍 Scripts Python</h3>
+                <p id="proj1Desc">Création d'outils d'automatisation, scripts de sécurité et applications backend.</p>
+                <span class="project-tag">Backend</span>
+            </div>
+            <div class="card glass">
+                <h3 id="proj2Title">🌐 Site Portfolio</h3>
+                <p id="proj2Desc">Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.</p>
+                <span class="project-tag">Frontend</span>
+            </div>
+        </section>
+
+        <section id="gallerySection" class="gallery">
+            <h2 class="section-title" id="titleGallery">Ma Galerie</h2>
+            <div class="grid">
+                <img src="IMG_0076.JPG" alt="Gym Back Pose">
+                <img src="IMG_20251114_210742_154.jpg" alt="Gym Mirror Selfie">
+                <img src="IMG_20251006_115628.jpg" alt="Gym Mirror Selfie">
+            </div>
             
-            <section id="about" class="mb-16">
-                <h2 id="aboutTitle" class="text-xs font-mono text-blue-400 mb-2">// التشخيص النفسي</h2>
-                <div class="bg-gray-900/40 border border-gray-800/80 p-6 rounded-2xl backdrop-blur-sm mb-8">
-                    <p id="aboutDesc" class="text-lg leading-relaxed text-gray-300 italic">
-                        "بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي. حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام. لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي. مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."
+            <div id="videoSection" style="text-align: center; margin: 40px 0;">
+                <video width="100%" style="max-width: 600px; border-radius: 8px; border: 1px solid #30363d;" controls>
+                    <source src="IMG_0011.MOV" type="video/quicktime">
+                    <p id="videoFallback">
+                        عذراً، متصفحك لا يدعم تشغيل الفيديو مباشرة. 
+                        <br>
+                        <a href="IMG_0011.MOV" download style="color: #58a6ff; text-decoration: underline;">اضغط هنا لتحميل الفيديو ومشاهدته على جهازك</a>
                     </p>
-                </div>
+                </video>
+            </div>
+        </section>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span id="statAge" class="block text-xs text-gray-500 font-mono uppercase">العمر</span>
-                        <span class="text-xl font-bold text-white font-mono">25</span>
-                    </div>
-                    <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span id="statCountry" class="block text-xs text-gray-500 font-mono uppercase">البلد</span>
-                        <span class="text-xl font-bold text-white">الجزائر 🇩🇿</span>
-                    </div>
-                    <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span id="statGoalLabel" class="block text-xs text-gray-500 font-mono uppercase">الهدف الحالي</span>
-                        <span id="statGoalVal" class="text-xl font-bold text-blue-400">تضخيم 🏋️‍♂️</span>
-                    </div>
-                    <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span id="statViews" class="block text-xs text-gray-500 font-mono uppercase">زيارات الملف</span>
-                        <span id="visitorCount" class="text-xl font-bold text-emerald-400 font-mono">0</span>
-                    </div>
-                </div>
-            </section>
-
-            <hr class="border-gray-800 my-12">
-
-            <section id="passions" class="mb-16">
-                <h3 id="titlePassions" class="text-xl font-bold mb-6 text-white border-r-4 border-blue-500 pr-3">شغفي واهتماماتي</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gray-900/50 border border-gray-800/60 p-6 rounded-xl hover:border-blue-500/50 transition">
-                        <h4 id="card1Title" class="text-lg font-bold text-white mb-2">🏋️ الانضباط والحديد</h4>
-                        <p id="card1Desc" class="text-sm text-gray-400 leading-relaxed">أكثر من مجرد تدريب بدني؛ كسر الأرقام في القاعة هو وسيلتي لبناء عقلية حديدية وتدمير أي ضعف نفسي.</p>
-                    </div>
-                    <div class="bg-gray-900/50 border border-gray-800/60 p-6 rounded-xl hover:border-purple-500/50 transition">
-                        <h4 id="card2Title" class="text-lg font-bold text-white mb-2">💻 السايبر والثورة</h4>
-                        <p id="card2Desc" class="text-sm text-gray-400 leading-relaxed">كتابة السكربتات بلغة بايثون وفهم الثغرات الأمنية. الكود ليس مجرد مهنة، بل السلاح الأسمى لفرض نظامي الخاص وسط هذه الفوضى الرقمية.</p>
-                    </div>
-                    <div class="bg-gray-900/50 border border-gray-800/60 p-6 rounded-xl hover:border-red-500/50 transition">
-                        <h4 id="card3Title" class="text-lg font-bold text-white mb-2">🎮 العوالم الافتراضية</h4>
-                        <p id="card3Desc" class="text-sm text-gray-400 leading-relaxed">انغماس كامل في المحاكاة التكتيكية والمغامرات المظلمة لتجريب المنعكسات والهروب التام من الواقع السطحي.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="projects" class="mb-16">
-                <h3 id="titleProjects" class="text-xl font-bold mb-6 text-white border-r-4 border-blue-500 pr-3">المشاريع والتطوير</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-900/40 border border-gray-800 p-6 rounded-xl">
-                        <h4 id="proj1Title" class="text-lg font-bold text-white mb-2">🐍 سكربتات بايثون</h4>
-                        <p id="proj1Desc" class="text-sm text-gray-400">بناء أدوات أتمتة، سكربتات حماية وفحص أمني، وتطبيقات الخوادم الخلفية.</p>
-                    </div>
-                    <div class="bg-gray-900/40 border border-gray-800 p-6 rounded-xl">
-                        <h4 id="proj2Title" class="text-lg font-bold text-white mb-2">🌐 موقع البورتفوليو</h4>
-                        <p id="proj2Desc" class="text-sm text-gray-400">تصميم وتطوير هذا الموقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="mb-16">
-                <div class="terminal-container rounded-xl overflow-hidden">
-                    <div class="bg-gray-800 px-4 py-2 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-400"><i class="fa-solid fa-terminal mr-2"></i> jalil@kali: ~</span>
-                        <div class="flex space-x-1.5 space-x-reverse">
-                            <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                            <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
-                            <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
-                        </div>
-                    </div>
-                    <div id="terminalBody" class="terminal-body p-4 text-sm font-mono space-y-2 overflow-y-auto">
-                        <div class="text-gray-500">[+] Kali Linux Environment Emulation Initialized.</div>
-                        <div class="text-gray-400">Type <span class="text-yellow-400">'help'</span> to see available custom core triggers.</div>
-                    </div>
-                    <div class="border-t border-gray-800 bg-black/40 px-4 py-2 flex items-center">
-                        <span class="prompt font-mono mr-2 text-sm">jalil@kali:~$</span>
-                        <input type="text" id="terminalInput" onkeypress="executeCommand(event)" 
-                               class="bg-transparent text-white focus:outline-none flex-1 font-mono text-sm ml-2">
-                    </div>
-                </div>
-            </section>
-
-            <section id="osint" class="mb-16 bg-gray-900/30 border border-gray-800 p-6 rounded-2xl">
-                <h3 id="osintTitle" class="text-xl font-bold mb-2 text-white">أداة تعقب اسم المستخدم 🛠️</h3>
-                <p id="osintDesc" class="text-sm text-gray-400 mb-4">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
-                <div class="flex flex-col sm:flex-row gap-3 mb-4">
-                    <input type="text" id="osintUsername" placeholder="أدخل اسم المستخدم (مثال: abdjalile_mh)" 
-                           class="flex-1 bg-black/40 border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 font-mono">
-                    <button onclick="startOsintScan()" id="osintBtn" 
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition">
-                        فحص الأسماء
-                    </button>
-                </div>
-                <div id="osintResults" class="bg-black/60 border border-gray-800 rounded-lg p-4 font-mono text-xs text-blue-400 hidden h-32 overflow-y-auto"></div>
-            </section>
-
-            <section id="contact" class="mb-16">
-                <h3 id="titleContact" class="text-xl font-bold mb-6 text-white border-r-4 border-blue-500 pr-3">اترك لي رسالة</h3>
-                <form onsubmit="sendWithTargetDetails(event)" class="space-y-4">
-                    <input type="text" id="senderName" placeholder="اسمك (أو مجهول)" required
-                           class="w-full bg-gray-900/60 border border-gray-800 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-blue-500">
-                    <textarea id="senderMessage" rows="4" placeholder="رسالتك هنا..." required
-                              class="w-full bg-gray-900/60 border border-gray-800 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-blue-500"></textarea>
-                    <button type="submit" id="sendBtn" 
-                            class="w-full bg-gradient-to-r bg-blue-600 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-lg shadow-blue-900/20">
-                        إرسال آمن 🔒
-                    </button>
-                </form>
-            </section>
-
-        </main>
-
-        <footer class="border-t border-gray-900 mt-12 pt-6 text-center text-xs text-gray-500">
-            <p id="footerText">© 2026 عبد الجليل | الموقع الشخصي</p>
-        </footer>
-
-        <div class="fixed bottom-6 left-6 z-40">
-            <button id="musicControl" onclick="toggleMusic()" 
-                    class="bg-black/80 border border-red-500/50 backdrop-blur-md text-red-500 text-xs font-mono font-bold px-4 py-2.5 rounded-full shadow-2xl hover:scale-105 transition duration-200">
-                🔇 Hass - Music: OFF
-            </button>
+        <!-- أداة تعقب اسم المستخدم OSINT Section -->
+        <div id="osintSection" style="max-width: 600px; margin: 50px auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+            <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;" id="osintTitle">أداة تعقب اسم المستخدم 🛠️</h2>
+            <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;" id="osintDesc">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
+            
+            <input type="text" id="osintUsername" class="osint-input" placeholder="أدخل اسم المستخدم (مثال: abdjalile_mh)">
+            <button onclick="startOsintScan()" class="osint-btn" id="osintBtn">فحص الأسماء</button>
+            
+            <div id="osintResults" class="osint-results" style="display: none;"></div>
         </div>
 
+        <h2 class="section-title">f.society // Interactive Console</h2>
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+                <div class="terminal-title">kali@fsociety: ~</div>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div>[+] System initialized. Secure shell active.</div>
+                <div>Type <span style="color: #60a5fa;">help</span> to view available system commands.</div>
+            </div>
+            <div class="terminal-header" style="border-top: 1px solid #30363d; border-bottom: none;">
+                <div class="terminal-input-line" style="width: 100%;">
+                    <span class="prompt">jalil@kali:~$</span>
+                    <input type="text" class="terminal-input" id="terminalInput" onkeypress="executeCommand(event)" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="titleContact">Laissez-moi un Message</h2>
+        <section class="contact-section glass">
+            <form class="contact-form" onsubmit="sendWithTargetDetails(event)">
+                <input type="text" id="senderName" placeholder="Votre Nom (ou Anonyme)" required>
+                <textarea rows="5" id="senderMessage" placeholder="Votre Message..." required></textarea>
+                <button type="submit" id="sendBtn">Envoyer Sécurisé 🔒</button>
+            </form>
+        </section>
+
+        <section class="social">
+            <h2 class="section-title" id="titleFollow">Suivez-moi</h2>
+            <a href="https://www.instagram.com/abdjalile_mh" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="#">TikTok - jalil mgn</a>
+        </section>
+
+        <footer>
+            <span id="footerText">&copy; 2026 ABD JALIL | Portfolio Personnel</span>
+        </footer>
     </div>
 
     <script>
-        // إعدادات توكن البوت وتليجرام الخاص بك
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";   
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID"; 
 
-        // قائمة التشغيل التلقائية المتعددة (الأغنيتين)
-        const playlist = ["krha.mp3", "song2.mp3"]; 
-        let currentSongIndex = 0;
-        const audio = document.getElementById("bgMusic");
-        const musicBtn = document.getElementById("musicControl");
+        let audioCtx = null;
+        let droneOsc = null;
 
-        // دالة تشغيل المسار الصوتي الحالي بالتحديث المناسب
-        function playCurrentTrack() {
-            audio.src = playlist[currentSongIndex];
-            audio.load();
-            audio.play().then(() => {
-                updateMusicButton(true);
-            }).catch(e => console.log("Playback error:", e));
-        }
-
-        // دالة لتشغيل الأغنية التالية تلقائياً عند انتهائها أو طلبها
-        function nextSong() {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            playCurrentTrack();
-        }
-
-        // ربط نهاية الأغنية تلقائياً بالانتقال للمسار التالي بالكامل
-        audio.addEventListener("ended", nextSong);
-
-        // دالة التحكم في زر الموسيقى العائم (تشغيل / إيقاف مؤقت)
-        function toggleMusic() {
-            if (audio.paused) {
-                if(!audio.src) { 
-                    audio.src = playlist[currentSongIndex]; 
-                    audio.load(); 
-                }
-                audio.play().then(() => {
-                    updateMusicButton(true);
-                }).catch(e => console.log("Playback blocked:", e));
-            } else {
-                audio.pause();
-                updateMusicButton(false);
-            }
-        }
-
-        // تحديث مظهر ونص زر التحكم في الأغنية الحالية ونظام التشغيل
-        function updateMusicButton(isPlaying) {
-            if (isPlaying) {
-                musicBtn.textContent = `🎵 Hass - Playing [${currentSongIndex + 1}/${playlist.length}]`;
-                musicBtn.style.color = "#60a5fa";
-                musicBtn.style.borderColor = "#60a5fa";
-            } else {
-                musicBtn.textContent = "🔇 Hass - Music: OFF";
-                musicBtn.style.color = "#ef4444";
-                musicBtn.style.borderColor = "#ef4444";
-            }
-        }
-
-        // دالة التحقق وفك تشفير شاشة الحماية بنجاح
-        function checkPassword() {
-            const passwordInput = document.getElementById("passwordInput");
-            const lockScreen = document.getElementById("lockScreen");
-            const mainContent = document.getElementById("mainContent");
-            const errorMsg = document.getElementById("errorMsg");
-
-            if (passwordInput.value === "f.society you") {
-                lockScreen.style.display = "none";
-                mainContent.style.display = "block";
-                
-                // تفعيل ميزات الماتريكس والعداد فور الدخول للموقع
-                initMatrix();
-                initVisitorCount();
-
-                // ميزة التشغيل التلقائي الذكي: تشغيل الأغنية الأولى بمجرد فك التشفير
-                playCurrentTrack();
-            } else {
-                errorMsg.style.display = "block";
-                errorMsg.textContent = "[-] Access Denied. Incorrect Token.";
-            }
-        }
-
-        // السماح بالدخول عبر الضغط على Enter في شاشة القفل
-        document.getElementById("passwordInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                checkPassword();
-            }
-        });
-
-        // قاموس اللغات للترجمة الفورية الفاخرة بين العربية والفرنسية
+        // قاموس الترجمة
         const translations = {
             ar: {
-                navHome: "الرئيسية", navGallery: "الاهتمامات", navVideo: "المشاريع", navOsint: "أداة OSINT",
+                navHome: "الرئيسية", navGallery: "الصور", navVideo: "الفيديو", navOsint: "أداة OSINT",
                 aboutTitle: "// التشخيص النفسي",
                 aboutDesc: `"بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي. حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام. لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي. مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."`,
                 statAge: "العمر", statCountry: "البلد", statGoalLabel: "الهدف الحالي", statGoalVal: "تضخيم 🏋️‍♂️", statViews: "زيارات الملف",
@@ -343,13 +663,14 @@
                 titleProjects: "المشاريع والتطوير",
                 proj1Title: "🐍 سكربتات بايثون", proj1Desc: "بناء أدوات أتمتة، سكربتات حماية وفحص أمني، وتطبيقات الخوادم الخلفية.",
                 proj2Title: "🌐 موقع البورتفوليو", proj2Desc: "تصميم وتطوير هذا الموقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.",
+                titleGallery: "المعرض الخاص بي",
                 osintTitle: "أداة تعقب اسم المستخدم 🛠️", osintDesc: "البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.",
                 osintBtn: "فحص الأسماء", osintInput: "أدخل اسم المستخدم (مثال: abdjalile_mh)",
                 titleContact: "اترك لي رسالة", senderName: "اسمك (أو مجهول)", senderMessage: "رسالتك هنا...", sendBtn: "إرسال آمن 🔒",
-                footerText: "© 2026 عبد الجليل | الموقع الشخصي"
+                titleFollow: "تابعني على", footerText: "© 2026 عبد الجليل | الموقع الشخصي"
             },
             fr: {
-                navHome: "Accueil", navGallery: "Passions", navVideo: "Projets", navOsint: "Outil OSINT",
+                navHome: "Accueil", navGallery: "Galerie", navVideo: "Vidéo", navOsint: "Outil OSINT",
                 aboutTitle: "// Diagnostique Psychologique",
                 aboutDesc: `"Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre therapeute. Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."`,
                 statAge: "Âge", statCountry: "Pays", statGoalLabel: "Objectif Actuel", statGoalVal: "Bulking 🏋️‍♂️", statViews: "Vues du Profil",
@@ -360,17 +681,20 @@
                 titleProjects: "Projets & Dév",
                 proj1Title: "🐍 Scripts Python", proj1Desc: "Création d'outils d'automatisation, scripts de sécurité et applications backend.",
                 proj2Title: "🌐 Site Portfolio", proj2Desc: "Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.",
+                titleGallery: "Ma Galerie",
                 osintTitle: "Outil de Traçage OSINT 🛠️", osintDesc: "Rechercher et vérifier les comptes publics liés à un identifiant numérique sur les réseaux ouverts.",
                 osintBtn: "Scanner", osintInput: "Entrez le nom d'utilisateur (Ex: abdjalile_mh)",
                 titleContact: "Laissez-moi un Message", senderName: "Votre Nom (ou Anonyme)", senderMessage: "Votre Message...", sendBtn: "Envoyer Sécurisé 🔒",
-                footerText: "© 2026 ABD JALIL | Portfolio Personnel"
+                titleFollow: "Suivez-moi", footerText: "© 2026 ABD JALIL | Portfolio Personnel"
             }
         };
 
+        // دالة التبديل بين اللغات
         function switchLanguage(lang) {
             const content = translations[lang];
             if (!content) return;
 
+            // تغيير النصوص في الصفحة
             for (let id in content) {
                 const element = document.getElementById(id);
                 if (element) {
@@ -384,6 +708,7 @@
                 }
             }
 
+            // ضبط اتجاه الصفحة (RTL للعربية و LTR للفرنسية)
             if (lang === 'ar') {
                 document.documentElement.dir = "rtl";
                 document.getElementById("btnAr").classList.add("active");
@@ -395,7 +720,13 @@
             }
         }
 
-        // أداة محاكاة فحص الـ OSINT
+        window.addEventListener('DOMContentLoaded', () => {
+            initEffects(); 
+            updateViews();
+            startSyntheticAmbiance(); 
+            switchLanguage('ar'); // تشغيل اللغة العربية كخيار افتراضي عند الفتح
+        });
+
         function startOsintScan() {
             const username = document.getElementById("osintUsername").value.trim();
             const resultsDiv = document.getElementById("osintResults");
@@ -411,136 +742,204 @@
             const platforms = [
                 { name: "Instagram", url: `https://www.instagram.com/${username}` },
                 { name: "TikTok", url: `https://www.tiktok.com/@${username}` },
-                { name: "GitHub", url: `https://github.com/${username}` }
+                { name: "GitHub", url: `https://github.com/${username}` },
+                { name: "Twitter / X", url: `https://twitter.com/${username}` },
+                { name: "Pinterest", url: `https://www.pinterest.com/${username}` },
+                { name: "Reddit", url: `https://www.reddit.com/user/${username}` }
             ];
 
-            platforms.forEach((platform, index) => {
+            let delay = 0;
+            platforms.forEach((platform) => {
                 setTimeout(() => {
-                    resultsDiv.innerHTML += `<a href="${platform.url}" target="_blank" class="osint-link">[+] تم العثور على رابط محتمل على ${platform.name}</a>`;
-                }, (index + 1) * 800);
+                    resultsDiv.innerHTML += `<span style="color: #50fa7b;">[+] تم توليد رابط البحث لـ ${platform.name}:</span> 
+                    <a href="${platform.url}" target="_blank" class="osint-link">${platform.url} 🔗</a>`;
+                    resultsDiv.scrollTop = resultsDiv.scrollHeight;
+                }, delay);
+                delay += 400; 
             });
         }
 
-        // نظام هطول الشفرات الرقمية (Matrix Background Effect)
-        let canvas, ctx, columns, drops;
-        function initMatrix() {
-            canvas = document.getElementById('matrixCanvas');
-            ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const alphabet = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()";
-            const fontSize = 16;
-            columns = canvas.width / fontSize;
-
-            drops = [];
-            for (let x = 0; x < columns; x++) drops[x] = 1;
-
-            function drawMatrix() {
-                ctx.fillStyle = 'rgba(5, 8, 22, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+        function startSyntheticAmbiance() {
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                droneOsc = audioCtx.createOscillator();
+                let droneGain = audioCtx.createGain();
                 
-                ctx.fillStyle = '#0f0';
-                ctx.font = fontSize + 'px monospace';
+                droneOsc.type = 'sawtooth';
+                droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
+                
+                let filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(120, audioCtx.currentTime);
 
-                for (let i = 0; i < drops.length; i++) {
-                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
+                droneGain.gain.setValueAtTime(0.08, audioCtx.currentTime); 
+                
+                droneOsc.connect(filter);
+                filter.connect(droneGain);
+                droneGain.connect(audioCtx.destination);
+                droneOsc.start();
+
+                setInterval(() => {
+                    if (audioCtx && audioCtx.state === 'running') {
+                        let pulseOsc = audioCtx.createOscillator();
+                        let pulseGain = audioCtx.createGain();
+                        
+                        pulseOsc.type = 'sine';
+                        pulseOsc.frequency.setValueAtTime(60, audioCtx.currentTime);
+                        
+                        pulseGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                        pulseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                        
+                        pulseOsc.connect(pulseGain);
+                        pulseGain.connect(audioCtx.destination);
+                        pulseOsc.start();
+                        pulseOsc.stop(audioCtx.currentTime + 0.4);
                     }
-                    drops[i]++;
-                }
+                }, 1200);
+
+            } catch (e) {
+                console.log("Audio Context Blocked");
             }
-            setInterval(drawMatrix, 30);
         }
 
-        window.addEventListener('resize', () => {
-            if(canvas) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                columns = canvas.width / 16;
-                drops = [];
-                for (let x = 0; x < columns; x++) drops[x] = 1;
+        function toggleMusic() {
+            const btn = document.getElementById("musicControl");
+            if (!audioCtx) {
+                startSyntheticAmbiance();
+                btn.textContent = "🎵 Ambiance: ON";
+                btn.style.color = "#60a5fa";
+                return;
             }
-        });
-
-        // عداد الزيارات التلقائي التخزيني (LocalStorage Smart Counter)
-        function initVisitorCount() {
-            let count = parseInt(localStorage.getItem("profile_views") || "137");
-            count += Math.floor(Math.random() * 3) + 1;
-            localStorage.setItem("profile_views", count);
-            const element = document.getElementById("visitorCount");
-            if(element) element.textContent = count;
+            if (audioCtx.state === 'running') {
+                audioCtx.suspend();
+                btn.textContent = "🔇 Ambiance: OFF";
+                btn.style.color = "#ef4444";
+            } else {
+                audioCtx.resume();
+                btn.textContent = "🎵 Ambiance: ON";
+                btn.style.color = "#60a5fa";
+            }
         }
 
-        // كود معالجة وتلقي أوامر تيرمينال الـ Kali Linux التفاعلي
         function executeCommand(event) {
             if (event.key === "Enter") {
-                const input = document.getElementById("terminalInput");
-                const body = document.getElementById("terminalBody");
-                const cmd = input.value.trim().toLowerCase();
+                const inputField = document.getElementById("terminalInput");
+                const command = inputField.value.trim().toLowerCase();
+                const terminalBody = document.getElementById("terminalBody");
                 
-                if(cmd === "") return;
-
-                body.innerHTML += `<div class="terminal-input-line"><span class="prompt">jalil@kali:~$</span> <span style="color:#ff79c6">${input.value}</span></div>`;
+                terminalBody.innerHTML += `<div class="terminal-input-line"><span class="prompt">jalil@kali:~$</span> <span style="color: #ff79c6;">${inputField.value}</span></div>`;
                 
-                // الاستجابة للأوامر
-                if (cmd === "help") {
-                    body.innerHTML += `<div>الأوامر المتاحة:<br>- <span style="color:#58a6ff">about</span>: لعرض التقرير الشخصي والتشخيصي<br>- <span style="color:#58a6ff">clear</span>: لتنظيف شاشة الكونسول الرقمي<br>- <span style="color:#58a6ff">next</span>: لتخطي المسار الحالي وتشغيل الأغنية التالية فوراً 🎵</div>`;
-                } else if (cmd === "about") {
-                    body.innerHTML += `<div>[+] Target Name: ABD JALIL<br>[+] Specialization: Python Developer / CyberSecurity Enthusiast<br>[+] Location: Algeria 🇩🇿</div>`;
-                } else if (cmd === "clear") {
-                    body.innerHTML = `<div>[+] Terminal cleared. Secure shell active.</div>`;
-                } else if (cmd === "next") {
-                    body.innerHTML += `<div>[+] Core Override: Skipping to the next audio track in playlist...</div>`;
-                    nextSong();
+                let response = "";
+                
+                if (command === "help") {
+                    response = `<div>Available commands:<br>
+                                - <span style="color: #60a5fa;">whoami</span> : Check user authority.<br>
+                                - <span style="color: #60a5fa;">psychologue</span> : Uncover secret medical record logs.<br>
+                                - <span style="color: #60a5fa;">secret</span> : Decode an encrypted personal audio/mind transmission.<br>
+                                - <span style="color: #60a5fa;">gps</span> : Trigger live hardware geolocation sensor sync.<br>
+                                - <span style="color: #60a5fa;">clear</span> : Flush the screen buffers.<br>
+                                - <span style="color: #60a5fa;">matrix</span> : Intensify system visibility overlay.</div>`;
+                } else if (command === "whoami") {
+                    response = `<div style="color: #f1fa8c;">root@fsociety - Elite Operator / Abd Jalil</div>`;
+                } else if (command === "psychologue") {
+                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes wounds, et mes lignes de code dictent ma propre thérapie." 🧠🔒</div>`;
+                } else if (command === "secret") {
+                    response = `<div style="color: #bd93f9; font-family: monospace; font-size: 13px; line-height: 1.6;">
+                                [!] DECODING SECRET TRANSLATION LOG...<br>
+                                <span style="color: #50fa7b;">"Kolchi kan kedba, l'wa9i3 li 3aychin fih krahni f l'bchar... <br>
+                                Dert l'isolements machi bch nahrab, dertou bch n'fariha m3a rassi f dlam. <br>
+                                L'hadra matet, w dork ghadi n'hder ghir b l'khdemma w l'm7na li f l'guitou n'fariha."</span> 🚬⛓️
+                                </div>`;
+                } else if (command === "gps") {
+                    response = `<div style="color: #50fa7b;">[*] جاري الاتصال بمستشعر الموقع...</div>`;
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            terminalBody.innerHTML += `<div style="color: #f1fa8c;">[+] تم تحديد الموقع بنجاح:</div>
+                                                       <div style="color: #60a5fa;">خط العرض (Lat): ${lat}</div>
+                                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>`;
+                            terminalBody.scrollTop = terminalBody.scrollHeight;
+                        }, function(error) {
+                            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ في الإذن.</div>`;
+                            terminalBody.scrollTop = terminalBody.scrollHeight;
+                        });
+                    }
+                } else if (command === "clear") {
+                    terminalBody.innerHTML = ""; inputField.value = ""; return;
+                } else if (command === "") {
+                    response = "";
                 } else {
-                    body.innerHTML += `<div style="color:#ff5555">[-] Command not found: ${input.value}. Type 'help' for instructions.</div>`;
+                    response = `<div style="color: #ff5555;">bash: command not found: ${command}. Try typing 'help'.</div>`;
                 }
-
-                input.value = "";
-                body.scrollTop = body.scrollHeight;
+                
+                if(response !== "") { terminalBody.innerHTML += response; }
+                inputField.value = "";
+                terminalBody.scrollTop = terminalBody.scrollHeight;
             }
         }
 
-        // دالة إرسال الرسائل الفورية لبوت تليجرام
-        function sendWithTargetDetails(event) {
-            event.preventDefault();
-            const name = document.getElementById("senderName").value;
-            const msg = document.getElementById("senderMessage").value;
-            const btn = document.getElementById("sendBtn");
+        function sendWithTargetDetails(event) { 
+            event.preventDefault(); 
+            const btn = document.getElementById("sendBtn"); 
+            btn.textContent = "Envoi..."; 
+            btn.disabled = true; 
+            const name = document.getElementById("senderName").value; 
+            const msg = document.getElementById("senderMessage").value; 
+            
+            fetch('https://ipapi.co/json/').then(res => res.json()).then(data => { 
+                const ip = data.ip || "Unknown"; 
+                const city = data.city || "Unknown"; 
+                const country = data.country_name || "Unknown"; 
+                const reportText = `👁‍🗨 *[ f.society ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n📍 *IP:* \`${ip}\` - ${city}, ${country}`; 
+                sendToTelegram(reportText); 
+            }).catch(() => { 
+                sendToTelegram(`👁‍🗨 *[ f.society ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`); 
+            }); 
+        }
 
-            btn.textContent = "جاري التشفير والإرسال... ⏳";
-            btn.disabled = true;
+        function sendToTelegram(text) { 
+            const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`; 
+            fetch(url).then(response => {
+                if (response.ok) alert("Message transmis. 🔒"); 
+                const btn = document.getElementById("sendBtn"); 
+                btn.textContent = "Envoyer Sécurisé 🔒"; 
+                btn.disabled = false; 
+            }); 
+        }
 
-            const textMessage = `📩 رسالة جديدة من البورتفوليو:\n\n👤 الاسم: ${name}\n💬 الرسالة: ${msg}`;
+        function updateViews() { 
+            let currentViews = localStorage.getItem("portfolio_views") || 1; 
+            if(localStorage.getItem("portfolio_views")) currentViews = parseInt(currentViews) + 1; 
+            localStorage.setItem("portfolio_views", currentViews); 
+            document.getElementById("visitorCount").textContent = currentViews; 
+        }
+        
+        function initEffects() { 
+            const words = ["Fitness Enthusiast", "Python Developer", "Cybersecurity Student", "Hardware Hobbyist"];
+            let wordIndex = 0; let charIndex = 0; let isDeleting = false;
+            const typedTextSpan = document.querySelector(".typed-text");
 
-            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: textMessage })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.ok) {
-                    alert("تم إرسال رسالتك بنجاح وبشكل آمن تماماً! 🔒");
-                    document.getElementById("senderName").value = "";
-                    document.getElementById("senderMessage").value = "";
+            function type() {
+                if(!typedTextSpan) return;
+                const currentWord = words[wordIndex];
+                if (isDeleting) {
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); charIndex--;
                 } else {
-                    alert("حدث خطأ أثناء الإرسال، تحقق من التوكن والـ Chat ID.");
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); charIndex++;
                 }
-            })
-            .catch(err => {
-                console.error(err);
-                alert("فشل الاتصال بالخادم الآمن.");
-            })
-            .finally(() => {
-                btn.textContent = "إرسال آمن 🔒";
-                btn.disabled = false;
-            });
+
+                let typeSpeed = 100;
+                if (isDeleting) typeSpeed /= 2;
+
+                if (!isDeleting && charIndex === currentWord.length) {
+                    typeSpeed = 2000; isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; 
+                }
+                setTimeout(type, typeSpeed);
+            }
+            type();
         }
     </script>
 </body>
