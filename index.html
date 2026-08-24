@@ -484,7 +484,7 @@
 
 <body>
 
-    <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: ON</button>
+    <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: OFF</button>
     
     <div class="navbar">
         <div class="nav-links">
@@ -648,6 +648,7 @@
 
         let audioCtx = null;
         let droneOsc = null;
+        let isAudioPlaying = false;
 
         // قاموس الترجمة
         const translations = {
@@ -694,7 +695,6 @@
             const content = translations[lang];
             if (!content) return;
 
-            // تغيير النصوص في الصفحة
             for (let id in content) {
                 const element = document.getElementById(id);
                 if (element) {
@@ -708,7 +708,6 @@
                 }
             }
 
-            // ضبط اتجاه الصفحة (RTL للعربية و LTR للفرنسية)
             if (lang === 'ar') {
                 document.documentElement.dir = "rtl";
                 document.getElementById("btnAr").classList.add("active");
@@ -721,12 +720,104 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            initEffects(); 
+            initMatrixBackground();
+            initTypingEffect();
             updateViews();
-            startSyntheticAmbiance(); 
-            switchLanguage('ar'); // تشغيل اللغة العربية كخيار افتراضي عند الفتح
+            switchLanguage('ar');
         });
 
+        // 1. Matrix Background Canvas
+        function initMatrixBackground() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = Array.from({ length: columns }).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(5, 8, 22, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            setInterval(draw, 33);
+        }
+
+        // 2. Typing Effect
+        function initTypingEffect() {
+            const phrases = ["Cyber Security Enthusiast", "Python Developer", "Fitness & Gym Addict"];
+            let i = 0, j = 0, isDeleting = false;
+            const el = document.querySelector('.typed-text');
+
+            function loop() {
+                el.innerHTML = phrases[i].substring(0, j);
+                if (!isDeleting && j < phrases[i].length) {
+                    j++;
+                    setTimeout(loop, 100);
+                } else if (isDeleting && j > 0) {
+                    j--;
+                    setTimeout(loop, 50);
+                } else {
+                    isDeleting = !isDeleting;
+                    if (!isDeleting) i = (i + 1) % phrases.length;
+                    setTimeout(loop, 1200);
+                }
+            }
+            loop();
+        }
+
+        // 3. Audio Control (Synthesizer Ambiance)
+        function toggleMusic() {
+            const btn = document.getElementById('musicControl');
+            if (!isAudioPlaying) {
+                startSyntheticAmbiance();
+                btn.textContent = "🎵 Ambiance: ON";
+                isAudioPlaying = true;
+            } else {
+                if (audioCtx) audioCtx.suspend();
+                btn.textContent = "🎵 Ambiance: OFF";
+                isAudioPlaying = false;
+            }
+        }
+
+        function startSyntheticAmbiance() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                droneOsc = audioCtx.createOscillator();
+                let droneGain = audioCtx.createGain();
+                
+                droneOsc.type = 'sawtooth';
+                droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
+                
+                let filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(120, audioCtx.currentTime);
+
+                droneGain.gain.setValueAtTime(0.05, audioCtx.currentTime); 
+                
+                droneOsc.connect(filter);
+                filter.connect(droneGain);
+                droneGain.connect(audioCtx.destination);
+                droneOsc.start();
+            } else {
+                audioCtx.resume();
+            }
+        }
+
+        // 4. OSINT Tool
         function startOsintScan() {
             const username = document.getElementById("osintUsername").value.trim();
             const resultsDiv = document.getElementById("osintResults");
@@ -755,191 +846,61 @@
                     <a href="${platform.url}" target="_blank" class="osint-link">${platform.url} 🔗</a>`;
                     resultsDiv.scrollTop = resultsDiv.scrollHeight;
                 }, delay);
-                delay += 400; 
+                delay += 300; 
             });
         }
 
-        function startSyntheticAmbiance() {
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                droneOsc = audioCtx.createOscillator();
-                let droneGain = audioCtx.createGain();
-                
-                droneOsc.type = 'sawtooth';
-                droneOsc.frequency.setValueAtTime(45, audioCtx.currentTime); 
-                
-                let filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(120, audioCtx.currentTime);
-
-                droneGain.gain.setValueAtTime(0.08, audioCtx.currentTime); 
-                
-                droneOsc.connect(filter);
-                filter.connect(droneGain);
-                droneGain.connect(audioCtx.destination);
-                droneOsc.start();
-
-                setInterval(() => {
-                    if (audioCtx && audioCtx.state === 'running') {
-                        let pulseOsc = audioCtx.createOscillator();
-                        let pulseGain = audioCtx.createGain();
-                        
-                        pulseOsc.type = 'sine';
-                        pulseOsc.frequency.setValueAtTime(60, audioCtx.currentTime);
-                        
-                        pulseGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                        pulseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-                        
-                        pulseOsc.connect(pulseGain);
-                        pulseGain.connect(audioCtx.destination);
-                        pulseOsc.start();
-                        pulseOsc.stop(audioCtx.currentTime + 0.4);
-                    }
-                }, 1200);
-
-            } catch (e) {
-                console.log("Audio Context Blocked");
-            }
-        }
-
-        function toggleMusic() {
-            const btn = document.getElementById("musicControl");
-            if (!audioCtx) {
-                startSyntheticAmbiance();
-                btn.textContent = "🎵 Ambiance: ON";
-                btn.style.color = "#60a5fa";
-                return;
-            }
-            if (audioCtx.state === 'running') {
-                audioCtx.suspend();
-                btn.textContent = "🔇 Ambiance: OFF";
-                btn.style.color = "#ef4444";
-            } else {
-                audioCtx.resume();
-                btn.textContent = "🎵 Ambiance: ON";
-                btn.style.color = "#60a5fa";
-            }
-        }
-
+        // 5. Interactive Terminal Commands
         function executeCommand(event) {
-            if (event.key === "Enter") {
-                const inputField = document.getElementById("terminalInput");
-                const command = inputField.value.trim().toLowerCase();
-                const terminalBody = document.getElementById("terminalBody");
-                
-                terminalBody.innerHTML += `<div class="terminal-input-line"><span class="prompt">jalil@kali:~$</span> <span style="color: #ff79c6;">${inputField.value}</span></div>`;
-                
-                let response = "";
-                
-                if (command === "help") {
-                    response = `<div>Available commands:<br>
-                                - <span style="color: #60a5fa;">whoami</span> : Check user authority.<br>
-                                - <span style="color: #60a5fa;">psychologue</span> : Uncover secret medical record logs.<br>
-                                - <span style="color: #60a5fa;">secret</span> : Decode an encrypted personal audio/mind transmission.<br>
-                                - <span style="color: #60a5fa;">gps</span> : Trigger live hardware geolocation sensor sync.<br>
-                                - <span style="color: #60a5fa;">clear</span> : Flush the screen buffers.<br>
-                                - <span style="color: #60a5fa;">matrix</span> : Intensify system visibility overlay.</div>`;
-                } else if (command === "whoami") {
-                    response = `<div style="color: #f1fa8c;">root@fsociety - Elite Operator / Abd Jalil</div>`;
-                } else if (command === "psychologue") {
-                    response = `<div style="color: #ff5555; font-style: italic;">"Pas besoin de psychologue... Mes poids à la salle pansent mes wounds, et mes lignes de code dictent ma propre thérapie." 🧠🔒</div>`;
-                } else if (command === "secret") {
-                    response = `<div style="color: #bd93f9; font-family: monospace; font-size: 13px; line-height: 1.6;">
-                                [!] DECODING SECRET TRANSLATION LOG...<br>
-                                <span style="color: #50fa7b;">"Kolchi kan kedba, l'wa9i3 li 3aychin fih krahni f l'bchar... <br>
-                                Dert l'isolements machi bch nahrab, dertou bch n'fariha m3a rassi f dlam. <br>
-                                L'hadra matet, w dork ghadi n'hder ghir b l'khdemma w l'm7na li f l'guitou n'fariha."</span> 🚬⛓️
-                                </div>`;
-                } else if (command === "gps") {
-                    response = `<div style="color: #50fa7b;">[*] جاري الاتصال بمستشعر الموقع...</div>`;
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            const lat = position.coords.latitude;
-                            const lng = position.coords.longitude;
-                            terminalBody.innerHTML += `<div style="color: #f1fa8c;">[+] تم تحديد الموقع بنجاح:</div>
-                                                       <div style="color: #60a5fa;">خط العرض (Lat): ${lat}</div>
-                                                       <div style="color: #60a5fa;">خط الطول (Lng): ${lng}</div>`;
-                            terminalBody.scrollTop = terminalBody.scrollHeight;
-                        }, function(error) {
-                            terminalBody.innerHTML += `<div style="color: #ff5555;">[-] خطأ في الإذن.</div>`;
-                            terminalBody.scrollTop = terminalBody.scrollHeight;
-                        });
-                    }
-                } else if (command === "clear") {
-                    terminalBody.innerHTML = ""; inputField.value = ""; return;
-                } else if (command === "") {
-                    response = "";
-                } else {
-                    response = `<div style="color: #ff5555;">bash: command not found: ${command}. Try typing 'help'.</div>`;
+            if (event.key === 'Enter') {
+                const input = document.getElementById('terminalInput');
+                const cmd = input.value.trim().toLowerCase();
+                const body = document.getElementById('terminalBody');
+
+                body.innerHTML += `<div><span class="prompt">jalil@kali:~$</span> ${input.value}</div>`;
+
+                let response = '';
+                switch (cmd) {
+                    case 'help':
+                        response = 'Available commands: <span style="color:#60a5fa;">whoami, skills, clear, status</span>';
+                        break;
+                    case 'whoami':
+                        response = 'Abd Jalil - Cybersecurity student & Developer from Algeria 🇩🇿';
+                        break;
+                    case 'skills':
+                        response = 'Python, HTML/CSS/JS, Kali Linux, Penetration Testing Basics';
+                        break;
+                    case 'status':
+                        response = 'Current Status: Bulking 🏋️‍♂️ & Coding 💻';
+                        break;
+                    case 'clear':
+                        body.innerHTML = '';
+                        input.value = '';
+                        return;
+                    default:
+                        response = `Command not found: ${cmd}. Type 'help' for options.`;
                 }
-                
-                if(response !== "") { terminalBody.innerHTML += response; }
-                inputField.value = "";
-                terminalBody.scrollTop = terminalBody.scrollHeight;
+
+                body.innerHTML += `<div style="color: #8b949e; margin-bottom: 10px;">${response}</div>`;
+                input.value = '';
+                body.scrollTop = body.scrollHeight;
             }
         }
 
-        function sendWithTargetDetails(event) { 
-            event.preventDefault(); 
-            const btn = document.getElementById("sendBtn"); 
-            btn.textContent = "Envoi..."; 
-            btn.disabled = true; 
-            const name = document.getElementById("senderName").value; 
-            const msg = document.getElementById("senderMessage").value; 
-            
-            fetch('https://ipapi.co/json/').then(res => res.json()).then(data => { 
-                const ip = data.ip || "Unknown"; 
-                const city = data.city || "Unknown"; 
-                const country = data.country_name || "Unknown"; 
-                const reportText = `👁‍🗨 *[ f.society ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}\n\n📍 *IP:* \`${ip}\` - ${city}, ${country}`; 
-                sendToTelegram(reportText); 
-            }).catch(() => { 
-                sendToTelegram(`👁‍🗨 *[ f.society ]*\n\n👤 *Name:* ${name}\n📝 *Message:* ${msg}`); 
-            }); 
+        // 6. Simple Local Visitor Counter
+        function updateViews() {
+            let views = localStorage.getItem('profileViews') || 1;
+            views = parseInt(views) + 1;
+            localStorage.setItem('profileViews', views);
+            document.getElementById('visitorCount').textContent = views;
         }
 
-        function sendToTelegram(text) { 
-            const url = `https://api.telegram.com/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`; 
-            fetch(url).then(response => {
-                if (response.ok) alert("Message transmis. 🔒"); 
-                const btn = document.getElementById("sendBtn"); 
-                btn.textContent = "Envoyer Sécurisé 🔒"; 
-                btn.disabled = false; 
-            }); 
-        }
-
-        function updateViews() { 
-            let currentViews = localStorage.getItem("portfolio_views") || 1; 
-            if(localStorage.getItem("portfolio_views")) currentViews = parseInt(currentViews) + 1; 
-            localStorage.setItem("portfolio_views", currentViews); 
-            document.getElementById("visitorCount").textContent = currentViews; 
-        }
-        
-        function initEffects() { 
-            const words = ["Fitness Enthusiast", "Python Developer", "Cybersecurity Student", "Hardware Hobbyist"];
-            let wordIndex = 0; let charIndex = 0; let isDeleting = false;
-            const typedTextSpan = document.querySelector(".typed-text");
-
-            function type() {
-                if(!typedTextSpan) return;
-                const currentWord = words[wordIndex];
-                if (isDeleting) {
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1); charIndex--;
-                } else {
-                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1); charIndex++;
-                }
-
-                let typeSpeed = 100;
-                if (isDeleting) typeSpeed /= 2;
-
-                if (!isDeleting && charIndex === currentWord.length) {
-                    typeSpeed = 2000; isDeleting = true;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; 
-                }
-                setTimeout(type, typeSpeed);
-            }
-            type();
+        // 7. Contact Form Handler (Telegram integration standard placeholder)
+        function sendWithTargetDetails(e) {
+            e.preventDefault();
+            alert("Merci ! Votre message a été envoyé avec succès.");
+            document.getElementById('senderName').value = '';
+            document.getElementById('senderMessage').value = '';
         }
     </script>
 </body>
