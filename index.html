@@ -22,7 +22,7 @@
             min-height: 100vh;
         }
 
-        /* شريط التنقل - Navbar */
+        /* Navbar */
         .navbar { 
             display: flex;
             justify-content: space-between;
@@ -47,7 +47,6 @@
             color: #58a6ff;
         }
 
-        /* أزرار الترجمة */
         .lang-buttons {
             display: flex;
             gap: 5px;
@@ -517,7 +516,7 @@
             <p id="aboutDesc">
                 "Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. 
                 Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. 
-                Pas besoin de psychologue ; mes poids à la salle pansent mes blood-stains, et mes lignes de code dictent ma propre thérapie. 
+                Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. 
                 Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."
             </p>
         </section>
@@ -553,7 +552,7 @@
             </div>
             <div class="card glass">
                 <h3 id="card3Title">🎮 Mondes Virtuels</h3>
-                <p id="card3Desc">Une immersion totale dans des simulations tactiques et des aventures sombres لتجريب المنعكسات والهروب التام من الواقع السطحي.</p>
+                <p id="card3Desc">Une immersion totale dans des simulations tactiques et des aventures sombres pour tester les réflexes et s'échapper de la réalité superficielle.</p>
             </div>
         </section>
 
@@ -591,7 +590,7 @@
             </div>
         </section>
 
-        <!-- أداة تعقب اسم المستخدم OSINT Section -->
+        <!-- OSINT Tracker Section -->
         <div id="osintSection" style="max-width: 600px; margin: 50px auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
             <h2 style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;" id="osintTitle">أداة تعقب اسم المستخدم 🛠️</h2>
             <p style="color: #8b949e; font-size: 14px; margin-bottom: 20px;" id="osintDesc">البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.</p>
@@ -650,7 +649,7 @@
         let droneOsc = null;
         let isAudioPlaying = false;
 
-        // قاموس الترجمة
+        // Translation Dictionary
         const translations = {
             ar: {
                 navHome: "الرئيسية", navGallery: "الصور", navVideo: "الفيديو", navOsint: "أداة OSINT",
@@ -673,7 +672,7 @@
             fr: {
                 navHome: "Accueil", navGallery: "Galerie", navVideo: "Vidéo", navOsint: "Outil OSINT",
                 aboutTitle: "// Diagnostique Psychologique",
-                aboutDesc: `"Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre therapeute. Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."`,
+                aboutDesc: `"Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."`,
                 statAge: "Âge", statCountry: "Pays", statGoalLabel: "Objectif Actuel", statGoalVal: "Bulking 🏋️‍♂️", statViews: "Vues du Profil",
                 titlePassions: "Mes Passions",
                 card1Title: "🏋️ Discipline & Fer", card1Desc: "Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.",
@@ -690,7 +689,6 @@
             }
         };
 
-        // دالة التبديل بين اللغات
         function switchLanguage(lang) {
             const content = translations[lang];
             if (!content) return;
@@ -736,7 +734,7 @@
             const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             const fontSize = 14;
             const columns = canvas.width / fontSize;
-            const drops = Array.from({ length: columns }).fill(1);
+            const drops = Array.from({ length: Math.floor(columns) }).fill(1);
 
             function draw() {
                 ctx.fillStyle = 'rgba(5, 8, 22, 0.05)';
@@ -779,7 +777,7 @@
             loop();
         }
 
-        // 3. Audio Control (Synthesizer Ambiance)
+        // 3. Audio Control
         function toggleMusic() {
             const btn = document.getElementById('musicControl');
             if (!isAudioPlaying) {
@@ -850,57 +848,85 @@
             });
         }
 
-        // 5. Interactive Terminal Commands
-        function executeCommand(event) {
-            if (event.key === 'Enter') {
-                const input = document.getElementById('terminalInput');
-                const cmd = input.value.trim().toLowerCase();
-                const body = document.getElementById('terminalBody');
-
-                body.innerHTML += `<div><span class="prompt">jalil@kali:~$</span> ${input.value}</div>`;
-
-                let response = '';
-                switch (cmd) {
-                    case 'help':
-                        response = 'Available commands: <span style="color:#60a5fa;">whoami, skills, clear, status</span>';
-                        break;
-                    case 'whoami':
-                        response = 'Abd Jalil - Cybersecurity student & Developer from Algeria 🇩🇿';
-                        break;
-                    case 'skills':
-                        response = 'Python, HTML/CSS/JS, Kali Linux, Penetration Testing Basics';
-                        break;
-                    case 'status':
-                        response = 'Current Status: Bulking 🏋️‍♂️ & Coding 💻';
-                        break;
-                    case 'clear':
-                        body.innerHTML = '';
-                        input.value = '';
-                        return;
-                    default:
-                        response = `Command not found: ${cmd}. Type 'help' for options.`;
-                }
-
-                body.innerHTML += `<div style="color: #8b949e; margin-bottom: 10px;">${response}</div>`;
-                input.value = '';
-                body.scrollTop = body.scrollHeight;
-            }
-        }
-
-        // 6. Simple Local Visitor Counter
+        // 5. Counter & Storage
         function updateViews() {
-            let views = localStorage.getItem('profileViews') || 1;
-            views = parseInt(views) + 1;
-            localStorage.setItem('profileViews', views);
+            let views = localStorage.getItem('page_views') || 0;
+            views++;
+            localStorage.setItem('page_views', views);
             document.getElementById('visitorCount').textContent = views;
         }
 
-        // 7. Contact Form Handler (Telegram integration standard placeholder)
-        function sendWithTargetDetails(e) {
-            e.preventDefault();
-            alert("Merci ! Votre message a été envoyé avec succès.");
-            document.getElementById('senderName').value = '';
-            document.getElementById('senderMessage').value = '';
+        // 6. Interactive Terminal Commands
+        function executeCommand(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('terminalInput');
+                const command = input.value.trim().toLowerCase();
+                const terminalBody = document.getElementById('terminalBody');
+
+                terminalBody.innerHTML += `<div><span class="prompt">jalil@kali:~$</span> ${input.value}</div>`;
+                
+                let output = "";
+                switch (command) {
+                    case 'help':
+                        output = "Available commands: <br>- <span style='color: #60a5fa;'>about</span>: Information about Jalil<br>- <span style='color: #60a5fa;'>skills</span>: Technical skillset<br>- <span style='color: #60a5fa;'>clear</span>: Clear terminal screen<br>- <span style='color: #60a5fa;'>whoami</span>: Display current user<br>- <span style='color: #60a5fa;'>matrix</span>: Toggle matrix ambiance";
+                        break;
+                    case 'about':
+                        output = "ABD JALIL // Algerian Cyber Security Enthusiast & Developer.";
+                        break;
+                    case 'skills':
+                        output = "Python, Bash, Network Security, Linux System Admin, HTML/CSS/JS.";
+                        break;
+                    case 'whoami':
+                        output = "guest@fsociety_node_dz";
+                        break;
+                    case 'clear':
+                        terminalBody.innerHTML = "";
+                        input.value = "";
+                        return;
+                    case 'matrix':
+                        toggleMusic();
+                        output = "Ambiance toggled.";
+                        break;
+                    case '':
+                        output = "";
+                        break;
+                    default:
+                        output = `<span style="color: #ff5f56;">Command not found: ${command}. Type 'help' for options.</span>`;
+                }
+
+                if (output) {
+                    terminalBody.innerHTML += `<div>${output}</div>`;
+                }
+
+                input.value = "";
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+        }
+
+        // 7. Secure Contact Form Logic
+        function sendWithTargetDetails(event) {
+            event.preventDefault();
+            const name = document.getElementById("senderName").value;
+            const message = document.getElementById("senderMessage").value;
+
+            if (TELEGRAM_BOT_TOKEN !== "YOUR_BOT_TOKEN" && TELEGRAM_CHAT_ID !== "YOUR_CHAT_ID") {
+                const text = `📬 Message de ${name}:\n\n${message}`;
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text })
+                }).then(() => {
+                    alert("Message envoyé avec succès !");
+                    document.getElementById("senderName").value = "";
+                    document.getElementById("senderMessage").value = "";
+                }).catch(() => {
+                    alert("Erreur lors de l'envoi du message.");
+                });
+            } else {
+                alert(`Merci ${name}, votre message a été enregistré localement ! (Configurez votre Token Telegram pour un envoi en direct).`);
+                document.getElementById("senderName").value = "";
+                document.getElementById("senderMessage").value = "";
+            }
         }
     </script>
 </body>
