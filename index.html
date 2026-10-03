@@ -3,752 +3,703 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABD JALIL | Cyber Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-    
+    <title>ABD JALIL</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* ==========================================
-           1. BASE & RESET STYLES
-        ========================================== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
+
         body {
-            background-color: #050816;
-            color: #f3f4f6;
-            font-family: 'Tajawal', sans-serif;
+            background: #050816;
+            color: white;
             overflow-x: hidden;
-            position: relative;
+            min-height: 100vh;
         }
-        
-        /* Matrix Background Canvas */
+
+        /* =========================
+            NAVBAR
+        ========================= */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #161b22;
+            padding: 10px 20px;
+            border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #58a6ff;
+        }
+
+        .lang-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background-color: #238636;
+            color: white;
+            border-color: #2ea44f;
+        }
+
+        /* =========================
+            BACKGROUNDS
+        ========================= */
         #matrixCanvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            opacity: 0.25;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Glassmorphism Design */
-        .glass {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 240, 255, 0.15);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        /* ==========================================
-           2. HEADER & NAVIGATION
-        ========================================== */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            margin-bottom: 30px;
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #00f0ff;
-            letter-spacing: 1px;
-        }
-        nav a {
-            color: #94a3b8;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s;
-            font-weight: 700;
-        }
-        nav a:hover {
-            color: #00f0ff;
-        }
-        .controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .lang-btn {
-            background: transparent;
-            border: 1px solid #00f0ff;
-            color: #00f0ff;
-            padding: 5px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.85rem;
-        }
-        .lang-btn.active, .lang-btn:hover {
-            background: #00f0ff;
-            color: #050816;
-        }
-
-        /* ==========================================
-           3. HERO SECTION
-        ========================================== */
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-        }
-        .profile-img-container {
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            border: 3px solid #00f0ff;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-            overflow: hidden;
-        }
-        .profile-img-container img {
             width: 100%;
             height: 100%;
+            z-index: -2;
+            opacity: 0.12;
+        }
+
+        .bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0,140,255,.22), transparent 30%),
+                radial-gradient(circle at 80% 40%, rgba(128,0,255,.18), transparent 30%),
+                radial-gradient(circle at 50% 90%, rgba(0,255,255,.12), transparent 30%);
+            animation: moveBg 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveBg {
+            100% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        #mainContent {
+            display: block;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, .06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* =========================
+            HERO
+        ========================= */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px 20px;
+        }
+
+        .profile {
+            width: 220px;
+            height: 220px;
             object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(0,140,255,.5);
         }
+
         .hero h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        .typed-container {
-            font-family: 'Fira Code', monospace;
-            color: #60a5fa;
-            font-size: 1.2rem;
-            min-height: 30px;
+            margin-top: 25px;
+            font-size: 60px;
+            letter-spacing: 2px;
         }
 
-        /* ==========================================
-           4. DIAGNOSIS / ABOUT CARDS
-        ========================================== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            padding: 20px;
-            text-align: center;
-        }
-        .stat-card h3 {
-            color: #00f0ff;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-        .stat-card p {
-            color: #94a3b8;
-            font-size: 0.95rem;
+        .typing-container {
+            font-size: 24px;
+            color: #8ab4ff;
+            font-weight: 400;
+            min-height: 35px;
         }
 
-        /* ==========================================
-           5. INSPORA CAROUSEL
-        ========================================== */
-        .section-title {
-            text-align: center;
-            color: #00f0ff;
-            margin: 40px 0 20px;
-            font-size: 1.6rem;
+        .typed-text {
+            border-right: 2px solid #60a5fa;
+            animation: blink 0.75s step-end infinite;
+            padding-right: 5px;
         }
-        .carousel-container {
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #60a5fa; }
+        }
+
+        /* =====================================================
+            INSPORA FLUID LIQUID CAROUSEL
+        ===================================================== */
+        .inspora-section {
             position: relative;
-            height: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 40px;
+            width: 100%;
+            min-height: 650px;
+            margin: 40px 0 80px;
             overflow: hidden;
-        }
-        .inspora-card {
-            position: absolute;
-            width: 260px;
-            height: 180px;
-            padding: 20px;
-            border-radius: 12px;
-            transition: all 0.5s ease;
-            text-align: center;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            opacity: 0;
+            justify-content: center;
+            direction: ltr;
+        }
+
+        .inspora-liquid {
+            position: absolute;
+            width: min(1150px, 92vw);
+            height: 500px;
+            background:
+                radial-gradient(ellipse at 18% 50%, #003cff 0%, #0929a8 35%, transparent 68%),
+                radial-gradient(ellipse at 82% 45%, #008cff 0%, #152caa 38%, transparent 70%);
+            background-color: #06145d;
+            filter: blur(3px);
+            border-radius: 110px 260px 130px 230px;
+            animation: insporaLiquid 8s ease-in-out infinite alternate;
+            box-shadow: 0 0 100px rgba(0,100,255,.25);
+            z-index: 1;
+        }
+
+        .inspora-liquid::before {
+            content: "";
+            position: absolute;
+            inset: -80px;
+            background:
+                radial-gradient(ellipse at 25% 30%, rgba(0,255,220,.75), transparent 35%),
+                radial-gradient(ellipse at 75% 70%, rgba(0,90,255,.9), transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(100,0,255,.35), transparent 50%);
+            filter: blur(45px);
+            animation: insporaColors 7s ease-in-out infinite alternate;
+            border-radius: 50%;
+        }
+
+        .inspora-liquid::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,.12), transparent 55%);
+            animation: insporaShine 5s linear infinite;
             pointer-events: none;
         }
+
+        @keyframes insporaLiquid {
+            0% {
+                border-radius: 100px 260px 130px 230px;
+                transform: rotate(-1deg) scale(1);
+            }
+            50% {
+                border-radius: 250px 100px 220px 120px;
+                transform: rotate(1deg) scale(1.035);
+            }
+            100% {
+                border-radius: 150px 210px 260px 100px;
+                transform: rotate(-1deg) scale(1.02);
+            }
+        }
+
+        @keyframes insporaColors {
+            0% {
+                transform: translate(-50px,-20px) scale(1);
+            }
+            100% {
+                transform: translate(60px,40px) scale(1.3);
+            }
+        }
+
+        @keyframes insporaShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .inspora-carousel {
+            position: relative;
+            width: 100%;
+            height: 560px;
+            z-index: 5;
+            perspective: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: pan-y;
+        }
+
+        .inspora-card {
+            position: absolute;
+            width: 280px;
+            height: 390px;
+            border-radius: 18px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            cursor: grab;
+            user-select: none;
+            box-shadow: 0 30px 70px rgba(0,0,0,.55);
+            transition:
+                transform .85s cubic-bezier(.16,1,.3,1),
+                opacity .7s ease,
+                filter .7s ease,
+                box-shadow .7s ease;
+            border: 1px solid rgba(255,255,255,.25);
+        }
+
+        .inspora-card:active {
+            cursor: grabbing;
+        }
+
+        .inspora-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.85), transparent 65%);
+            pointer-events: none;
+        }
+
+        .inspora-content {
+            position: absolute;
+            left: 25px;
+            right: 25px;
+            bottom: 25px;
+            z-index: 3;
+            color: white;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .inspora-content small {
+            display: block;
+            font-size: 11px;
+            opacity: .75;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .inspora-content h3 {
+            font-size: 24px;
+            margin: 0 0 5px;
+            color: white;
+        }
+
+        .inspora-content p {
+            font-size: 13px;
+            color: rgba(255,255,255,.8);
+            margin: 0;
+        }
+
         .inspora-card.center {
             transform: translateX(0) scale(1);
-            opacity: 1;
-            z-index: 3;
-            border-color: #00f0ff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            pointer-events: auto;
-        }
-        .inspora-card.left {
-            transform: translateX(-180px) scale(0.8);
-            opacity: 0.6;
-            z-index: 2;
-        }
-        .inspora-card.right {
-            transform: translateX(180px) scale(0.8);
-            opacity: 0.6;
-            z-index: 2;
-        }
-        .inspora-card.hidden-left { transform: translateX(-350px) scale(0.6); opacity: 0; }
-        .inspora-card.hidden-right { transform: translateX(350px) scale(0.6); opacity: 0; }
-        
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 240, 255, 0.2);
-            border: 1px solid #00f0ff;
-            color: #00f0ff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
             z-index: 10;
-            font-size: 1.2rem;
+            box-shadow:
+                0 35px 90px rgba(0,0,0,.7),
+                0 0 40px rgba(0,120,255,.18);
         }
-        .carousel-btn.prev { right: 10px; }
-        .carousel-btn.next { left: 10px; }
 
-        /* ==========================================
-           6. OSINT SCANNER & TERMINAL
-        ========================================== */
-        .osint-box, .terminal-container {
-            margin-bottom: 30px;
-            padding: 25px;
+        .inspora-card.left {
+            transform: translateX(-390px) scale(.78) rotateY(10deg);
+            filter: brightness(.7) saturate(.85);
+            z-index: 4;
         }
-        .osint-input-group {
+
+        .inspora-card.right {
+            transform: translateX(390px) scale(.78) rotateY(-10deg);
+            filter: brightness(.7) saturate(.85);
+            z-index: 4;
+        }
+
+        .inspora-controls {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            z-index: 20;
         }
-        .osint-input-group input {
-            flex: 1;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            outline: none;
-        }
-        .osint-input-group button {
-            padding: 12px 25px;
-            border: none;
-            background: #00f0ff;
-            color: #050816;
-            font-weight: bold;
-            border-radius: 8px;
+
+        .inspora-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.25);
+            background: rgba(0,0,0,.35);
+            backdrop-filter: blur(15px);
+            color: white;
             cursor: pointer;
+            font-size: 18px;
+            transition: .3s;
         }
-        .osint-results {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(0,0,0,0.4);
-            border-radius: 8px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
+
+        .inspora-btn:hover {
+            background: #2563eb;
+            transform: scale(1.1);
         }
-        .osint-link {
-            display: block;
+
+        .inspora-title {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,.55);
+            text-transform: uppercase;
+        }
+
+        /* =========================
+            GENERAL SECTIONS
+        ========================= */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin: 50px 0 20px 0;
+            letter-spacing: 1px;
+        }
+
+        .about {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 35px;
+            text-align: center;
+            width: 90%;
+            border-left: 4px solid #60a5fa;
+        }
+
+        .about h2 {
             color: #60a5fa;
-            text-decoration: none;
-            margin-top: 5px;
+            margin-bottom: 15px;
+            font-family: monospace;
         }
 
-        .terminal-container {
-            background: #090d16;
-            border: 1px solid #1e293b;
-            padding: 0;
-            overflow: hidden;
+        .about p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #e2e8f0;
         }
-        .terminal-header {
-            background: #0f172a;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .terminal-btn { width: 12px; height: 12px; border-radius: 50%; }
-        .btn-red { background: #ff5f56; }
-        .btn-yellow { background: #ffbd2e; }
-        .btn-green { background: #27c93f; }
-        .terminal-title { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #64748b; margin-left: 10px; }
-        .terminal-body {
-            padding: 20px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            min-height: 150px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .terminal-input-line {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Fira Code', monospace;
-        }
-        .terminal-input {
-            background: transparent;
-            border: none;
-            color: #38bdf8;
-            outline: none;
-            font-family: inherit;
-            width: 100%;
-        }
-        .prompt { color: #2ea44f; }
 
-        /* ==========================================
-           7. CONTACT & FOOTER
-        ========================================== */
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .contact-form input, .contact-form textarea {
-            padding: 12px;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-        }
-        .contact-form button {
-            padding: 12px;
-            background: #00f0ff;
-            border: none;
-            color: #050816;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .social {
+        .stats {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin: 30px 0;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        .social a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .social a:hover { color: #00f0ff; }
-        footer { text-align: center; color: #64748b; font-size: 0.85rem; padding: 20px 0; }
 
-        @media (max-width: 600px) {
-            .inspora-card.left, .inspora-card.right { opacity: 0; }
+        .stat.glass {
+            flex: 1;
+            min-width: 180px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .stat h3 {
+            font-size: 32px;
+            color: #60a5fa;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 320px;
+            padding: 30px;
+            transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, .1);
+            box-shadow: 0 12px 40px rgba(0, 140, 255, 0.2);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: #60a5fa;
+            font-size: 22px;
+        }
+
+        /* =========================
+            MOBILE
+        ========================= */
+        @media(max-width: 800px) {
+            .nav-links a {
+                margin: 0 4px;
+                font-size: 12px;
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .profile {
+                width: 180px;
+                height: 180px;
+            }
+
+            .typing-container {
+                font-size: 18px;
+            }
+
+            .inspora-section {
+                min-height: 570px;
+            }
+
+            .inspora-liquid {
+                width: 130vw;
+                height: 400px;
+            }
+
+            .inspora-card {
+                width: 225px;
+                height: 335px;
+            }
+
+            .inspora-card.left {
+                transform: translateX(-185px) scale(.65);
+            }
+
+            .inspora-card.right {
+                transform: translateX(185px) scale(.65);
+            }
+
+            .inspora-card.center {
+                transform: translateX(0) scale(1);
+            }
+
+            .inspora-content h3 {
+                font-size: 21px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Matrix Animation Background -->
-    <canvas id="matrixCanvas"></canvas>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#" id="navHome">الرئيسية</a>
+            <a href="#gallerySection" id="navGallery">الصور</a>
+            <a href="#videoSection" id="navVideo">الفيديو</a>
+            <a href="#osintSection" id="navOsint" style="color: #2ea44f; font-weight: bold;">أداة OSINT</a>
+        </div>
 
-    <div class="container">
+        <div class="lang-buttons">
+            <button id="btnAr" class="lang-btn active">AR</button>
+            <button id="btnFr" class="lang-btn">FR/EN</button>
+        </div>
+    </div>
 
-        <!-- =========================
-             HEADER
-        ========================= -->
-        <header class="glass">
-            <div class="logo">ABD JALIL</div>
-            <nav>
-                <a href="#about" id="navHome">الرئيسية</a>
-                <a href="#passions" id="navGallery">الشغف</a>
-                <a href="#osint" id="navOsint">OSINT</a>
-            </nav>
-            <div class="controls">
-                <button class="lang-btn active" id="btnAr" onclick="switchLanguage('ar')">AR</button>
-                <button class="lang-btn" id="btnFr" onclick="switchLanguage('fr')">EN/FR</button>
-                <button class="lang-btn" id="musicControl" onclick="toggleMusic()">🎵</button>
-            </div>
-        </header>
+    <div id="mainContent">
+
+        <canvas id="matrixCanvas"></canvas>
+        <div class="bg"></div>
 
         <!-- =========================
-             HERO SECTION
+             HERO
         ========================= -->
-        <section class="hero glass" id="about">
-            <div class="profile-img-container">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="ABD JALIL Profile">
-            </div>
+        <section class="hero">
+            <img src="IMG_0076.JPG" alt="Abd Jalil Profile" class="profile">
             <h1>ABD JALIL</h1>
-            <div class="typed-container">
-                <span class="typed-text"></span>
+
+            <div class="typing-container">
+                <span class="typed-text">Developer & Cyber Security Enthusiast</span>
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             INSPORA FLUID CAROUSEL (MY INSPIRATIONS)
+        ===================================================== -->
+        <section class="inspora-section">
+
+            <div class="inspora-title">
+                MY INSPIRATIONS
+            </div>
+
+            <div class="inspora-liquid"></div>
+
+            <div class="inspora-carousel" id="insporaCarousel">
+
+                <!-- 1. رواية الغريب - ألبير كامو -->
+                <article
+                    class="inspora-card left"
+                    style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c7/L%27%C3%89tranger_-_Albert_Camus.jpg');"
+                >
+                    <div class="inspora-content">
+                        <small>BOOK • ALBERT CAMUS</small>
+                        <h3>الغريب</h3>
+                        <p>رواية ألبير كامو (L'Étranger)</p>
+                    </div>
+                </article>
+
+                <!-- 2. رواية العين الحمراء - ندى سمير شرف -->
+                <article
+                    class="inspora-card center"
+                    style="background-image: url('https://m.media-amazon.com/images/I/71DkG8bFfVL._AC_UF1000,1000_QL80_.jpg');"
+                >
+                    <div class="inspora-content">
+                        <small>BOOK • NOVEL</small>
+                        <h3>العين الحمراء</h3>
+                        <p>ندى سمير شرف</p>
+                    </div>
+                </article>
+
+                <!-- 3. مسلسل The Sopranos -->
+                <article
+                    class="inspora-card right"
+                    style="background-image: url('https://m.media-amazon.com/images/M/MVBMTIxNTI4Mzk5MV5BMl5BanBnXkFtZTcwMDAyMTI3Mw@@._V1_.jpg');"
+                >
+                    <div class="inspora-content">
+                        <small>SERIES • HBO</small>
+                        <h3>The Sopranos</h3>
+                        <p>السينما والسرد الدرامي</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="inspora-controls">
+                <button class="inspora-btn" id="insporaPrev" type="button">←</button>
+                <button class="inspora-btn" id="insporaNext" type="button">→</button>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABOUT
+        ========================= -->
+        <section class="about glass">
+            <h2 id="aboutTitle">// التشخيص النفسي</h2>
+            <p id="aboutDesc">
+                "بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي.
+                حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام.
+                لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي.
+                مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."
+            </p>
+        </section>
+
+        <!-- =========================
+             STATS
+        ========================= -->
+        <section class="stats">
+            <div class="stat glass">
+                <h3>18</h3>
+                <p id="statAge">العمر</p>
+            </div>
+            <div class="stat glass">
+                <h3>🇩🇿</h3>
+                <p id="statCountry">الجزائر</p>
+            </div>
+            <div class="stat glass">
+                <h3 id="statGoalVal">تضخيم 🏋️‍♂️</h3>
+                <p id="statGoalLabel">الهدف الحالي</p>
+            </div>
+            <div class="stat glass">
+                <h3 id="visitorCount">1</h3>
+                <p id="statViews">زيارات الملف</p>
             </div>
         </section>
 
         <!-- =========================
-             DIAGNOSIS / STATS
+             PASSIONS
         ========================= -->
-        <h2 class="section-title" id="aboutTitle">// التشخيص الذاتي</h2>
-        <div class="stats-grid">
-            <div class="stat-card glass">
-                <h3 id="statAge">25</h3>
-                <p>سنة</p>
-            </div>
-            <div class="stat-card glass">
-                <h3 id="statCountry">🇩🇿</h3>
-                <p>الجزائر</p>
-            </div>
-            <div class="stat-card glass">
-                <h3>Gym & Code</h3>
-                <p id="statGoalLabel">التركيز الأساسي</p>
-            </div>
-            <div class="stat-card glass">
-                <h3>OSINT</h3>
-                <p id="statViews">المجال الشغوف</p>
-            </div>
-        </div>
+        <h2 class="section-title" id="titlePassions">
+            شغفي واهتماماتي
+        </h2>
 
-        <!-- =========================
-             INSPORA CAROUSEL
-        ========================= -->
-        <h2 class="section-title" id="titlePassions">مجالات الشغف والاهتمام</h2>
-        <div class="carousel-container" id="passions">
-            <button class="carousel-btn prev" id="insporaPrev">❮</button>
-            
-            <div class="inspora-card glass left">
-                <h3 style="color:#00f0ff; margin-bottom:8px;">Fitness & Gym</h3>
-                <p style="color:#94a3b8; font-size:0.9rem;">الالتزام والتمرين البدني اليومي وبناء الانضباط.</p>
-            </div>
-            <div class="inspora-card glass center">
-                <h3 style="color:#00f0ff; margin-bottom:8px;">Cybersecurity & OSINT</h3>
-                <p style="color:#94a3b8; font-size:0.9rem;">البحث والتتبع واستخراج البيانات البرمجية.</p>
-            </div>
-            <div class="inspora-card glass right">
-                <h3 style="color:#00f0ff; margin-bottom:8px;">Software Dev</h3>
-                <p style="color:#94a3b8; font-size:0.9rem;">تطوير السكربتات والأدوات التفاعلية والتطبيقات.</p>
+        <section class="cards">
+            <div class="card glass">
+                <h3 id="card1Title">🏋️ الانضباط والحديد</h3>
+                <p id="card1Desc">
+                    أكثر من مجرد تدريب بدني؛ كسر الأرقام في القاعة هو وسيلتي لبناء عقلية حديدية وتدمير أي ضعف نفسي.
+                </p>
             </div>
 
-            <button class="carousel-btn next" id="insporaNext">❯</button>
-        </div>
-
-        <!-- =========================
-             OSINT TRACKER TOOL
-        ========================= -->
-        <div class="osint-box glass" id="osint">
-            <h2 id="osintTitle" style="color: #00f0ff; font-size: 1.3rem;">أداة تعقب اسم المستخدم (OSINT Tracker) 🛠️</h2>
-            <div class="osint-input-group">
-                <input type="text" id="osintUsername" placeholder="أدخل اسم المستخدم (Username)...">
-                <button onclick="startOsintScan()" id="osintBtn">فحص الأسماء</button>
+            <div class="card glass">
+                <h3 id="card2Title">💻 السايبر والثورة</h3>
+                <p id="card2Desc">
+                    كتابة السكربتات بلغة بايثون وفهم الثغرات الأمنية. الكود ليس مجرد مهنة، بل السلاح الأسمى لفرض نظامي الخاص وسط هذه الفوضى الرقمية.
+                </p>
             </div>
-            <div id="osintResults" class="osint-results" style="display: none;"></div>
-        </div>
-
-        <!-- =========================
-             TERMINAL INTERACTION
-        ========================= -->
-        <div class="terminal-container glass">
-            <div class="terminal-header">
-                <span class="terminal-btn btn-red"></span>
-                <span class="terminal-btn btn-yellow"></span>
-                <span class="terminal-btn btn-green"></span>
-                <span class="terminal-title">abdjalil@dark-node:~</span>
-            </div>
-            <div class="terminal-body" id="terminalBody">
-                <p><span class="prompt">system@node:~$</span> welcome --user</p>
-                <p style="color: #60a5fa;">[+] Matrix Node initialized. Type 'help' to see available commands.</p>
-            </div>
-            <div class="terminal-input-line" style="padding: 0 20px 15px;">
-                <span class="prompt">abdjalil@root:~$</span>
-                <input type="text" id="terminalInput" class="terminal-input" placeholder="Type a command..." onkeydown="handleTerminalCommand(event)">
-            </div>
-        </div>
-
-        <!-- =========================
-             CONTACT & SOCIAL
-        ========================= -->
-        <section class="contact-section glass" style="padding:25px;">
-            <h2 class="section-title" id="contactTitle" style="margin-top:0;">تواصل معي</h2>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('تم إرسال الرسالة بنجاح!');">
-                <input type="text" id="inputName" placeholder="الاسم" required>
-                <input type="email" id="inputEmail" placeholder="البريد الإلكتروني" required>
-                <textarea id="inputMsg" rows="4" placeholder="رسالتك..." required></textarea>
-                <button type="submit" id="btnSend">إرسال الرسالة</button>
-            </form>
         </section>
-
-        <section class="social">
-            <a href="https://github.com" target="_blank">GitHub</a>
-            <a href="https://instagram.com" target="_blank">Instagram</a>
-            <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-        </section>
-
-        <footer>
-            <p>© 2026 ABD JALIL. All Rights Reserved. Built with Cyber Spirit.</p>
-        </footer>
 
     </div>
 
-    <!-- Audio Background -->
-    <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
-
     <script>
-        /* ==========================================
-           1. MATRIX CANVAS ANIMATION
-        ========================================== */
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%&*';
-        const fontSize = 14;
-        let columns = Math.floor(canvas.width / fontSize);
-        let drops = Array(columns).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 8, 22, 0.08)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00f0ff';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 40);
-
-
-        /* ==========================================
-           2. TYPING EFFECT
-        ========================================== */
-        const typedTextSpan = document.querySelector(".typed-text");
-        const textsAr = ["مطور تطبيقات وسكربتات", "مهتم بالأمن السيبراني و OSINT", "عاشق للرياضة والانضباط"];
-        const textsEn = ["Software & Script Developer", "Cybersecurity & OSINT Enthusiast", "Fitness & Discipline Focused"];
-        
-        let currentTexts = textsAr;
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function type() {
-            const currentString = currentTexts[textIndex];
-            
-            if (isDeleting) {
-                typedTextSpan.textContent = currentString.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedTextSpan.textContent = currentString.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let typeSpeed = isDeleting ? 50 : 100;
-
-            if (!isDeleting && charIndex === currentString.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % currentTexts.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(type, typeSpeed);
-        }
-        document.addEventListener("DOMContentLoaded", () => setTimeout(type, 500));
-
-
-        /* ==========================================
-           3. INSPORA CAROUSEL CONTROLLER
-        ========================================== */
-        const carousel = document.getElementById('passions');
+        // Inspora Carousel Interaction logic
+        const carousel = document.getElementById('insporaCarousel');
         const cards = carousel.querySelectorAll('.inspora-card');
-        let activeIndex = 1;
+        const prevBtn = document.getElementById('insporaPrev');
+        const nextBtn = document.getElementById('insporaNext');
+
+        let currentIndex = 1;
 
         function updateCarousel() {
             cards.forEach((card, index) => {
-                card.className = 'inspora-card glass';
-                if (index === activeIndex) {
+                card.className = 'inspora-card';
+                if (index === currentIndex) {
                     card.classList.add('center');
-                } else if (index === activeIndex - 1) {
+                } else if (index === (currentIndex - 1 + cards.length) % cards.length) {
                     card.classList.add('left');
-                } else if (index === activeIndex + 1) {
-                    card.classList.add('right');
-                } else if (index < activeIndex - 1) {
-                    card.classList.add('hidden-left');
                 } else {
-                    card.classList.add('hidden-right');
+                    card.classList.add('right');
                 }
             });
         }
 
-        document.getElementById('insporaPrev').addEventListener('click', () => {
-            if (activeIndex > 0) {
-                activeIndex--;
-                updateCarousel();
-            }
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            updateCarousel();
         });
 
-        document.getElementById('insporaNext').addEventListener('click', () => {
-            if (activeIndex < cards.length - 1) {
-                activeIndex++;
-                updateCarousel();
-            }
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCarousel();
         });
 
-
-        /* ==========================================
-           4. OSINT TRACKER TOOL
-        ========================================== */
-        function startOsintScan() {
-            const username = document.getElementById('osintUsername').value.trim();
-            const resultsDiv = document.getElementById('osintResults');
-
-            if (!username) {
-                alert('الرجاء إدخال اسم المستخدم أولاً!');
-                return;
-            }
-
-            resultsDiv.style.display = 'block';
-            resultsDiv.innerHTML = `<p style="color: #e2e8f0;">[+] جاري البحث عن الحسابات المرتبطة بـ: <b>${username}</b>...</p>`;
-
-            const platforms = [
-                { name: 'GitHub', url: `https://github.com/${username}` },
-                { name: 'Instagram', url: `https://instagram.com/${username}` },
-                { name: 'Twitter/X', url: `https://x.com/${username}` },
-                { name: 'Telegram', url: `https://t.me/${username}` },
-                { name: 'Reddit', url: `https://reddit.com/user/${username}` }
-            ];
-
-            setTimeout(() => {
-                let htmlOutput = `<p style="color: #2ea44f; margin-bottom: 10px;">[✓] اكتمل الفحص السريع:</p>`;
-                platforms.forEach(p => {
-                    htmlOutput += `<a href="${p.url}" target="_blank" class="osint-link">🔗 ${p.name}: ${p.url}</a>`;
-                });
-                resultsDiv.innerHTML = htmlOutput;
-            }, 1200);
-        }
-
-
-        /* ==========================================
-           5. TERMINAL COMMAND INTERACTION
-        ========================================== */
-        function handleTerminalCommand(e) {
-            if (e.key === 'Enter') {
-                const input = document.getElementById('terminalInput');
-                const cmd = input.value.trim().toLowerCase();
-                const body = document.getElementById('terminalBody');
-
-                const pCmd = document.createElement('p');
-                pCmd.innerHTML = `<span class="prompt">abdjalil@root:~$</span> ${input.value}`;
-                body.appendChild(pCmd);
-
-                const pRes = document.createElement('p');
-                pRes.style.color = '#8ab4ff';
-
-                if (cmd === 'help') {
-                    pRes.textContent = 'Available commands: about, skills, osint, clear';
-                } else if (cmd === 'about') {
-                    pRes.textContent = 'ABD JALIL - Developer & Cybersecurity enthusiast based in Algeria 🇩🇿.';
-                } else if (cmd === 'skills') {
-                    pRes.textContent = 'Skills: Python, JavaScript, OSINT, Linux System, Fitness & Discipline.';
-                } else if (cmd === 'clear') {
-                    body.innerHTML = '';
-                    input.value = '';
-                    return;
-                } else {
-                    pRes.style.color = '#ff5f56';
-                    pRes.textContent = `Command not recognized: '${cmd}'. Type 'help' for available commands.`;
-                }
-
-                body.appendChild(pRes);
-                body.scrollTop = body.scrollHeight;
-                input.value = '';
-            }
-        }
-
-
-        /* ==========================================
-           6. LANGUAGE SWITCHER (AR / EN)
-        ========================================== */
-        function switchLanguage(lang) {
-            const btnAr = document.getElementById('btnAr');
-            const btnFr = document.getElementById('btnFr');
-
-            if (lang === 'ar') {
-                document.documentElement.setAttribute('dir', 'rtl');
-                document.documentElement.setAttribute('lang', 'ar');
-                btnAr.classList.add('active');
-                btnFr.classList.remove('active');
-                currentTexts = textsAr;
-
-                document.getElementById('navHome').textContent = 'الرئيسية';
-                document.getElementById('navGallery').textContent = 'الشغف';
-                document.getElementById('navOsint').textContent = 'OSINT';
-                document.getElementById('aboutTitle').textContent = '// التشخيص الذاتي';
-                document.getElementById('statGoalLabel').textContent = 'التركيز الأساسي';
-                document.getElementById('statViews').textContent = 'المجال الشغوف';
-                document.getElementById('titlePassions').textContent = 'مجالات الشغف والاهتمام';
-                document.getElementById('osintTitle').textContent = 'أداة تعقب اسم المستخدم (OSINT Tracker) 🛠️';
-                document.getElementById('osintBtn').textContent = 'فحص الأسماء';
-                document.getElementById('contactTitle').textContent = 'تواصل معي';
-            } else {
-                document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', 'en');
-                btnFr.classList.add('active');
-                btnAr.classList.remove('active');
-                currentTexts = textsEn;
-
-                document.getElementById('navHome').textContent = 'Home';
-                document.getElementById('navGallery').textContent = 'Passions';
-                document.getElementById('navOsint').textContent = 'OSINT';
-                document.getElementById('aboutTitle').textContent = '// Self Diagnosis';
-                document.getElementById('statGoalLabel').textContent = 'Main Focus';
-                document.getElementById('statViews').textContent = 'Field Interest';
-                document.getElementById('titlePassions').textContent = 'Passions & Interests';
-                document.getElementById('osintTitle').textContent = 'Username OSINT Tracker 🛠️';
-                document.getElementById('osintBtn').textContent = 'Scan User';
-                document.getElementById('contactTitle').textContent = 'Contact Me';
-            }
-        }
-
-
-        /* ==========================================
-           7. MUSIC CONTROLLER
-        ========================================== */
-        function toggleMusic() {
-            const music = document.getElementById('bgMusic');
-            const btn = document.getElementById('musicControl');
-            if (music.paused) {
-                music.play();
-                btn.style.borderColor = '#2ea44f';
-                btn.style.color = '#2ea44f';
-            } else {
-                music.pause();
-                btn.style.borderColor = '#00f0ff';
-                btn.style.color = '#00f0ff';
-            }
-        }
+        updateCarousel();
     </script>
 </body>
 </html>
