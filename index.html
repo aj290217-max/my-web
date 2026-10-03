@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +25,7 @@
         }
 
         /* =========================
-            NAVBAR
+           NAVBAR
         ========================= */
         .navbar {
             display: flex;
@@ -72,7 +74,7 @@
         }
 
         /* =========================
-            BACKGROUNDS
+           BACKGROUNDS
         ========================= */
         #matrixCanvas {
             position: fixed;
@@ -116,7 +118,7 @@
         }
 
         /* =========================
-            HERO
+           HERO
         ========================= */
         .hero {
             text-align: center;
@@ -158,7 +160,7 @@
         }
 
         /* =====================================================
-            INSPORA FLUID LIQUID CAROUSEL
+           INSPORA FLUID LIQUID CAROUSEL
         ===================================================== */
         .inspora-section {
             position: relative;
@@ -288,8 +290,7 @@
             bottom: 25px;
             z-index: 3;
             color: white;
-            text-align: right;
-            direction: rtl;
+            text-align: left;
         }
 
         .inspora-content small {
@@ -298,19 +299,17 @@
             opacity: .75;
             margin-bottom: 8px;
             letter-spacing: 1px;
-            direction: ltr;
-            text-align: left;
         }
 
         .inspora-content h3 {
-            font-size: 24px;
+            font-size: 25px;
             margin: 0 0 5px;
             color: white;
         }
 
         .inspora-content p {
-            font-size: 13px;
-            color: rgba(255,255,255,.8);
+            font-size: 12px;
+            color: rgba(255,255,255,.75);
             margin: 0;
         }
 
@@ -332,6 +331,18 @@
             transform: translateX(390px) scale(.78) rotateY(-10deg);
             filter: brightness(.7) saturate(.85);
             z-index: 4;
+        }
+
+        .inspora-card.hidden-left {
+            transform: translateX(-700px) scale(.5);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .inspora-card.hidden-right {
+            transform: translateX(700px) scale(.5);
+            opacity: 0;
+            z-index: 1;
         }
 
         .inspora-controls {
@@ -375,7 +386,7 @@
         }
 
         /* =========================
-            GENERAL SECTIONS
+           GENERAL SECTIONS
         ========================= */
         .section-title {
             text-align: center;
@@ -455,8 +466,278 @@
             font-size: 22px;
         }
 
+        .project-tag {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
         /* =========================
-            MOBILE
+           TERMINAL
+        ========================= */
+        .terminal-container {
+            max-width: 800px;
+            margin: 40px auto;
+            width: 90%;
+            background: #010409;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            overflow: hidden;
+            font-family: monospace;
+            direction: ltr;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+
+        .terminal-title {
+            color: #8b949e;
+            font-size: 13px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            color: #c9d1d9;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: #2ea043;
+            font-weight: bold;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ff79c6;
+            font-family: monospace;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        /* =========================
+           GALLERY
+        ========================= */
+        .gallery {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .grid img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform .4s ease, box-shadow .4s ease;
+            border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,140,255,.3);
+        }
+
+        /* =========================
+           OSINT
+        ========================= */
+        .osint-input {
+            width: 70%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .osint-btn {
+            padding: 12px 20px;
+            background: #238636;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .osint-btn:hover {
+            background: #2ea44f;
+        }
+
+        .osint-results {
+            margin-top: 20px;
+            text-align: right;
+            max-height: 250px;
+            overflow-y: auto;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            font-family: monospace;
+            direction: ltr;
+        }
+
+        .osint-link {
+            display: block;
+            margin: 8px 0;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .osint-link:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           CONTACT
+        ========================= */
+        .contact-section {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 40px;
+            width: 90%;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border .3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .contact-form button {
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .3s, transform .2s;
+        }
+
+        .contact-form button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           SOCIAL
+        ========================= */
+        .social {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 35px;
+            text-decoration: none;
+            color: white;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            transition: all .3s ease;
+        }
+
+        .social a:hover {
+            background: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        #musicControl {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 30px;
+            color: #60a5fa;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: block;
+            font-family: monospace;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+
+        /* =========================
+           MOBILE
         ========================= */
         @media(max-width: 800px) {
             .nav-links a {
@@ -510,11 +791,75 @@
             .inspora-content h3 {
                 font-size: 21px;
             }
+
+            .osint-input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .osint-btn {
+                margin-left: 0;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .navbar {
+                padding: 9px 8px;
+            }
+
+            .nav-links {
+                white-space: nowrap;
+            }
+
+            .nav-links a {
+                margin: 0 2px;
+                font-size: 10px;
+            }
+
+            .lang-buttons {
+                gap: 2px;
+            }
+
+            .lang-btn {
+                padding: 4px 7px;
+                font-size: 10px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .inspora-card {
+                width: 205px;
+                height: 310px;
+            }
+
+            .inspora-card.left {
+                transform: translateX(-125px) scale(.55);
+            }
+
+            .inspora-card.right {
+                transform: translateX(125px) scale(.55);
+            }
+
+            .inspora-title {
+                font-size: 10px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            .about {
+                padding: 25px 20px;
+            }
         }
     </style>
 </head>
 
 <body>
+
+    <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: OFF</button>
 
     <div class="navbar">
         <div class="nav-links">
@@ -525,8 +870,8 @@
         </div>
 
         <div class="lang-buttons">
-            <button id="btnAr" class="lang-btn active">AR</button>
-            <button id="btnFr" class="lang-btn">FR/EN</button>
+            <button id="btnAr" onclick="switchLanguage('ar')" class="lang-btn active">AR</button>
+            <button id="btnFr" onclick="switchLanguage('fr')" class="lang-btn">FR/EN</button>
         </div>
     </div>
 
@@ -543,13 +888,13 @@
             <h1>ABD JALIL</h1>
 
             <div class="typing-container">
-                <span class="typed-text">Developer & Cyber Security Enthusiast</span>
+                <span class="typed-text"></span>
             </div>
         </section>
 
 
         <!-- =====================================================
-             INSPORA FLUID CAROUSEL (MY INSPIRATIONS)
+             INSPORA FLUID CAROUSEL
         ===================================================== -->
         <section class="inspora-section">
 
@@ -561,39 +906,39 @@
 
             <div class="inspora-carousel" id="insporaCarousel">
 
-                <!-- 1. رواية الغريب - ألبير كامو -->
+                <!-- الغريب -->
                 <article
                     class="inspora-card left"
-                    style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c7/L%27%C3%89tranger_-_Albert_Camus.jpg');"
+                    style="background-image:url('images/stranger.jpg');"
                 >
                     <div class="inspora-content">
                         <small>BOOK • ALBERT CAMUS</small>
                         <h3>الغريب</h3>
-                        <p>رواية ألبير كامو (L'Étranger)</p>
+                        <p>Albert Camus</p>
                     </div>
                 </article>
 
-                <!-- 2. رواية العين الحمراء - ندى سمير شرف -->
+                <!-- عين حمراء -->
                 <article
                     class="inspora-card center"
-                    style="background-image: url('https://m.media-amazon.com/images/I/71DkG8bFfVL._AC_UF1000,1000_QL80_.jpg');"
+                    style="background-image:url('images/red-eye.jpg');"
                 >
                     <div class="inspora-content">
-                        <small>BOOK • NOVEL</small>
-                        <h3>العين الحمراء</h3>
-                        <p>ندى سمير شرف</p>
+                        <small>BOOK • INSPIRATION</small>
+                        <h3>عين حمراء</h3>
+                        <p>My Reading</p>
                     </div>
                 </article>
 
-                <!-- 3. مسلسل The Sopranos -->
+                <!-- The Sopranos -->
                 <article
                     class="inspora-card right"
-                    style="background-image: url('https://m.media-amazon.com/images/M/MVBMTIxNTI4Mzk5MV5BMl5BanBnXkFtZTcwMDAyMTI3Mw@@._V1_.jpg');"
+                    style="background-image:url('images/sopranos.jpg');"
                 >
                     <div class="inspora-content">
                         <small>SERIES • HBO</small>
                         <h3>The Sopranos</h3>
-                        <p>السينما والسرد الدرامي</p>
+                        <p>Cinema & Stories</p>
                     </div>
                 </article>
 
@@ -612,6 +957,7 @@
         ========================= -->
         <section class="about glass">
             <h2 id="aboutTitle">// التشخيص النفسي</h2>
+
             <p id="aboutDesc">
                 "بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي.
                 حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام.
@@ -620,27 +966,34 @@
             </p>
         </section>
 
+
         <!-- =========================
              STATS
         ========================= -->
         <section class="stats">
+
             <div class="stat glass">
                 <h3>18</h3>
                 <p id="statAge">العمر</p>
             </div>
+
             <div class="stat glass">
                 <h3>🇩🇿</h3>
                 <p id="statCountry">الجزائر</p>
             </div>
+
             <div class="stat glass">
                 <h3 id="statGoalVal">تضخيم 🏋️‍♂️</h3>
                 <p id="statGoalLabel">الهدف الحالي</p>
             </div>
+
             <div class="stat glass">
                 <h3 id="visitorCount">1</h3>
                 <p id="statViews">زيارات الملف</p>
             </div>
+
         </section>
+
 
         <!-- =========================
              PASSIONS
@@ -650,6 +1003,7 @@
         </h2>
 
         <section class="cards">
+
             <div class="card glass">
                 <h3 id="card1Title">🏋️ الانضباط والحديد</h3>
                 <p id="card1Desc">
@@ -663,43 +1017,1644 @@
                     كتابة السكربتات بلغة بايثون وفهم الثغرات الأمنية. الكود ليس مجرد مهنة، بل السلاح الأسمى لفرض نظامي الخاص وسط هذه الفوضى الرقمية.
                 </p>
             </div>
+
+            <div class="card glass">
+                <h3 id="card3Title">🎮 العوالم الافتراضية</h3>
+                <p id="card3Desc">
+                    انغماس كامل في المحاكاة التكتيكية والمغامرات المظلمة لتجريب المنعكسات والهروب التام من الواقع السطحي.
+                </p>
+            </div>
+
         </section>
+
+
+        <!-- =========================
+             PROJECTS
+        ========================= -->
+        <h2 class="section-title" id="titleProjects">
+            المشاريع والتطوير
+        </h2>
+
+        <section class="cards">
+
+            <div class="card glass">
+                <h3 id="proj1Title">🐍 سكربتات بايثون</h3>
+                <p id="proj1Desc">
+                    بناء أدوات أتمتة، سكربتات حماية وفحص أمني، وتطبيقات الخوادم الخلفية.
+                </p>
+                <span class="project-tag">Backend</span>
+            </div>
+
+            <div class="card glass">
+                <h3 id="proj2Title">🌐 موقع البورتفوليو</h3>
+                <p id="proj2Desc">
+                    تصميم وتطوير هذا الموقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.
+                </p>
+                <span class="project-tag">Frontend</span>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             GALLERY
+        ========================= -->
+        <section id="gallerySection" class="gallery">
+
+            <h2 class="section-title" id="titleGallery">
+                المعرض الخاص بي
+            </h2>
+
+            <div class="grid">
+
+                <img src="IMG_0076.JPG" alt="Gym Back Pose">
+
+                <img src="IMG_20251114_210742_154.jpg" alt="Gym Mirror Selfie">
+
+                <img src="IMG_20251006_115628.jpg" alt="Gym Mirror Selfie">
+
+                <img src="IMG_0465.JPG" alt="Gym Mirror Selfie">
+
+                <img src="MG_0402.JPG" alt="Gym Mirror Selfie">
+
+                <img src="IMG_0369.JPG" alt="Gym Mirror Selfie">
+
+            </div>
+
+
+            <!-- VIDEO -->
+
+            <div id="videoSection" style="text-align: center; margin: 40px 0;">
+
+                <video
+                    width="100%"
+                    style="max-width: 600px; border-radius: 8px; border: 1px solid #30363d;"
+                    controls
+                >
+
+                    <source src="IMG_0011.MP4" type="video/quicktime">
+
+                    <p id="videoFallback">
+                        عذراً، متصفحك لا يدعم تشغيل الفيديو مباشرة.
+                        <br>
+
+                        <a
+                            href="IMG_0011.MOV"
+                            download
+                            style="color: #58a6ff; text-decoration: underline;"
+                        >
+                            اضغط هنا لتحميل الفيديو ومشاهدته على جهازك
+                        </a>
+
+                    </p>
+
+                </video>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             OSINT
+        ========================= -->
+        <div
+            id="osintSection"
+            style="
+                max-width: 600px;
+                margin: 50px auto;
+                background: #161b22;
+                padding: 30px;
+                border-radius: 10px;
+                border: 1px solid #30363d;
+                text-align: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            "
+        >
+
+            <h2
+                style="color: #2ea44f; font-size: 24px; margin-bottom: 10px;"
+                id="osintTitle"
+            >
+                أداة تعقب اسم المستخدم 🛠️
+            </h2>
+
+            <p
+                style="color: #8b949e; font-size: 14px; margin-bottom: 20px;"
+                id="osintDesc"
+            >
+                البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.
+            </p>
+
+            <input
+                type="text"
+                id="osintUsername"
+                class="osint-input"
+                placeholder="أدخل اسم المستخدم (مثال: abdjalile_mh)"
+            >
+
+            <button
+                onclick="startOsintScan()"
+                class="osint-btn"
+                id="osintBtn"
+            >
+                فحص الأسماء
+            </button>
+
+            <div
+                id="osintResults"
+                class="osint-results"
+                style="display: none;"
+            ></div>
+
+        </div>
+
+
+        <!-- =========================
+             TERMINAL
+        ========================= -->
+        <h2 class="section-title">
+            f.society // Interactive Console
+        </h2>
+
+        <div class="terminal-container">
+
+            <div class="terminal-header">
+
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+
+                <div class="terminal-title">
+                    kali@fsociety: ~
+                </div>
+
+            </div>
+
+            <div class="terminal-body" id="terminalBody">
+
+                <div>
+                    [+] System initialized. Secure shell active.
+                </div>
+
+                <div>
+                    Type
+                    <span style="color: #60a5fa;">help</span>
+                    to view available system commands.
+                </div>
+
+            </div>
+
+            <div
+                class="terminal-header"
+                style="border-top: 1px solid #30363d; border-bottom: none;"
+            >
+
+                <div
+                    class="terminal-input-line"
+                    style="width: 100%;"
+                >
+
+                    <span class="prompt">
+                        jalil@kali:~$
+                    </span>
+
+                    <input
+                        type="text"
+                        class="terminal-input"
+                        id="terminalInput"
+                        onkeypress="executeCommand(event)"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CONTACT
+        ========================= -->
+        <h2 class="section-title" id="titleContact">
+            اترك لي رسالة
+        </h2>
+
+        <section class="contact-section glass">
+
+            <form
+                class="contact-form"
+                onsubmit="sendWithTargetDetails(event)"
+            >
+
+                <input
+                    type="text"
+                    id="senderName"
+                    placeholder="اسمك (أو مجهول)"
+                    required
+                >
+
+                <textarea
+                    rows="5"
+                    id="senderMessage"
+                    placeholder="رسالتك هنا..."
+                    required
+                ></textarea>
+
+                <button
+                    type="submit"
+                    id="sendBtn"
+                >
+                    إرسال آمن 🔒
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- =========================
+             SOCIAL
+        ========================= -->
+        <section class="social">
+
+            <h2 class="section-title" id="titleFollow">
+                تابعني على
+            </h2>
+
+            <a
+                href="https://www.instagram.com/abdjalile_mh"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Instagram
+            </a>
+
+            <a href="#">
+                TikTok - jalil mgn
+            </a>
+
+        </section>
+
+
+        <footer>
+
+            <span id="footerText">
+                &copy; 2026 عبد الجليل | الموقع الشخصي
+            </span>
+
+        </footer>
 
     </div>
 
+
     <script>
-        // Inspora Carousel Interaction logic
-        const carousel = document.getElementById('insporaCarousel');
-        const cards = carousel.querySelectorAll('.inspora-card');
-        const prevBtn = document.getElementById('insporaPrev');
-        const nextBtn = document.getElementById('insporaNext');
 
-        let currentIndex = 1;
+        /* =====================================================
+           TELEGRAM
+        ===================================================== */
 
-        function updateCarousel() {
-            cards.forEach((card, index) => {
-                card.className = 'inspora-card';
-                if (index === currentIndex) {
-                    card.classList.add('center');
-                } else if (index === (currentIndex - 1 + cards.length) % cards.length) {
-                    card.classList.add('left');
+        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
+        const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
+
+
+        /* =====================================================
+           AUDIO
+        ===================================================== */
+
+        let audioCtx = null;
+        let droneOsc = null;
+        let isAudioPlaying = false;
+
+
+        /* =====================================================
+           TRANSLATION
+        ===================================================== */
+
+        const translations = {
+
+            ar: {
+                navHome: "الرئيسية",
+                navGallery: "الصور",
+                navVideo: "الفيديو",
+                navOsint: "أداة OSINT",
+
+                aboutTitle: "// التشخيص النفسي",
+
+                aboutDesc:
+                `"بعيداً عن أوهام هذا العالم، اخترت العزلة لأعيد بناء نفسي. حيث تحطم الخيبات الآخرين، أحوّل الصمت والمرار إلى قوة خام. لا أحتاج إلى طبيب نفسي؛ أوزاني في القاعة تضمد جراحي، وأسطر البرمجة الخاصة بي تملي علاجي الذاتي. مرحباً بكم في ملاذي المحصن، الذي صيغ في ظلال الجزائر 🇩🇿."`,
+
+                statAge: "العمر",
+                statCountry: "البلد",
+                statGoalLabel: "الهدف الحالي",
+                statGoalVal: "تضخيم 🏋️‍♂️",
+                statViews: "زيارات الملف",
+
+                titlePassions: "شغفي واهتماماتي",
+
+                card1Title: "🏋️ الانضباط والحديد",
+                card1Desc:
+                "أكثر من مجرد تدريب بدني؛ كسر الأرقام في القاعة هو وسيلتي لبناء عقلية حديدية وتدمير أي ضعف نفسي.",
+
+                card2Title: "💻 السايبر والثورة",
+                card2Desc:
+                "كتابة السكربتات بلغة بايثون وفهم الثغرات الأمنية. الكود ليس مجرد مهنة، بل السلاح الأسمى لفرض نظامي الخاص وسط هذه الفوضى الرقمية.",
+
+                card3Title: "🎮 العوالم الافتراضية",
+                card3Desc:
+                "انغماس كامل في المحاكاة التكتيكية والمغامرات المظلمة لتجريب المنعكسات والهروب التام من الواقع السطحي.",
+
+                titleProjects: "المشاريع والتطوير",
+
+                proj1Title: "🐍 سكربتات بايثون",
+                proj1Desc:
+                "بناء أدوات أتمتة، سكربتات حماية وفحص أمني، وتطبيقات الخوادم الخلفية.",
+
+                proj2Title: "🌐 موقع البورتفوليو",
+                proj2Desc:
+                "تصميم وتطوير هذا الموقع التفاعلي المتكامل بواجهات عصرية وأنظمة مخصصة.",
+
+                titleGallery: "المعرض الخاص بي",
+
+                osintTitle: "أداة تعقب اسم المستخدم 🛠️",
+                osintDesc:
+                "البحث والتحقق من الحسابات العامة المتصلة بمعرف رقمي عبر الشبكات المفتوحة.",
+
+                osintBtn: "فحص الأسماء",
+                osintInput:
+                "أدخل اسم المستخدم (مثال: abdjalile_mh)",
+
+                titleContact: "اترك لي رسالة",
+
+                senderName: "اسمك (أو مجهول)",
+                senderMessage: "رسالتك هنا...",
+                sendBtn: "إرسال آمن 🔒",
+
+                titleFollow: "تابعني على",
+
+                footerText:
+                "© 2026 عبد الجليل | الموقع الشخصي"
+            },
+
+
+            fr: {
+
+                navHome: "Accueil",
+                navGallery: "Galerie",
+                navVideo: "Vidéo",
+                navOsint: "Outil OSINT",
+
+                aboutTitle:
+                "// Diagnostique Psychologique",
+
+                aboutDesc:
+                `"Loin des illusions de ce monde, j'ai choisi de m'isoler pour me reconstruire. Là où les déceptions brisent les autres, je transforme le silence et l'amertume en force brute. Pas besoin de psychologue ; mes poids à la salle pansent mes blessures, et mes lignes de code dictent ma propre thérapie. Bienvenue dans mon sanctuaire, forgé dans l'ombre de l'Algérie 🇩🇿."`,
+
+                statAge: "Âge",
+                statCountry: "Pays",
+                statGoalLabel: "Objectif Actuel",
+                statGoalVal: "Bulking 🏋️‍♂️",
+                statViews: "Vues du Profil",
+
+                titlePassions: "Mes Passions",
+
+                card1Title: "🏋️ Discipline & Fer",
+                card1Desc:
+                "Plus qu'un simple entraînement physique; briser les records à la salle est mon moyen de forger un mental d'acier et de détruire toute faiblesse psychologique.",
+
+                card2Title: "💻 Cyber & Révolution",
+                card2Desc:
+                "Écrire des scripts en Python et comprendre les failles de sécurité. Le code n'est pas un métier, c'est l'arme ultime pour instaurer mon propre ordre dans ce chaos numérique.",
+
+                card3Title: "🎮 Mondes Virtuels",
+                card3Desc:
+                "Une immersion totale dans des simulations tactiques et des aventures sombres pour tester les réflexes et s'échapper de la réalité superficielle.",
+
+                titleProjects: "Projets & Dév",
+
+                proj1Title: "🐍 Scripts Python",
+                proj1Desc:
+                "Création d'outils d'automatisation, scripts de sécurité et applications backend.",
+
+                proj2Title: "🌐 Site Portfolio",
+                proj2Desc:
+                "Conception de ce portfolio interactif haut de gamme avec thèmes dynamiques.",
+
+                titleGallery: "Ma Galerie",
+
+                osintTitle: "Outil de Traçage OSINT 🛠️",
+                osintDesc:
+                "Rechercher et vérifier les comptes publics liés à un identifiant numérique sur les réseaux ouverts.",
+
+                osintBtn: "Scanner",
+
+                osintInput:
+                "Entrez le nom d'utilisateur (Ex: abdjalile_mh)",
+
+                titleContact:
+                "Laissez-moi un Message",
+
+                senderName:
+                "Votre Nom (ou Anonyme)",
+
+                senderMessage:
+                "Votre Message...",
+
+                sendBtn:
+                "Envoyer Sécurisé 🔒",
+
+                titleFollow:
+                "Suivez-moi",
+
+                footerText:
+                "© 2026 ABD JALIL | Portfolio Personnel"
+            }
+
+        };
+
+
+        /* =====================================================
+           LANGUAGE
+        ===================================================== */
+
+        function switchLanguage(lang) {
+
+            const content = translations[lang];
+
+            if (!content) return;
+
+            for (let id in content) {
+
+                const element =
+                    document.getElementById(id);
+
+                if (!element) continue;
+
+                if (
+                    element.tagName === "INPUT" ||
+                    element.tagName === "TEXTAREA"
+                ) {
+
+                    element.placeholder =
+                        content[id];
+
                 } else {
-                    card.classList.add('right');
+
+                    element.innerHTML =
+                        content[id];
+
                 }
-            });
+
+            }
+
+
+            if (lang === "ar") {
+
+                document.documentElement.dir = "rtl";
+
+                document.getElementById("btnAr")
+                    .classList.add("active");
+
+                document.getElementById("btnFr")
+                    .classList.remove("active");
+
+            } else {
+
+                document.documentElement.dir = "ltr";
+
+                document.getElementById("btnFr")
+                    .classList.add("active");
+
+                document.getElementById("btnAr")
+                    .classList.remove("active");
+
+            }
+
         }
 
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-            updateCarousel();
-        });
 
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % cards.length;
-            updateCarousel();
-        });
+        /* =====================================================
+           STARTUP
+        ===================================================== */
 
-        updateCarousel();
+        window.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                initMatrixBackground();
+
+                initTypingEffect();
+
+                updateViews();
+
+                switchLanguage("ar");
+
+                updateInsporaCards();
+
+            }
+        );
+
+
+        /* =====================================================
+           MATRIX BACKGROUND
+        ===================================================== */
+
+        function initMatrixBackground() {
+
+            const canvas =
+                document.getElementById(
+                    "matrixCanvas"
+                );
+
+            const ctx =
+                canvas.getContext("2d");
+
+
+            function resizeCanvas() {
+
+                canvas.width =
+                    window.innerWidth;
+
+                canvas.height =
+                    window.innerHeight;
+
+            }
+
+            resizeCanvas();
+
+            window.addEventListener(
+                "resize",
+                resizeCanvas
+            );
+
+
+            const chars =
+                "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            const fontSize = 14;
+
+            let columns =
+                Math.floor(
+                    canvas.width / fontSize
+                );
+
+            let drops =
+                Array.from(
+                    { length: columns },
+                    () => 1
+                );
+
+
+            function draw() {
+
+                ctx.fillStyle =
+                    "rgba(5, 8, 22, 0.05)";
+
+                ctx.fillRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+
+                ctx.fillStyle = "#0f0";
+
+                ctx.font =
+                    fontSize + "px monospace";
+
+
+                for (
+                    let i = 0;
+                    i < drops.length;
+                    i++
+                ) {
+
+                    const text =
+                        chars.charAt(
+                            Math.floor(
+                                Math.random() *
+                                chars.length
+                            )
+                        );
+
+
+                    ctx.fillText(
+                        text,
+                        i * fontSize,
+                        drops[i] * fontSize
+                    );
+
+
+                    if (
+                        drops[i] * fontSize >
+                        canvas.height &&
+                        Math.random() > .975
+                    ) {
+
+                        drops[i] = 0;
+
+                    }
+
+                    drops[i]++;
+
+                }
+
+            }
+
+            setInterval(draw, 33);
+
+        }
+
+
+        /* =====================================================
+           TYPING EFFECT
+        ===================================================== */
+
+        function initTypingEffect() {
+
+            const phrases = [
+                "Cyber Security Enthusiast",
+                "Python Developer",
+                "Fitness & Gym Addict"
+            ];
+
+            let i = 0;
+            let j = 0;
+            let isDeleting = false;
+
+            const el =
+                document.querySelector(
+                    ".typed-text"
+                );
+
+
+            function loop() {
+
+                el.innerHTML =
+                    phrases[i].substring(0, j);
+
+
+                if (
+                    !isDeleting &&
+                    j < phrases[i].length
+                ) {
+
+                    j++;
+
+                    setTimeout(
+                        loop,
+                        100
+                    );
+
+                }
+
+                else if (
+                    isDeleting &&
+                    j > 0
+                ) {
+
+                    j--;
+
+                    setTimeout(
+                        loop,
+                        50
+                    );
+
+                }
+
+                else {
+
+                    isDeleting =
+                        !isDeleting;
+
+
+                    if (!isDeleting) {
+
+                        i =
+                            (i + 1) %
+                            phrases.length;
+
+                    }
+
+
+                    setTimeout(
+                        loop,
+                        1200
+                    );
+
+                }
+
+            }
+
+            loop();
+
+        }
+
+
+        /* =====================================================
+           AUDIO
+        ===================================================== */
+
+        function toggleMusic() {
+
+            const btn =
+                document.getElementById(
+                    "musicControl"
+                );
+
+
+            if (!isAudioPlaying) {
+
+                startSyntheticAmbiance();
+
+                btn.textContent =
+                    "🎵 Ambiance: ON";
+
+                isAudioPlaying = true;
+
+            }
+
+            else {
+
+                if (audioCtx) {
+                    audioCtx.suspend();
+                }
+
+                btn.textContent =
+                    "🎵 Ambiance: OFF";
+
+                isAudioPlaying = false;
+
+            }
+
+        }
+
+
+        function startSyntheticAmbiance() {
+
+            if (!audioCtx) {
+
+                audioCtx =
+                    new (
+                        window.AudioContext ||
+                        window.webkitAudioContext
+                    )();
+
+
+                droneOsc =
+                    audioCtx.createOscillator();
+
+
+                let droneGain =
+                    audioCtx.createGain();
+
+
+                droneOsc.type =
+                    "sawtooth";
+
+
+                droneOsc.frequency.setValueAtTime(
+                    45,
+                    audioCtx.currentTime
+                );
+
+
+                let filter =
+                    audioCtx.createBiquadFilter();
+
+
+                filter.type =
+                    "lowpass";
+
+
+                filter.frequency.setValueAtTime(
+                    120,
+                    audioCtx.currentTime
+                );
+
+
+                droneGain.gain.setValueAtTime(
+                    0.05,
+                    audioCtx.currentTime
+                );
+
+
+                droneOsc.connect(filter);
+
+                filter.connect(droneGain);
+
+                droneGain.connect(
+                    audioCtx.destination
+                );
+
+                droneOsc.start();
+
+            }
+
+            else {
+
+                audioCtx.resume();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           OSINT
+        ===================================================== */
+
+        function startOsintScan() {
+
+            const username =
+                document
+                    .getElementById(
+                        "osintUsername"
+                    )
+                    .value
+                    .trim();
+
+
+            const resultsDiv =
+                document.getElementById(
+                    "osintResults"
+                );
+
+
+            if (username === "") {
+
+                alert(
+                    "الرجاء كتابة اسم المستخدم أولاً!"
+                );
+
+                return;
+
+            }
+
+
+            resultsDiv.style.display =
+                "block";
+
+
+            resultsDiv.innerHTML =
+                `<span>[*] جاري بدء فحص المعرفات الرقمية لـ [${username}]...</span><br><br>`;
+
+
+            const platforms = [
+
+                {
+                    name: "Instagram",
+                    url:
+                    `https://www.instagram.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "TikTok",
+                    url:
+                    `https://www.tiktok.com/@${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "GitHub",
+                    url:
+                    `https://github.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "Twitter / X",
+                    url:
+                    `https://twitter.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "Pinterest",
+                    url:
+                    `https://www.pinterest.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "Reddit",
+                    url:
+                    `https://www.reddit.com/user/${encodeURIComponent(username)}`
+                }
+
+            ];
+
+
+            let delay = 0;
+
+
+            platforms.forEach(
+                (platform) => {
+
+                    setTimeout(
+                        () => {
+
+                            resultsDiv.innerHTML +=
+                            `<span style="color:#50fa7b;">[+] تم توليد رابط البحث لـ ${platform.name}:</span>
+                            <a href="${platform.url}" target="_blank" rel="noopener noreferrer" class="osint-link">${platform.url} 🔗</a>`;
+
+                            resultsDiv.scrollTop =
+                                resultsDiv.scrollHeight;
+
+                        },
+                        delay
+                    );
+
+                    delay += 300;
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           TERMINAL
+        ===================================================== */
+
+        function executeCommand(e) {
+
+            if (e.key !== "Enter") return;
+
+
+            const input =
+                document.getElementById(
+                    "terminalInput"
+                );
+
+            const body =
+                document.getElementById(
+                    "terminalBody"
+                );
+
+
+            const cmd =
+                input.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const cmdLine =
+                document.createElement(
+                    "div"
+                );
+
+
+            cmdLine.innerHTML =
+                `<span class="prompt">jalil@kali:~$</span> ${input.value}`;
+
+
+            body.appendChild(
+                cmdLine
+            );
+
+
+            const response =
+                document.createElement(
+                    "div"
+                );
+
+
+            response.style.marginBottom =
+                "10px";
+
+
+            switch (cmd) {
+
+                case "help":
+
+                    response.innerHTML = `
+                        Available Commands:<br>
+                        - <span style="color:#60a5fa;">about</span>: View profile details<br>
+                        - <span style="color:#60a5fa;">whoami</span>: Check current user session<br>
+                        - <span style="color:#60a5fa;">social</span>: List active social media<br>
+                        - <span style="color:#60a5fa;">clear</span>: Clean terminal screen<br>
+                        - <span style="color:#60a5fa;">matrix</span>: Toggle background audio
+                    `;
+
+                    break;
+
+
+                case "about":
+
+                    response.innerHTML =
+                    `<span style="color:#f1fa8c;">
+                    ABD JALIL // Developer, Cyber Security Enthusiast & Fitness Addict from Algeria 🇩🇿.
+                    </span>`;
+
+                    break;
+
+
+                case "whoami":
+
+                    response.innerHTML =
+                    `<span style="color:#ff79c6;">
+                    guest@fsociety-terminal
+                    </span>`;
+
+                    break;
+
+
+                case "social":
+
+                    response.innerHTML =
+                    `Instagram: @abdjalile_mh | TikTok: jalil mgn`;
+
+                    break;
+
+
+                case "clear":
+
+                    body.innerHTML = "";
+
+                    input.value = "";
+
+                    return;
+
+
+                case "matrix":
+
+                    toggleMusic();
+
+                    response.innerHTML =
+                        `Audio status toggled.`;
+
+                    break;
+
+
+                case "":
+
+                    break;
+
+
+                default:
+
+                    response.innerHTML =
+                    `<span style="color:#ff5555;">
+                    Command not found: '${cmd}'. Type 'help' for available commands.
+                    </span>`;
+
+            }
+
+
+            body.appendChild(
+                response
+            );
+
+
+            input.value = "";
+
+            body.scrollTop =
+                body.scrollHeight;
+
+        }
+
+
+        /* =====================================================
+           CONTACT / TELEGRAM
+        ===================================================== */
+
+        function sendWithTargetDetails(e) {
+
+            e.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "senderName"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "senderMessage"
+                ).value;
+
+
+            const sendBtn =
+                document.getElementById(
+                    "sendBtn"
+                );
+
+
+            sendBtn.innerText =
+                "جاري الإرسال...";
+
+
+            sendBtn.disabled = true;
+
+
+            const text =
+            `📬 *رسالة جديدة من Portfolio*:\n\n👤 *الاسم:* ${name}\n💬 *الرسالة:* ${message}`;
+
+
+            if (
+                TELEGRAM_BOT_TOKEN ===
+                "YOUR_BOT_TOKEN" ||
+                TELEGRAM_CHAT_ID ===
+                "YOUR_CHAT_ID"
+            ) {
+
+                alert(
+                    "تم استلام رسالتك بنجاح!"
+                );
+
+
+                sendBtn.innerText =
+                    "تم الإرسال بنجاح ✅";
+
+
+                document.getElementById(
+                    "senderName"
+                ).value = "";
+
+
+                document.getElementById(
+                    "senderMessage"
+                ).value = "";
+
+
+                setTimeout(
+                    () => {
+
+                        sendBtn.innerText =
+                            "إرسال آمن 🔒";
+
+                        sendBtn.disabled =
+                            false;
+
+                    },
+                    3000
+                );
+
+
+                return;
+
+            }
+
+
+            fetch(
+                `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        chat_id:
+                            TELEGRAM_CHAT_ID,
+
+                        text: text,
+
+                        parse_mode:
+                            "Markdown"
+                    })
+                }
+            )
+
+            .then(
+                res => res.json()
+            )
+
+            .then(
+                data => {
+
+                    if (data.ok) {
+
+                        alert(
+                            "تم إرسال رسالتك بنجاح!"
+                        );
+
+
+                        document.getElementById(
+                            "senderName"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "senderMessage"
+                        ).value = "";
+
+                    }
+
+                    else {
+
+                        alert(
+                            "حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً."
+                        );
+
+                    }
+
+                }
+            )
+
+            .catch(
+                () => {
+
+                    alert(
+                        "تعذر الاتصال بالخادم."
+                    );
+
+                }
+            )
+
+            .finally(
+                () => {
+
+                    sendBtn.innerText =
+                        "إرسال آمن 🔒";
+
+                    sendBtn.disabled =
+                        false;
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           PROFILE VIEWS
+        ===================================================== */
+
+        function updateViews() {
+
+            let views =
+                localStorage.getItem(
+                    "profile_views"
+                ) || 100;
+
+
+            views =
+                parseInt(views) + 1;
+
+
+            localStorage.setItem(
+                "profile_views",
+                views
+            );
+
+
+            const viewsElem =
+                document.getElementById(
+                    "visitorCount"
+                );
+
+
+            if (viewsElem) {
+
+                viewsElem.innerText =
+                    views;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           INSPORA FLUID CAROUSEL
+        ===================================================== */
+
+        const insporaCards =
+            document.querySelectorAll(
+                ".inspora-card"
+            );
+
+        let insporaCurrent = 1;
+
+
+        function updateInsporaCards() {
+
+            const total =
+                insporaCards.length;
+
+
+            insporaCards.forEach(
+                (card, index) => {
+
+                    const position =
+                        (index - insporaCurrent + total)
+                        % total;
+
+
+                    card.classList.remove(
+                        "left",
+                        "center",
+                        "right",
+                        "hidden-left",
+                        "hidden-right"
+                    );
+
+
+                    if (position === 0) {
+
+                        card.classList.add(
+                            "center"
+                        );
+
+                    }
+
+                    else if (position === 1) {
+
+                        card.classList.add(
+                            "right"
+                        );
+
+                    }
+
+                    else if (
+                        position ===
+                        total - 1
+                    ) {
+
+                        card.classList.add(
+                            "left"
+                        );
+
+                    }
+
+                    else if (
+                        position <
+                        total / 2
+                    ) {
+
+                        card.classList.add(
+                            "hidden-right"
+                        );
+
+                    }
+
+                    else {
+
+                        card.classList.add(
+                            "hidden-left"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* التالي */
+
+        document
+            .getElementById(
+                "insporaNext"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    insporaCurrent++;
+
+                    if (
+                        insporaCurrent >=
+                        insporaCards.length
+                    ) {
+
+                        insporaCurrent = 0;
+
+                    }
+
+                    updateInsporaCards();
+
+                }
+            );
+
+
+        /* السابق */
+
+        document
+            .getElementById(
+                "insporaPrev"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    insporaCurrent--;
+
+                    if (
+                        insporaCurrent < 0
+                    ) {
+
+                        insporaCurrent =
+                            insporaCards.length - 1;
+
+                    }
+
+                    updateInsporaCards();
+
+                }
+            );
+
+
+        /* =====================================================
+           SWIPE / DRAG
+        ===================================================== */
+
+        const insporaCarousel =
+            document.getElementById(
+                "insporaCarousel"
+            );
+
+
+        let insporaStartX = 0;
+
+        let insporaDragging = false;
+
+
+        insporaCarousel.addEventListener(
+            "pointerdown",
+            (e) => {
+
+                insporaStartX =
+                    e.clientX;
+
+                insporaDragging = true;
+
+                insporaCarousel.setPointerCapture(
+                    e.pointerId
+                );
+
+            }
+        );
+
+
+        insporaCarousel.addEventListener(
+            "pointerup",
+            (e) => {
+
+                if (!insporaDragging)
+                    return;
+
+
+                const distance =
+                    e.clientX -
+                    insporaStartX;
+
+
+                insporaDragging = false;
+
+
+                if (
+                    Math.abs(distance) > 60
+                ) {
+
+                    if (distance < 0) {
+
+                        document
+                            .getElementById(
+                                "insporaNext"
+                            )
+                            .click();
+
+                    }
+
+                    else {
+
+                        document
+                            .getElementById(
+                                "insporaPrev"
+                            )
+                            .click();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           MOUSE WHEEL
+        ===================================================== */
+
+        let insporaWheelLock =
+            false;
+
+
+        insporaCarousel.addEventListener(
+            "wheel",
+            (e) => {
+
+                if (insporaWheelLock)
+                    return;
+
+
+                insporaWheelLock = true;
+
+
+                if (e.deltaY > 0) {
+
+                    document
+                        .getElementById(
+                            "insporaNext"
+                        )
+                        .click();
+
+                }
+
+                else {
+
+                    document
+                        .getElementById(
+                            "insporaPrev"
+                        )
+                        .click();
+
+                }
+
+
+                setTimeout(
+                    () => {
+
+                        insporaWheelLock =
+                            false;
+
+                    },
+                    800
+                );
+
+            },
+            { passive: true }
+        );
+
+
+        /* =====================================================
+           AUTO PLAY
+        ===================================================== */
+
+        let insporaAutoPlay =
+            setInterval(
+                () => {
+
+                    document
+                        .getElementById(
+                            "insporaNext"
+                        )
+                        .click();
+
+                },
+                4500
+            );
+
+
+        insporaCarousel.addEventListener(
+            "mouseenter",
+            () => {
+
+                clearInterval(
+                    insporaAutoPlay
+                );
+
+            }
+        );
+
+
+        insporaCarousel.addEventListener(
+            "mouseleave",
+            () => {
+
+                clearInterval(
+                    insporaAutoPlay
+                );
+
+
+                insporaAutoPlay =
+                    setInterval(
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "insporaNext"
+                                )
+                                .click();
+
+                        },
+                        4500
+                    );
+
+            }
+        );
+
     </script>
+
 </body>
 </html>
+'''
+
+path = Path("/mnt/data/index_combined.html")
+path.write_text(html, encoding="utf-8")
+
+print(f"تم إنشاء الملف: {path}")
