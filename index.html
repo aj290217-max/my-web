@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -699,7 +704,1149 @@
             updateCarousel();
         });
 
-        updateCarousel();
+                document.documentElement.dir = "rtl";
+
+                document.getElementById("btnAr")
+                    .classList.add("active");
+
+                document.getElementById("btnFr")
+                    .classList.remove("active");
+
+            } else {
+
+                document.documentElement.dir = "ltr";
+
+                document.getElementById("btnFr")
+                    .classList.add("active");
+
+                document.getElementById("btnAr")
+                    .classList.remove("active");
+
+            }
+
+        }
+
+
+        /* =====================================================
+           STARTUP
+        ===================================================== */
+
+        window.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                initMatrixBackground();
+
+                initTypingEffect();
+
+                updateViews();
+
+                switchLanguage("ar");
+
+                updateInsporaCards();
+
+            }
+        );
+
+
+        /* =====================================================
+           MATRIX BACKGROUND
+        ===================================================== */
+
+        function initMatrixBackground() {
+
+            const canvas =
+                document.getElementById(
+                    "matrixCanvas"
+                );
+
+            const ctx =
+                canvas.getContext("2d");
+
+
+            function resizeCanvas() {
+
+                canvas.width =
+                    window.innerWidth;
+
+                canvas.height =
+                    window.innerHeight;
+
+            }
+
+            resizeCanvas();
+
+            window.addEventListener(
+                "resize",
+                resizeCanvas
+            );
+
+
+            const chars =
+                "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            const fontSize = 14;
+
+            let columns =
+                Math.floor(
+                    canvas.width / fontSize
+                );
+
+            let drops =
+                Array.from(
+                    { length: columns },
+                    () => 1
+                );
+
+
+            function draw() {
+
+                ctx.fillStyle =
+                    "rgba(5, 8, 22, 0.05)";
+
+                ctx.fillRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+
+                ctx.fillStyle = "#0f0";
+
+                ctx.font =
+                    fontSize + "px monospace";
+
+
+                for (
+                    let i = 0;
+                    i < drops.length;
+                    i++
+                ) {
+
+                    const text =
+                        chars.charAt(
+                            Math.floor(
+                                Math.random() *
+                                chars.length
+                            )
+                        );
+
+
+                    ctx.fillText(
+                        text,
+                        i * fontSize,
+                        drops[i] * fontSize
+                    );
+
+
+                    if (
+                        drops[i] * fontSize >
+                        canvas.height &&
+                        Math.random() > .975
+                    ) {
+
+                        drops[i] = 0;
+
+                    }
+
+                    drops[i]++;
+
+                }
+
+            }
+
+            setInterval(draw, 33);
+
+        }
+
+
+        /* =====================================================
+           TYPING EFFECT
+        ===================================================== */
+
+        function initTypingEffect() {
+
+            const phrases = [
+                "Cyber Security Enthusiast",
+                "Python Developer",
+                "Fitness & Gym Addict"
+            ];
+
+            let i = 0;
+            let j = 0;
+            let isDeleting = false;
+
+            const el =
+                document.querySelector(
+                    ".typed-text"
+                );
+
+
+            function loop() {
+
+                el.innerHTML =
+                    phrases[i].substring(0, j);
+
+
+                if (
+                    !isDeleting &&
+                    j < phrases[i].length
+                ) {
+
+                    j++;
+
+                    setTimeout(
+                        loop,
+                        100
+                    );
+
+                }
+
+                else if (
+                    isDeleting &&
+                    j > 0
+                ) {
+
+                    j--;
+
+                    setTimeout(
+                        loop,
+                        50
+                    );
+
+                }
+
+                else {
+
+                    isDeleting =
+                        !isDeleting;
+
+
+                    if (!isDeleting) {
+
+                        i =
+                            (i + 1) %
+                            phrases.length;
+
+                    }
+
+
+                    setTimeout(
+                        loop,
+                        1200
+                    );
+
+                }
+
+            }
+
+            loop();
+
+        }
+
+
+        /* =====================================================
+           AUDIO
+        ===================================================== */
+
+        function toggleMusic() {
+
+            const btn =
+                document.getElementById(
+                    "musicControl"
+                );
+
+
+            if (!isAudioPlaying) {
+
+                startSyntheticAmbiance();
+
+                btn.textContent =
+                    "🎵 Ambiance: ON";
+
+                isAudioPlaying = true;
+
+            }
+
+            else {
+
+                if (audioCtx) {
+                    audioCtx.suspend();
+                }
+
+                btn.textContent =
+                    "🎵 Ambiance: OFF";
+
+                isAudioPlaying = false;
+
+            }
+
+        }
+
+
+        function startSyntheticAmbiance() {
+
+            if (!audioCtx) {
+
+                audioCtx =
+                    new (
+                        window.AudioContext ||
+                        window.webkitAudioContext
+                    )();
+
+
+                droneOsc =
+                    audioCtx.createOscillator();
+
+
+                let droneGain =
+                    audioCtx.createGain();
+
+
+                droneOsc.type =
+                    "sawtooth";
+
+
+                droneOsc.frequency.setValueAtTime(
+                    45,
+                    audioCtx.currentTime
+                );
+
+
+                let filter =
+                    audioCtx.createBiquadFilter();
+
+
+                filter.type =
+                    "lowpass";
+
+
+                filter.frequency.setValueAtTime(
+                    120,
+                    audioCtx.currentTime
+                );
+
+
+                droneGain.gain.setValueAtTime(
+                    0.05,
+                    audioCtx.currentTime
+                );
+
+
+                droneOsc.connect(filter);
+
+                filter.connect(droneGain);
+
+                droneGain.connect(
+                    audioCtx.destination
+                );
+
+                droneOsc.start();
+
+            }
+
+            else {
+
+                audioCtx.resume();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           OSINT
+        ===================================================== */
+
+        function startOsintScan() {
+
+            const username =
+                document
+                    .getElementById(
+                        "osintUsername"
+                    )
+                    .value
+                    .trim();
+
+
+            const resultsDiv =
+                document.getElementById(
+                    "osintResults"
+                );
+
+
+            if (username === "") {
+
+                alert(
+                    "الرجاء كتابة اسم المستخدم أولاً!"
+                );
+
+                return;
+
+            }
+
+
+            resultsDiv.style.display =
+                "block";
+
+
+            resultsDiv.innerHTML =
+                `<span>[*] جاري بدء فحص المعرفات الرقمية لـ [${username}]...</span><br><br>`;
+
+
+            const platforms = [
+
+                {
+                    name: "Instagram",
+                    url:
+                    `https://www.instagram.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "TikTok",
+                    url:
+                    `https://www.tiktok.com/@${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "GitHub",
+                    url:
+                    `https://github.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "Twitter / X",
+                    url:
+                    `https://twitter.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "Pinterest",
+                    url:
+                    `https://www.pinterest.com/${encodeURIComponent(username)}`
+                },
+
+                {
+                    name: "Reddit",
+                    url:
+                    `https://www.reddit.com/user/${encodeURIComponent(username)}`
+                }
+
+            ];
+
+
+            let delay = 0;
+
+
+            platforms.forEach(
+                (platform) => {
+
+                    setTimeout(
+                        () => {
+
+                            resultsDiv.innerHTML +=
+                            `<span style="color:#50fa7b;">[+] تم توليد رابط البحث لـ ${platform.name}:</span>
+                            <a href="${platform.url}" target="_blank" rel="noopener noreferrer" class="osint-link">${platform.url} 🔗</a>`;
+
+                            resultsDiv.scrollTop =
+                                resultsDiv.scrollHeight;
+
+                        },
+                        delay
+                    );
+
+                    delay += 300;
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           TERMINAL
+        ===================================================== */
+
+        function executeCommand(e) {
+
+            if (e.key !== "Enter") return;
+
+
+            const input =
+                document.getElementById(
+                    "terminalInput"
+                );
+
+            const body =
+                document.getElementById(
+                    "terminalBody"
+                );
+
+
+            const cmd =
+                input.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const cmdLine =
+                document.createElement(
+                    "div"
+                );
+
+
+            cmdLine.innerHTML =
+                `<span class="prompt">jalil@kali:~$</span> ${input.value}`;
+
+
+            body.appendChild(
+                cmdLine
+            );
+
+
+            const response =
+                document.createElement(
+                    "div"
+                );
+
+
+            response.style.marginBottom =
+                "10px";
+
+
+            switch (cmd) {
+
+                case "help":
+
+                    response.innerHTML = `
+                        Available Commands:<br>
+                        - <span style="color:#60a5fa;">about</span>: View profile details<br>
+                        - <span style="color:#60a5fa;">whoami</span>: Check current user session<br>
+                        - <span style="color:#60a5fa;">social</span>: List active social media<br>
+                        - <span style="color:#60a5fa;">clear</span>: Clean terminal screen<br>
+                        - <span style="color:#60a5fa;">matrix</span>: Toggle background audio
+                    `;
+
+                    break;
+
+
+                case "about":
+
+                    response.innerHTML =
+                    `<span style="color:#f1fa8c;">
+                    ABD JALIL // Developer, Cyber Security Enthusiast & Fitness Addict from Algeria 🇩🇿.
+                    </span>`;
+
+                    break;
+
+
+                case "whoami":
+
+                    response.innerHTML =
+                    `<span style="color:#ff79c6;">
+                    guest@fsociety-terminal
+                    </span>`;
+
+                    break;
+
+
+                case "social":
+
+                    response.innerHTML =
+                    `Instagram: @abdjalile_mh | TikTok: jalil mgn`;
+
+                    break;
+
+
+                case "clear":
+
+                    body.innerHTML = "";
+
+                    input.value = "";
+
+                    return;
+
+
+                case "matrix":
+
+                    toggleMusic();
+
+                    response.innerHTML =
+                        `Audio status toggled.`;
+
+                    break;
+
+
+                case "":
+
+                    break;
+
+
+                default:
+
+                    response.innerHTML =
+                    `<span style="color:#ff5555;">
+                    Command not found: '${cmd}'. Type 'help' for available commands.
+                    </span>`;
+
+            }
+
+
+            body.appendChild(
+                response
+            );
+
+
+            input.value = "";
+
+            body.scrollTop =
+                body.scrollHeight;
+
+        }
+
+
+        /* =====================================================
+           CONTACT / TELEGRAM
+        ===================================================== */
+
+        function sendWithTargetDetails(e) {
+
+            e.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "senderName"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "senderMessage"
+                ).value;
+
+
+            const sendBtn =
+                document.getElementById(
+                    "sendBtn"
+                );
+
+
+            sendBtn.innerText =
+                "جاري الإرسال...";
+
+
+            sendBtn.disabled = true;
+
+
+            const text =
+            `📬 *رسالة جديدة من Portfolio*:\n\n👤 *الاسم:* ${name}\n💬 *الرسالة:* ${message}`;
+
+
+            if (
+                TELEGRAM_BOT_TOKEN ===
+                "YOUR_BOT_TOKEN" ||
+                TELEGRAM_CHAT_ID ===
+                "YOUR_CHAT_ID"
+            ) {
+
+                alert(
+                    "تم استلام رسالتك بنجاح!"
+                );
+
+
+                sendBtn.innerText =
+                    "تم الإرسال بنجاح ✅";
+
+
+                document.getElementById(
+                    "senderName"
+                ).value = "";
+
+
+                document.getElementById(
+                    "senderMessage"
+                ).value = "";
+
+
+                setTimeout(
+                    () => {
+
+                        sendBtn.innerText =
+                            "إرسال آمن 🔒";
+
+                        sendBtn.disabled =
+                            false;
+
+                    },
+                    3000
+                );
+
+
+                return;
+
+            }
+
+
+            fetch(
+                `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        chat_id:
+                            TELEGRAM_CHAT_ID,
+
+                        text: text,
+
+                        parse_mode:
+                            "Markdown"
+                    })
+                }
+            )
+
+            .then(
+                res => res.json()
+            )
+
+            .then(
+                data => {
+
+                    if (data.ok) {
+
+                        alert(
+                            "تم إرسال رسالتك بنجاح!"
+                        );
+
+
+                        document.getElementById(
+                            "senderName"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "senderMessage"
+                        ).value = "";
+
+                    }
+
+                    else {
+
+                        alert(
+                            "حدث خطأ أثناء الإرسال. يرجى المحاولة لاحقاً."
+                        );
+
+                    }
+
+                }
+            )
+
+            .catch(
+                () => {
+
+                    alert(
+                        "تعذر الاتصال بالخادم."
+                    );
+
+                }
+            )
+
+            .finally(
+                () => {
+
+                    sendBtn.innerText =
+                        "إرسال آمن 🔒";
+
+                    sendBtn.disabled =
+                        false;
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           PROFILE VIEWS
+        ===================================================== */
+
+        function updateViews() {
+
+            let views =
+                localStorage.getItem(
+                    "profile_views"
+                ) || 100;
+
+
+            views =
+                parseInt(views) + 1;
+
+
+            localStorage.setItem(
+                "profile_views",
+                views
+            );
+
+
+            const viewsElem =
+                document.getElementById(
+                    "visitorCount"
+                );
+
+
+            if (viewsElem) {
+
+                viewsElem.innerText =
+                    views;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           INSPORA FLUID CAROUSEL
+        ===================================================== */
+
+        const insporaCards =
+            document.querySelectorAll(
+                ".inspora-card"
+            );
+
+        let insporaCurrent = 1;
+
+
+        function updateInsporaCards() {
+
+            const total =
+                insporaCards.length;
+
+
+            insporaCards.forEach(
+                (card, index) => {
+
+                    const position =
+                        (index - insporaCurrent + total)
+                        % total;
+
+
+                    card.classList.remove(
+                        "left",
+                        "center",
+                        "right",
+                        "hidden-left",
+                        "hidden-right"
+                    );
+
+
+                    if (position === 0) {
+
+                        card.classList.add(
+                            "center"
+                        );
+
+                    }
+
+                    else if (position === 1) {
+
+                        card.classList.add(
+                            "right"
+                        );
+
+                    }
+
+                    else if (
+                        position ===
+                        total - 1
+                    ) {
+
+                        card.classList.add(
+                            "left"
+                        );
+
+                    }
+
+                    else if (
+                        position <
+                        total / 2
+                    ) {
+
+                        card.classList.add(
+                            "hidden-right"
+                        );
+
+                    }
+
+                    else {
+
+                        card.classList.add(
+                            "hidden-left"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* التالي */
+
+        document
+            .getElementById(
+                "insporaNext"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    insporaCurrent++;
+
+                    if (
+                        insporaCurrent >=
+                        insporaCards.length
+                    ) {
+
+                        insporaCurrent = 0;
+
+                    }
+
+                    updateInsporaCards();
+
+                }
+            );
+
+
+        /* السابق */
+
+        document
+            .getElementById(
+                "insporaPrev"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    insporaCurrent--;
+
+                    if (
+                        insporaCurrent < 0
+                    ) {
+
+                        insporaCurrent =
+                            insporaCards.length - 1;
+
+                    }
+
+                    updateInsporaCards();
+
+                }
+            );
+
+
+        /* =====================================================
+           SWIPE / DRAG
+        ===================================================== */
+
+        const insporaCarousel =
+            document.getElementById(
+                "insporaCarousel"
+            );
+
+
+        let insporaStartX = 0;
+
+        let insporaDragging = false;
+
+
+        insporaCarousel.addEventListener(
+            "pointerdown",
+            (e) => {
+
+                insporaStartX =
+                    e.clientX;
+
+                insporaDragging = true;
+
+                insporaCarousel.setPointerCapture(
+                    e.pointerId
+                );
+
+            }
+        );
+
+
+        insporaCarousel.addEventListener(
+            "pointerup",
+            (e) => {
+
+                if (!insporaDragging)
+                    return;
+
+
+                const distance =
+                    e.clientX -
+                    insporaStartX;
+
+
+                insporaDragging = false;
+
+
+                if (
+                    Math.abs(distance) > 60
+                ) {
+
+                    if (distance < 0) {
+
+                        document
+                            .getElementById(
+                                "insporaNext"
+                            )
+                            .click();
+
+                    }
+
+                    else {
+
+                        document
+                            .getElementById(
+                                "insporaPrev"
+                            )
+                            .click();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           MOUSE WHEEL
+        ===================================================== */
+
+        let insporaWheelLock =
+            false;
+
+
+        insporaCarousel.addEventListener(
+            "wheel",
+            (e) => {
+
+                if (insporaWheelLock)
+                    return;
+
+
+                insporaWheelLock = true;
+
+
+                if (e.deltaY > 0) {
+
+                    document
+                        .getElementById(
+                            "insporaNext"
+                        )
+                        .click();
+
+                }
+
+                else {
+
+                    document
+                        .getElementById(
+                            "insporaPrev"
+                        )
+                        .click();
+
+                }
+
+
+                setTimeout(
+                    () => {
+
+                        insporaWheelLock =
+                            false;
+
+                    },
+                    800
+                );
+
+            },
+            { passive: true }
+        );
+
+
+        /* =====================================================
+           AUTO PLAY
+        ===================================================== */
+
+        let insporaAutoPlay =
+            setInterval(
+                () => {
+
+                    document
+                        .getElementById(
+                            "insporaNext"
+                        )
+                        .click();
+
+                },
+                4500
+            );
+
+
+        insporaCarousel.addEventListener(
+            "mouseenter",
+            () => {
+
+                clearInterval(
+                    insporaAutoPlay
+                );
+
+            }
+        );
+
+
+        insporaCarousel.addEventListener(
+            "mouseleave",
+            () => {
+
+                clearInterval(
+                    insporaAutoPlay
+                );
+
+
+                insporaAutoPlay =
+                    setInterval(
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "insporaNext"
+                                )
+                                .click();
+
+                        },
+                        4500
+                    );
+
+            }
+        );
+
     </script>
 </body>
 </html>
+'''
+
+path = Path("/mnt/data/index_combined.html")
+path.write_text(html, encoding="utf-8")
+
+print(f"تم إنشاء الملف: {path}")
