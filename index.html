@@ -546,10 +546,172 @@
         }
         @media(prefers-reduced-motion:reduce) { .liquid-card,.liquid-card img,.liquid-card::before { transition:none!important; animation:none!important; } }
 
-    </style>
+    </style>  
+<style>
+/* ABD JALIL — Password Gate */
+#passwordGate {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background:
+    radial-gradient(ellipse at 20% 20%, #123c80 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 85%, #10265b 0%, transparent 40%),
+    #050816;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+#passwordGate[hidden] {
+  display: none !important;
+}
+
+.password-card {
+  width: 100%;
+  max-width: 390px;
+  box-sizing: border-box;
+  padding: 38px 28px;
+  text-align: center;
+  border: 1px solid rgba(110, 170, 255, .28);
+  border-radius: 25px;
+  background: rgba(13, 25, 52, .72);
+  box-shadow: 0 0 65px rgba(0, 100, 255, .18);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  animation: gateAppear .8s ease both;
+}
+
+.password-lock {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 22px;
+  border-radius: 23px;
+  border: 1px solid rgba(110, 170, 255, .4);
+  background: linear-gradient(135deg, #173f81, #09152e);
+  box-shadow: 0 0 30px rgba(44, 125, 255, .2);
+  font-size: 34px;
+  animation: lockFloat 3s ease-in-out infinite;
+}
+
+.password-card h1 {
+  margin: 0 0 10px;
+  font-size: 27px;
+  letter-spacing: 2px;
+}
+
+.password-card p {
+  color: #aabbd9;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+#sitePassword {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 18px;
+  padding: 15px;
+  border: 1px solid #263e66;
+  border-radius: 12px;
+  outline: none;
+  background: rgba(2, 8, 24, .8);
+  color: white;
+  font-size: 16px;
+  text-align: center;
+}
+
+#sitePassword:focus {
+  border-color: #5c9cff;
+  box-shadow: 0 0 18px #287bff30;
+}
+
+#unlockButton {
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(100deg, #1769ff, #4c9dff);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .25s;
+}
+
+#unlockButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px #1769ff55;
+}
+
+#passwordMessage {
+  min-height: 20px;
+  margin-top: 12px;
+  color: #ff7c91;
+  font-size: 13px;
+}
+
+.password-footer {
+  margin-top: 22px;
+  color: #647da7;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+@keyframes gateAppear {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes lockFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .password-card, .password-lock {
+    animation: none;
+  }
+}
+</style>
+
 </head> 
 
 <body>
+
+<div id="passwordGate">
+  <div class="password-card">
+    <div class="password-lock">🔐</div>
+
+    <h1>ABD JALIL</h1>
+    <p>Welcome to my personal website</p>
+    <p>أدخل كلمة السر للمتابعة</p>
+
+    <form id="passwordForm">
+      <input
+        id="sitePassword"
+        type="password"
+        placeholder="Enter password..."
+        autocomplete="current-password"
+        required
+      />
+
+      <button id="unlockButton" type="submit">
+        UNLOCK WEBSITE →
+      </button>
+
+      <div id="passwordMessage" role="status"></div>
+    </form>
+
+    <div class="password-footer">
+      PRIVATE ACCESS · ABD JALIL
+    </div>
+  </div>
+</div>
 
     <button id="musicControl" onclick="toggleMusic()">🎵 Ambiance: OFF</button>
     
