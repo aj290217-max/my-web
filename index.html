@@ -1312,5 +1312,40 @@
         })();
 
     </script>
+
+    <!-- ABD JALIL password gate fix: prevents the form from refreshing the page -->
+    <script>
+    (() => {
+        const SITE_PASSWORD = "Jalil@2026";
+
+        const gate = document.getElementById("passwordGate");
+        const form = document.getElementById("passwordForm");
+        const input = document.getElementById("sitePassword");
+        const message = document.getElementById("passwordMessage");
+        const mainContent = document.getElementById("mainContent");
+
+        if (!gate || !form || !input || !message || !mainContent) {
+            console.error("Password gate: one or more required elements were not found.");
+            return;
+        }
+
+        mainContent.style.visibility = "hidden";
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (input.value.trim() === SITE_PASSWORD) {
+                gate.hidden = true;
+                mainContent.style.visibility = "visible";
+                message.textContent = "";
+            } else {
+                message.textContent = "كلمة السر غير صحيحة! حاول مجدداً.";
+                input.value = "";
+                input.focus();
+            }
+        });
+    })();
+    </script>
+
 </body>
 </html>
